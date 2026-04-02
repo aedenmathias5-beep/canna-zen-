@@ -25,3 +25,7 @@ client_secret*.json
 *.njsproj
 *.sln
 *.sw?
+.env
+.env.production
+.env.local
+*.zip
