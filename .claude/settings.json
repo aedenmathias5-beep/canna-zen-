@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(zip -r ~/Desktop/cannazen-hostinger-FINAL.zip .)",
+      "Bash(unzip -l ~/Desktop/cannazen-hostinger-FINAL.zip)",
+      "Bash(grep -E \"index\\\\.html|\\\\.htaccess|\\\\.js$|\\\\.css$\")",
+      "Bash(grep -E \"index\\\\.html|\\\\.htaccess|\\\\.css$\")",
+      "Bash(git init:*)"
+    ]
+  }
+}
