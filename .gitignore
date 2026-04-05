@@ -26,6 +26,5 @@ client_secret*.json
 *.sln
 *.sw?
 .env
-.env.production
 .env.local
 *.zip
