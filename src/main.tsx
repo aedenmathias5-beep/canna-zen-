@@ -5,7 +5,18 @@ import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+console.log('ENV CHECK:', {
+  supabase: !!import.meta.env.VITE_SUPABASE_URL,
+  key: !!import.meta.env.VITE_SUPABASE_ANON_KEY,
+  url: import.meta.env.VITE_SUPABASE_URL
+})
+
+const rootElement = document.getElementById('root')
+if (!rootElement) {
+  document.body.innerHTML = '<div id="root"></div>'
+}
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
