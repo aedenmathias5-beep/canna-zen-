@@ -13,7 +13,7 @@ export async function signInWithGoogle(): Promise<void> {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'https://cannazenn.netlify.app/auth/callback'
+      redirectTo: 'https://cannazen.fun/auth/callback'
     }
   });
   if (error) throw error;

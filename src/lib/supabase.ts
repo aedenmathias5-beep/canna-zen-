@@ -1,18 +1,16 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
-const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+  || 'https://wsfufhzdxhqimbokxwcw.supabase.co'
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+  || 'sb_publishable_iFHuddg53-NTSxu3YTuw-w_LvcgsDVE'
+const siteUrl = import.meta.env.VITE_SITE_URL || 'https://cannazen.fun'
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('MISSING SUPABASE ENV VARS:', { supabaseUrl: !!supabaseUrl, supabaseAnonKey: !!supabaseAnonKey })
-}
-
-export const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey)
+export const isSupabaseConfigured = true
 
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder',
+  SUPABASE_URL,
+  SUPABASE_KEY,
   {
     auth: {
       flowType: 'implicit',
@@ -23,6 +21,4 @@ export const supabase = createClient(
   }
 )
 
-export const getRedirectUrl = () => {
-  return `${siteUrl}/auth/callback`
-}
+export const getRedirectUrl = () => `${siteUrl}/auth/callback`

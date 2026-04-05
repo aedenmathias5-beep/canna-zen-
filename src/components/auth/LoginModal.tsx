@@ -45,7 +45,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'https://cannazenn.netlify.app/auth/callback'
+        redirectTo: 'https://cannazen.fun/auth/callback'
       }
     });
     if (error) {
