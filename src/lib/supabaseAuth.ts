@@ -13,9 +13,8 @@ export async function signInWithGoogle(): Promise<void> {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: getRedirectUrl(),
-      queryParams: { access_type: 'offline', prompt: 'select_account' },
-    },
+      redirectTo: 'https://cannazenn.netlify.app/auth/callback'
+    }
   });
   if (error) throw error;
   if (data?.url) window.location.href = data.url;
