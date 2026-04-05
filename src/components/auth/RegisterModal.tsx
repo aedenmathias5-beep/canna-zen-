@@ -3,7 +3,7 @@ import { X, Mail, Eye, EyeOff, User, Loader2, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuthActions } from '../../hooks/useAuthActions';
 import { registerSchema, type RegisterInput } from '../../lib/validators/auth';
-import { supabase, getRedirectUrl } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import SocialButton from './SocialButton';
 
 interface RegisterModalProps {

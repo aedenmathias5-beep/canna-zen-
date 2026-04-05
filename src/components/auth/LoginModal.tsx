@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { X, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useAuthActions } from '../../hooks/useAuthActions';
 import { loginSchema, type LoginInput } from '../../lib/validators/auth';
-import { supabase, getRedirectUrl } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase';
 import SocialButton from './SocialButton';
 
 interface LoginModalProps {
