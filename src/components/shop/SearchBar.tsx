@@ -33,19 +33,21 @@ export default function SearchBar({ value, onChange }: Props) {
 
   return (
     <div className="relative">
-      <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7a7267]/50" />
+      <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-500/50" />
       <input
         type="text"
         value={localValue}
         onChange={e => handleChange(e.target.value)}
         placeholder="Rechercher un produit..."
-        className="w-full bg-white/70 border border-[#e8efe4]/60 rounded-xl pl-11 pr-10 py-3 text-sm text-[#2c2520] placeholder:text-[#7a7267]/50 focus:outline-none focus:border-[#6b8f5e] focus:ring-1 focus:ring-[#6b8f5e]/20 transition-colors"
+        className="w-full glass-card rounded-xl pl-11 pr-10 py-3 text-sm focus:outline-none focus:border-teal-500/40 focus:ring-1 focus:ring-teal-500/20 transition-colors"
+        style={{ color: 'var(--text-primary)' }}
       />
       {localValue && (
         <button
           onClick={handleClear}
           aria-label="Effacer la recherche"
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#7a7267]/50 hover:text-[#2c2520] transition-colors"
+          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 transition-colors hover:text-teal-500"
+          style={{ color: 'var(--text-muted)' }}
         >
           <X size={16} />
         </button>

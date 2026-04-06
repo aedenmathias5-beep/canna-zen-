@@ -13,7 +13,7 @@ export async function signInWithGoogle(): Promise<void> {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: 'https://cannazen.fun/auth/callback'
+      redirectTo: getRedirectUrl()
     }
   });
   if (error) throw error;

@@ -11,8 +11,8 @@ export default function AuthGuard({ children }: { children: ReactNode }) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="text-center">
-          <Loader2 className="mx-auto h-8 w-8 animate-spin text-[#6b8f5e]" />
-          <p className="mt-4 text-sm text-[#7a7267] font-light">Chargement...</p>
+          <Loader2 className="mx-auto h-8 w-8 animate-spin text-teal-500" />
+          <p className="mt-4 text-sm text-[var(--text-secondary)] font-light">Chargement...</p>
         </div>
       </div>
     );

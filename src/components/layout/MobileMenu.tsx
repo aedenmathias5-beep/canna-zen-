@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ChevronDown, ChevronUp } from 'lucide-react';
+import { useTheme } from '../../lib/ThemeContext';
 import Logo from '../ui/Logo';
 
 const menuItems = [
@@ -33,16 +34,17 @@ interface Props {
 
 export default function MobileMenu({ open, onClose }: Props) {
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const { theme } = useTheme();
 
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-[#3d5a3a]/30 backdrop-blur-sm" onClick={onClose} />
-      <div className="fixed inset-y-0 left-0 z-50 w-4/5 max-w-sm bg-[#f7f3ec] p-6 shadow-xl lg:hidden flex flex-col overflow-y-auto">
+      <div className="absolute inset-0" style={{ background: 'rgba(13,148,136,0.1)', backdropFilter: 'blur(4px)' }} onClick={onClose} />
+      <div className="fixed inset-y-0 left-0 z-50 w-4/5 max-w-sm p-6 shadow-xl lg:hidden flex flex-col overflow-y-auto" style={{ background: 'var(--bg-surface)', borderRight: '1px solid var(--border-color)' }}>
         <div className="flex items-center justify-between mb-8">
-          <Logo variant="dark" />
-          <button onClick={onClose} aria-label="Fermer le menu" className="text-[#7a7267] hover:text-[#2c2520]"><X size={24} /></button>
+          <Logo variant={theme === 'dark' ? 'light' : 'dark'} />
+          <button onClick={onClose} aria-label="Fermer le menu" style={{ color: 'var(--text-secondary)' }}><X size={24} /></button>
         </div>
         <nav className="flex flex-col gap-1">
           {menuItems.map(item => {
@@ -54,7 +56,8 @@ export default function MobileMenu({ open, onClose }: Props) {
                   <>
                     <button
                       onClick={() => setExpandedItem(isExpanded ? null : item.label)}
-                      className="w-full flex items-center justify-between text-sm font-medium text-[#7a7267] hover:text-[#2c2520] hover:bg-[#e8efe4]/30 py-3 px-3 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-between text-sm font-medium py-3 px-3 rounded-lg transition-colors hover:bg-teal-500/5"
+                      style={{ color: 'var(--text-secondary)' }}
                     >
                       {item.label}
                       {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -66,7 +69,8 @@ export default function MobileMenu({ open, onClose }: Props) {
                             key={child.label}
                             to={child.to}
                             onClick={onClose}
-                            className="block text-sm text-[#7a7267] hover:text-[#6b8f5e] py-2 px-3 rounded-lg hover:bg-[#e8efe4]/20 transition-colors"
+                            className="block text-sm py-2 px-3 rounded-lg transition-colors hover:bg-teal-500/5 hover:text-teal-600"
+                            style={{ color: 'var(--text-secondary)' }}
                           >
                             {child.label}
                           </Link>
@@ -78,7 +82,8 @@ export default function MobileMenu({ open, onClose }: Props) {
                   <Link
                     to={'to' in item ? item.to! : '/'}
                     onClick={onClose}
-                    className="text-sm font-medium text-[#7a7267] hover:text-[#2c2520] hover:bg-[#e8efe4]/30 py-3 px-3 rounded-lg transition-colors"
+                    className="text-sm font-medium py-3 px-3 rounded-lg transition-colors hover:bg-teal-500/5 hover:text-teal-600"
+                    style={{ color: 'var(--text-secondary)' }}
                   >
                     {item.label}
                   </Link>

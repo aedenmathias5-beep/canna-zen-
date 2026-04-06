@@ -7,129 +7,102 @@ export default function AuthCallback() {
   const [status, setStatus] = useState('Connexion...')
 
   useEffect(() => {
-    let timeout: any
+    let timeout: ReturnType<typeof setTimeout>
+    let subscription: { unsubscribe: () => void } | null = null
 
     const handle = async () => {
-      const hash = window.location.hash
-      const query = window.location.search
-      const hashParams = new URLSearchParams(hash.substring(1))
-      const queryParams = new URLSearchParams(query)
+      try {
+        const hash = new URLSearchParams(window.location.hash.substring(1))
+        const query = new URLSearchParams(window.location.search)
+        const accessToken = hash.get('access_token')
+        const refreshToken = hash.get('refresh_token') || ''
+        const code = query.get('code')
+        const errorParam = query.get('error') || hash.get('error')
 
-      const accessToken = hashParams.get('access_token')
-      const code = queryParams.get('code')
-      const errorParam = queryParams.get('error') || hashParams.get('error')
-
-      console.log('[AuthCallback] accessToken:', !!accessToken, 'code:', !!code, 'error:', errorParam)
-
-      if (errorParam) {
-        setStatus('Erreur: ' + errorParam)
-        timeout = setTimeout(() => navigate('/'), 3000)
-        return
-      }
-
-      // Implicit flow: token in hash
-      if (accessToken) {
-        setStatus('Token détecté...')
-        const refreshToken = hashParams.get('refresh_token') || ''
-
-        const { data, error } = await supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken
-        })
-
-        console.log('setSession result:', data, error)
-
-        if (!error && data.session) {
-          navigate('/compte', { replace: true })
+        if (errorParam) {
+          setStatus('Erreur: ' + errorParam)
+          timeout = setTimeout(() => navigate('/'), 3000)
           return
         }
 
-        // If setSession fails, try getSession
+        if (accessToken) {
+          setStatus('Connexion établie...')
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken
+          })
+          if (!error) {
+            navigate('/compte', { replace: true })
+            return
+          }
+        }
+
+        if (code) {
+          setStatus('Vérification...')
+          const { error } = await supabase.auth.exchangeCodeForSession(code)
+          if (!error) {
+            navigate('/compte', { replace: true })
+            return
+          }
+        }
+
         const { data: { session } } = await supabase.auth.getSession()
         if (session) {
           navigate('/compte', { replace: true })
           return
         }
 
-        // Last resort - wait for auth state
-        setStatus('Récupération session...')
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          (event, session) => {
-            console.log('Auth event:', event, !!session)
-            if (event === 'SIGNED_IN' && session) {
-              subscription.unsubscribe()
-              navigate('/compte', { replace: true })
-            }
-          }
-        )
-
-        timeout = setTimeout(() => {
-          subscription.unsubscribe()
-          navigate('/')
-        }, 5000)
-        return
-      }
-
-      // PKCE flow: code in query
-      if (code) {
-        setStatus('Échange du code...')
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-        console.log('[AuthCallback] PKCE result:', { session: !!data?.session, error })
-
-        if (!error && data?.session) {
-          navigate('/compte', { replace: true })
-          return
-        }
-      }
-
-      // No token/code: check existing session (detectSessionInUrl may have handled it)
-      setStatus('Vérification session...')
-      const { data: { session } } = await supabase.auth.getSession()
-      if (session) {
-        navigate('/compte', { replace: true })
-        return
-      }
-
-      // Final fallback
-      setStatus('Attente...')
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
-        (_event, session) => {
-          if (session) {
-            subscription.unsubscribe()
+        setStatus('En attente...')
+        const { data } = supabase.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_IN' && session) {
+            data.subscription.unsubscribe()
             navigate('/compte', { replace: true })
           }
-        }
-      )
+        })
+        subscription = data.subscription
 
-      timeout = setTimeout(() => {
-        subscription.unsubscribe()
+        timeout = setTimeout(() => {
+          subscription?.unsubscribe()
+          navigate('/')
+        }, 5000)
+      } catch (err) {
+        console.error('Auth callback error:', err)
         navigate('/')
-      }, 5000)
+      }
     }
 
     handle()
-    return () => clearTimeout(timeout)
+
+    return () => {
+      clearTimeout(timeout)
+      subscription?.unsubscribe()
+    }
   }, [])
 
   return (
     <div style={{
       display: 'flex',
-      flexDirection: 'column' as const,
+      flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       height: '100vh',
       gap: '16px',
-      fontFamily: 'sans-serif'
+      background: '#faf9f6'
     }}>
       <div style={{
-        width: '32px', height: '32px',
+        width: '36px',
+        height: '36px',
         border: '3px solid #d1fae5',
-        borderTop: '3px solid #16a34a',
+        borderTop: '3px solid #15803d',
         borderRadius: '50%',
         animation: 'spin 1s linear infinite'
       }} />
       <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
-      <p style={{ color: '#6b7280', fontSize: '13px', maxWidth: '300px', textAlign: 'center' }}>
+      <p style={{
+        color: '#6b7280',
+        fontSize: '14px',
+        fontFamily: 'inherit'
+      }}>
         {status}
       </p>
     </div>

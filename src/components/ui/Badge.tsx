@@ -4,11 +4,11 @@ interface Props {
 }
 
 const variants = {
-  sage: 'bg-[#e8efe4] text-[#4a6741]',
+  sage: 'bg-[var(--border-color)] text-[#4a6741]',
   earth: 'bg-[#8b7355]/10 text-[#8b7355]',
   gold: 'bg-[#f5ecd7] text-[#8b7355]',
   red: 'bg-red-50 text-red-600',
-  default: 'bg-[#ede7da]/60 text-[#7a7267]',
+  default: 'bg-[#ede7da]/60 text-[var(--text-secondary)]',
 };
 
 export default function Badge({ children, variant = 'default' }: Props) {

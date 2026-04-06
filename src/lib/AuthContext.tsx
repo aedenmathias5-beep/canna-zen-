@@ -54,29 +54,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Safety timeout - never stay loading more than 3 seconds
-    const timeout = setTimeout(() => setLoading(false), 3000);
+    let mounted = true;
+    const timeout = setTimeout(() => {
+      if (mounted) setLoading(false);
+    }, 3000);
 
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mounted) return;
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
         fetchProfile(currentUser).finally(() => {
-          setLoading(false);
-          clearTimeout(timeout);
+          if (mounted) {
+            setLoading(false);
+            clearTimeout(timeout);
+          }
         });
       } else {
         setLoading(false);
         clearTimeout(timeout);
       }
     }).catch(() => {
-      setLoading(false);
-      clearTimeout(timeout);
+      if (mounted) {
+        setLoading(false);
+        clearTimeout(timeout);
+      }
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (!mounted) return;
       const currentUser = session?.user ?? null;
       setUser(currentUser);
       if (currentUser) {
@@ -88,6 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     return () => {
+      mounted = false;
       subscription.unsubscribe();
       clearTimeout(timeout);
     };

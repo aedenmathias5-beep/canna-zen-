@@ -6,6 +6,7 @@ import ProductCard from '../components/shop/ProductCard';
 import CategoryFilter from '../components/shop/CategoryFilter';
 import SearchBar from '../components/shop/SearchBar';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
+import AnimatedSection from '../components/ui/AnimatedSection';
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -73,14 +74,16 @@ export default function Shop() {
           : [{ label: 'Boutique' }]
       } />
 
-      <div className="mb-8">
-        <h1 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl font-semibold text-[#2c2520] italic">
-          {activeCat && activeCat.slug !== 'all' ? activeCat.name : 'Boutique'}
-        </h1>
-        <p className="text-[#7a7267] font-light">
-          {filtered.length} produit{filtered.length > 1 ? 's' : ''}{filtered.length !== products.length ? ` sur ${products.length}` : ' disponibles'}
-        </p>
-      </div>
+      <AnimatedSection animation="fade-up">
+        <div className="mb-8">
+          <h1 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl font-semibold italic" style={{ color: 'var(--text-primary)' }}>
+            {activeCat && activeCat.slug !== 'all' ? activeCat.name : 'Boutique'}
+          </h1>
+          <p className="font-light" style={{ color: 'var(--text-secondary)' }}>
+            {filtered.length} produit{filtered.length > 1 ? 's' : ''}{filtered.length !== products.length ? ` sur ${products.length}` : ' disponibles'}
+          </p>
+        </div>
+      </AnimatedSection>
 
       <div className="space-y-4 mb-8">
         <SearchBar value={searchQuery} onChange={handleSearchChange} />
@@ -88,19 +91,19 @@ export default function Shop() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="text-center py-20">
+        <div className="text-center py-20 fade-in-up">
           <div className="text-5xl mb-4">🔍</div>
-          <p className="text-[#7a7267] text-lg font-light mb-2">Aucun produit trouvé</p>
-          <p className="text-sm text-[#7a7267]/60 font-light mb-4">Essayez avec d'autres mots-clés ou catégories</p>
+          <p className="text-lg font-light mb-2" style={{ color: 'var(--text-secondary)' }}>Aucun produit trouvé</p>
+          <p className="text-sm font-light mb-4" style={{ color: 'var(--text-muted)' }}>Essayez avec d'autres mots-clés ou catégories</p>
           <button
             onClick={handleReset}
-            className="text-[#6b8f5e] hover:text-[#4a6741] font-medium text-sm"
+            className="text-teal-500 hover:text-teal-600 font-medium text-sm transition-colors"
           >
             Réinitialiser les filtres
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 stagger-child">
           {filtered.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
       )}

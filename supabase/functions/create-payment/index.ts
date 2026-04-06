@@ -29,7 +29,7 @@ serve(async (req) => {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
     const body = await req.json();
-    const { items, shipping, userEmail, userId } = body;
+    const { items, shipping, userEmail, userId, paymentMethod } = body;
 
     if (!items?.length || !shipping || !userEmail) {
       return new Response(
@@ -38,8 +38,14 @@ serve(async (req) => {
       );
     }
 
+    const allowedMethods = ["creditcard", "applepay"];
+    const validatedMethod = paymentMethod && allowedMethods.includes(paymentMethod) ? paymentMethod : undefined;
+
     const subtotal = items.reduce(
-      (acc: number, item: any) => acc + item.unitPrice * item.quantity,
+      (acc: number, item: any) => {
+        const price = typeof item.unitPrice === "number" ? item.unitPrice : Math.round((item.price || 0) * 100);
+        return acc + price * item.quantity;
+      },
       0
     );
     const shippingCost = subtotal >= 4900 ? 0 : shipping.cost;
@@ -91,9 +97,10 @@ serve(async (req) => {
       body: JSON.stringify({
         amount: { currency: "EUR", value: totalEuros },
         description: `CannaZen — Commande ${orderNumber}`,
-        redirectUrl: `${SITE_URL}/commande/confirmation?orderId=${order.id}`,
+        redirectUrl: `${SITE_URL}/checkout/confirmation/${order.id}`,
         webhookUrl: `${SUPABASE_URL}/functions/v1/mollie-webhook`,
         metadata: { orderId: order.id, userEmail },
+        ...(validatedMethod ? { method: validatedMethod } : {}),
         billingAddress: {
           streetAndNumber: shipping.address,
           postalCode: shipping.postalCode,

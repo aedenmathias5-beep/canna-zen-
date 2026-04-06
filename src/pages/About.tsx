@@ -10,17 +10,17 @@ export default function About() {
         <meta property="og:title" content="À propos — CannaZen" />
         <meta property="og:image" content="/logo-cannazen.png" />
       </Helmet>
-      <h1 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl font-semibold text-[#2c2520] italic">
+      <h1 className="font-['Cormorant_Garamond'] text-3xl sm:text-4xl font-semibold text-[var(--text-primary)] italic">
         À propos de CannaZen
       </h1>
-      <p className="text-[#7a7267] text-base mb-12 font-light">Notre vision, nos valeurs, notre engagement.</p>
+      <p className="text-[var(--text-secondary)] text-base mb-12 font-light">Notre vision, nos valeurs, notre engagement.</p>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-[#2c2520] italic mb-4">Notre Vision</h2>
-        <p className="text-[#7a7267] leading-relaxed mb-4 font-light">
+        <h2 className="text-2xl font-semibold text-[var(--text-primary)] italic mb-4">Notre Vision</h2>
+        <p className="text-[var(--text-secondary)] leading-relaxed mb-4 font-light">
           CannaZen est née d'une conviction simple : le cannabis légal mérite une approche premium, transparente et respectueuse. Nous sélectionnons les meilleurs produits CBD, D10 et OH+ pour vous offrir une expérience unique.
         </p>
-        <p className="text-[#7a7267] leading-relaxed font-light">
+        <p className="text-[var(--text-secondary)] leading-relaxed font-light">
           Basés à Strasbourg, nous travaillons directement avec les meilleurs producteurs et fournisseurs pour garantir la qualité de chaque produit. Notre engagement : zéro compromis sur la qualité, des prix justes et un service irréprochable.
         </p>
       </section>
@@ -32,30 +32,30 @@ export default function About() {
           { icon: Award, title: "Expertise", desc: "Notre équipe de passionnés vous conseille et vous guide vers les produits adaptés à vos besoins." },
           { icon: Truck, title: "Livraison Rapide", desc: "Expédition Colissimo sous 24h. Livraison gratuite dès 49€ d'achat. Emballage discret." },
         ].map((item, i) => (
-          <div key={i} className="bg-white/80 border border-[#e8efe4]/50 rounded-2xl p-6 shadow-sm">
-            <div className="w-10 h-10 rounded-full bg-[#e8efe4]/50 flex items-center justify-center mb-3">
-              <item.icon size={20} className="text-[#6b8f5e]" />
+          <div key={i} className="bg-white/80 border border-[var(--border-color)]/50 rounded-2xl p-6 shadow-sm">
+            <div className="w-10 h-10 rounded-full bg-[var(--border-color)]/50 flex items-center justify-center mb-3">
+              <item.icon size={20} className="text-teal-500" />
             </div>
-            <h3 className="font-semibold text-[#2c2520] mb-2">{item.title}</h3>
-            <p className="text-sm text-[#7a7267] font-light leading-relaxed">{item.desc}</p>
+            <h3 className="font-semibold text-[var(--text-primary)] mb-2">{item.title}</h3>
+            <p className="text-sm text-[var(--text-secondary)] font-light leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
 
       <section className="bg-[#f5ecd7]/30 border border-[#c4a35a]/15 rounded-2xl p-8 shadow-sm mb-12">
-        <h2 className="font-['Cormorant_Garamond'] text-2xl font-semibold text-[#2c2520] italic mb-4">Le Sommelier CannaZen</h2>
-        <p className="text-[#7a7267] leading-relaxed font-light mb-4">
+        <h2 className="font-['Cormorant_Garamond'] text-2xl font-semibold text-[var(--text-primary)] italic mb-4">Le Sommelier CannaZen</h2>
+        <p className="text-[var(--text-secondary)] leading-relaxed font-light mb-4">
           Notre outil exclusif, le Smokellier, est votre conseiller personnel. Basé sur notre expertise, il vous guide vers les produits les plus adaptés à vos envies : détente, énergie, créativité ou sommeil.
         </p>
         <p className="text-sm text-[#c4a35a] font-medium italic">Disponible en bas à droite de chaque page — essayez-le !</p>
       </section>
 
-      <section className="bg-white/80 border border-[#e8efe4]/50 rounded-2xl p-8 shadow-sm">
-        <h2 className="font-['Cormorant_Garamond'] text-xl font-semibold text-[#2c2520] italic mb-4">Contact</h2>
-        <div className="text-sm text-[#7a7267] space-y-1 font-light">
+      <section className="bg-white/80 border border-[var(--border-color)]/50 rounded-2xl p-8 shadow-sm">
+        <h2 className="font-['Cormorant_Garamond'] text-xl font-semibold text-[var(--text-primary)] italic mb-4">Contact</h2>
+        <div className="text-sm text-[var(--text-secondary)] space-y-1 font-light">
           <p>CannaZen — Benkiran Hatim</p>
           <p>11 rue de Tourraine, 67100 Strasbourg</p>
-          <p>Email : <a href="mailto:contact@cannazen.space" className="text-[#6b8f5e] hover:underline">contact@cannazen.space</a></p>
+          <p>Email : <a href="mailto:contact@cannazen.space" className="text-teal-500 hover:underline">contact@cannazen.space</a></p>
         </div>
       </section>
     </div>

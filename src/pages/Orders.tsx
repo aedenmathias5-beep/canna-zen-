@@ -28,14 +28,16 @@ interface Order {
 const getStatusBadge = (status: string) => {
   const statuses: Record<string, { label: string; bg: string; text: string }> = {
     pending: { label: 'En attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
-    confirmed: { label: 'Confirmée', bg: 'bg-[#e8efe4]/60', text: 'text-[#6b8f5e]' },
-    paid: { label: 'Payée', bg: 'bg-[#e8efe4]/60', text: 'text-[#6b8f5e]' },
+    confirmed: { label: 'Confirmée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
+    paid: { label: 'Payée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
+    test_paid: { label: 'Payée (test)', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
+    awaiting_crypto: { label: 'Crypto en attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
     processing: { label: 'En préparation', bg: 'bg-blue-50', text: 'text-blue-600' },
     shipped: { label: 'Expédiée', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
-    delivered: { label: 'Livrée', bg: 'bg-[#e8efe4]/80', text: 'text-[#4a6741]' },
+    delivered: { label: 'Livrée', bg: 'bg-[var(--border-color)]/80', text: 'text-[#4a6741]' },
     cancelled: { label: 'Annulée', bg: 'bg-red-50', text: 'text-red-500' },
     awaiting_transfer: { label: 'Virement en attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
-    test_mode: { label: 'Confirmée', bg: 'bg-[#e8efe4]/60', text: 'text-[#6b8f5e]' },
+    test_mode: { label: 'Confirmée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
   };
   return statuses[status] || statuses.pending;
 };
@@ -62,6 +64,7 @@ function OrderTimeline({ status }: { status: string }) {
     confirmed: 0,
     paid: 0,
     test_mode: 0,
+    test_paid: 0,
     processing: 1,
     shipped: 2,
     delivered: 3,
@@ -69,8 +72,8 @@ function OrderTimeline({ status }: { status: string }) {
   const currentIndex = statusMap[status] ?? -1;
 
   return (
-    <div className="mt-4 pt-4 border-t border-[#e8efe4]/40">
-      <p className="text-[10px] font-medium text-[#7a7267]/60 uppercase tracking-wider mb-3">
+    <div className="mt-4 pt-4 border-t border-[var(--border-color)]/40">
+      <p className="text-[10px] font-medium text-[var(--text-secondary)]/60 uppercase tracking-wider mb-3">
         Suivi de commande
       </p>
       <div className="space-y-2.5">
@@ -81,20 +84,20 @@ function OrderTimeline({ status }: { status: string }) {
             <div key={step.key} className="flex items-center gap-3">
               <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shrink-0 border ${
                 isDone
-                  ? 'bg-[#e8efe4]/60 border-[#6b8f5e]/30 text-[#6b8f5e]'
-                  : 'bg-[#f7f3ec] border-[#e8efe4]/40 text-[#7a7267]/40'
+                  ? 'bg-[var(--border-color)]/60 border-[#6b8f5e]/30 text-teal-500'
+                  : 'bg-[var(--bg-surface)] border-[var(--border-color)]/40 text-[var(--text-secondary)]/40'
               }`}>
                 {isDone ? '✓' : (i + 1)}
               </div>
               <div className="flex-1">
                 <p className={`text-sm ${
-                  isCurrent ? 'font-medium text-[#2c2520]' :
-                  isDone ? 'text-[#7a7267]' : 'text-[#7a7267]/40 font-light'
+                  isCurrent ? 'font-medium text-[var(--text-primary)]' :
+                  isDone ? 'text-[var(--text-secondary)]' : 'text-[var(--text-secondary)]/40 font-light'
                 }`}>
                   {step.label}
                 </p>
                 {isCurrent && (
-                  <p className="text-xs text-[#6b8f5e] mt-0.5 font-light">Statut actuel</p>
+                  <p className="text-xs text-teal-500 mt-0.5 font-light">Statut actuel</p>
                 )}
               </div>
             </div>
@@ -186,52 +189,52 @@ function OrdersContent() {
 
       <Breadcrumbs items={[{ label: 'Mon compte', to: '/compte' }, { label: 'Commandes' }]} />
 
-      <h1 className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#2c2520] italic mb-8">Mes commandes</h1>
+      <h1 className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[var(--text-primary)] italic mb-8">Mes commandes</h1>
 
       {loading ? (
         <div className="text-center py-20">
           <div className="w-8 h-8 border-2 border-[#6b8f5e] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-[#7a7267] font-light">Chargement...</p>
+          <p className="text-[var(--text-secondary)] font-light">Chargement...</p>
         </div>
       ) : orders.length === 0 ? (
         <div className="text-center py-20">
-          <Package size={48} className="text-[#e8efe4] mx-auto mb-4" />
-          <p className="text-[#7a7267] mb-4 font-light">Aucune commande pour le moment</p>
-          <Link to="/boutique" className="text-[#6b8f5e] hover:text-[#4a6741] font-medium">Voir la boutique</Link>
+          <Package size={48} className="text-[var(--border-color)] mx-auto mb-4" />
+          <p className="text-[var(--text-secondary)] mb-4 font-light">Aucune commande pour le moment</p>
+          <Link to="/boutique" className="text-teal-500 hover:text-[#4a6741] font-medium">Voir la boutique</Link>
         </div>
       ) : (
         <div className="space-y-4">
           {orders.map((order) => {
             const isExpanded = expandedOrder === order.id;
             return (
-              <div key={order.id} className="bg-white/80 border border-[#e8efe4]/50 rounded-xl shadow-sm overflow-hidden">
+              <div key={order.id} className="bg-white/80 border border-[var(--border-color)]/50 rounded-xl shadow-sm overflow-hidden">
                 <button
                   onClick={() => setExpandedOrder(isExpanded ? null : order.id)}
                   className="w-full p-4 text-left"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-semibold text-[#2c2520]">{order.id}</span>
+                    <span className="font-semibold text-[var(--text-primary)]">{order.id}</span>
                     <div className="flex items-center gap-2">
                       <StatusBadge status={order.status} />
-                      {isExpanded ? <ChevronUp size={16} className="text-[#7a7267]" /> : <ChevronDown size={16} className="text-[#7a7267]" />}
+                      {isExpanded ? <ChevronUp size={16} className="text-[var(--text-secondary)]" /> : <ChevronDown size={16} className="text-[var(--text-secondary)]" />}
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-sm text-[#7a7267] font-light">
+                    <p className="text-sm text-[var(--text-secondary)] font-light">
                       {new Date(order.date).toLocaleDateString('fr-FR', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
                       })}
                     </p>
-                    <p className="text-sm font-semibold text-[#2c2520]">{order.total.toFixed(2)}€</p>
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">{order.total.toFixed(2)}€</p>
                   </div>
                 </button>
 
                 {isExpanded && (
-                  <div className="border-t border-[#e8efe4]/40 px-4 pb-4">
+                  <div className="border-t border-[var(--border-color)]/40 px-4 pb-4">
                     {order.shipping_method && (
-                      <p className="text-xs text-[#7a7267] font-light mt-3 mb-2">
+                      <p className="text-xs text-[var(--text-secondary)] font-light mt-3 mb-2">
                         Livraison : {shippingLabel(order.shipping_method)}
                       </p>
                     )}
@@ -240,21 +243,21 @@ function OrdersContent() {
                         {order.items.map((item, idx) => (
                           <div key={idx} className="flex items-center gap-3">
                             {item.image && (
-                              <div className="w-10 h-10 rounded-lg bg-[#e8efe4]/20 border border-[#e8efe4]/40 overflow-hidden shrink-0">
+                              <div className="w-10 h-10 rounded-lg bg-[var(--border-color)]/20 border border-[var(--border-color)]/40 overflow-hidden shrink-0">
                                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                               </div>
                             )}
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm text-[#2c2520] truncate">{item.name}</p>
-                              {item.label && <p className="text-xs text-[#7a7267]/60 font-light">{item.label}</p>}
+                              <p className="text-sm text-[var(--text-primary)] truncate">{item.name}</p>
+                              {item.label && <p className="text-xs text-[var(--text-secondary)]/60 font-light">{item.label}</p>}
                             </div>
-                            <p className="text-xs text-[#7a7267] font-light">x{item.quantity}</p>
-                            <p className="text-sm font-medium text-[#2c2520]">{(item.price * item.quantity).toFixed(2)}€</p>
+                            <p className="text-xs text-[var(--text-secondary)] font-light">x{item.quantity}</p>
+                            <p className="text-sm font-medium text-[var(--text-primary)]">{(item.price * item.quantity).toFixed(2)}€</p>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <p className="text-xs text-[#7a7267]/60 font-light mt-3">Détails non disponibles</p>
+                      <p className="text-xs text-[var(--text-secondary)]/60 font-light mt-3">Détails non disponibles</p>
                     )}
 
                     <OrderTimeline status={order.status} />

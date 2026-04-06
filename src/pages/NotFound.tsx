@@ -9,22 +9,22 @@ export default function NotFound() {
         <title>Page introuvable — CannaZen</title>
       </Helmet>
       <div className="text-7xl mb-6">🌿</div>
-      <h1 className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#2c2520] italic mb-3">
+      <h1 className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[var(--text-primary)] italic mb-3">
         Page introuvable
       </h1>
-      <p className="text-[#7a7267] mb-8 font-light leading-relaxed">
+      <p className="text-[var(--text-secondary)] mb-8 font-light leading-relaxed">
         Cette page n'existe pas ou a été déplacée. Pas d'inquiétude, notre jardin vous attend.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Link
           to="/"
-          className="inline-flex items-center justify-center gap-2 bg-[#6b8f5e] hover:bg-[#4a6741] text-white px-6 py-3 rounded-xl font-semibold transition-colors shadow-md shadow-[#6b8f5e]/20"
+          className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold transition-colors shadow-md shadow-teal-500/20"
         >
           <ArrowLeft size={16} /> Retour à l'accueil
         </Link>
         <Link
           to="/boutique"
-          className="inline-flex items-center justify-center gap-2 bg-white border border-[#e8efe4]/50 text-[#2c2520] px-6 py-3 rounded-xl font-semibold hover:border-[#6b8f5e]/30 transition-colors"
+          className="inline-flex items-center justify-center gap-2 bg-[var(--bg-surface)] border border-[var(--border-color)]/50 text-[var(--text-primary)] px-6 py-3 rounded-xl font-semibold hover:border-[#6b8f5e]/30 transition-colors"
         >
           Voir la boutique
         </Link>

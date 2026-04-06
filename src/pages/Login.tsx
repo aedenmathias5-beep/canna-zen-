@@ -35,7 +35,7 @@ export default function Login() {
 
       <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
         <div className="text-center">
-          <p className="text-[#7a7267] font-light">Chargement...</p>
+          <p className="text-[var(--text-secondary)] font-light">Chargement...</p>
         </div>
       </div>
 

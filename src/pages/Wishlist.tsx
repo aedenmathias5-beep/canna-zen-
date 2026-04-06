@@ -41,20 +41,20 @@ function WishlistContent() {
 
       <Breadcrumbs items={[{ label: 'Favoris' }]} />
 
-      <h1 className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#2c2520] italic mb-8">
+      <h1 className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[var(--text-primary)] italic mb-8">
         Mes Favoris
       </h1>
 
       {wishlistProducts.length === 0 ? (
         <div className="text-center py-16">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#e8efe4]/30">
-            <Heart className="h-10 w-10 text-[#6b8f5e]/40" />
+          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--border-color)]/30">
+            <Heart className="h-10 w-10 text-teal-500/40" />
           </div>
-          <h2 className="text-lg font-medium text-[#2c2520] mb-2">Votre liste de favoris est vide</h2>
-          <p className="text-sm text-[#7a7267] font-light mb-6">Ajoutez des produits à vos favoris pour les retrouver facilement</p>
+          <h2 className="text-lg font-medium text-[var(--text-primary)] mb-2">Votre liste de favoris est vide</h2>
+          <p className="text-sm text-[var(--text-secondary)] font-light mb-6">Ajoutez des produits à vos favoris pour les retrouver facilement</p>
           <Link
             to="/boutique"
-            className="inline-flex items-center gap-2 bg-[#6b8f5e] hover:bg-[#4a6741] text-white px-6 py-3 rounded-xl font-medium transition-colors shadow-md shadow-[#6b8f5e]/20"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white px-6 py-3 rounded-xl font-medium transition-colors shadow-md shadow-teal-500/20"
           >
             Découvrir nos produits
           </Link>
@@ -62,30 +62,30 @@ function WishlistContent() {
       ) : (
         <div className="grid gap-4">
           {wishlistProducts.map((product) => (
-            <div key={product.id} className="flex items-center gap-4 bg-white/80 border border-[#e8efe4]/50 rounded-xl p-4 shadow-sm">
+            <div key={product.id} className="flex items-center gap-4 bg-white/80 border border-[var(--border-color)]/50 rounded-xl p-4 shadow-sm">
               <Link to={`/boutique/${product.slug}`} className="shrink-0">
                 <img src={product.image} alt={product.name} className="w-20 h-20 object-cover rounded-lg" />
               </Link>
 
               <div className="flex-1 min-w-0">
                 <Link to={`/boutique/${product.slug}`} className="block">
-                  <h3 className="font-medium text-[#2c2520] truncate hover:text-[#6b8f5e] transition-colors">{product.name}</h3>
+                  <h3 className="font-medium text-[var(--text-primary)] truncate hover:text-teal-500 transition-colors">{product.name}</h3>
                 </Link>
-                <p className="text-sm text-[#7a7267] font-light mt-0.5">{product.category}</p>
-                <p className="text-[#6b8f5e] font-semibold mt-1">{product.prices[0].amount.toFixed(2)} €</p>
+                <p className="text-sm text-[var(--text-secondary)] font-light mt-0.5">{product.category}</p>
+                <p className="text-teal-500 font-semibold mt-1">{product.prices[0].amount.toFixed(2)} €</p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => handleAddToCart(product)}
-                  className="flex items-center gap-1.5 bg-[#6b8f5e] hover:bg-[#4a6741] text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="flex items-center gap-1.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 >
                   <ShoppingCart className="h-4 w-4" />
                   <span className="hidden sm:inline">Ajouter</span>
                 </button>
                 <button
                   onClick={() => handleRemove(product.id)}
-                  className="p-2 text-[#7a7267] hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
+                  className="p-2 text-[var(--text-secondary)] hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
                   aria-label="Retirer des favoris"
                 >
                   <Trash2 className="h-4 w-4" />

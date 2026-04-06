@@ -1,7 +1,3 @@
-// Smart payment service:
-// 1. Tries Supabase Edge Function (server-side Mollie) if deployed
-// 2. Falls back to direct order creation (test mode) if not
-
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -21,7 +17,8 @@ export const createPayment = async (
     servicePointName?: string;
   },
   userEmail: string,
-  userId?: string
+  userId?: string,
+  paymentMethod?: string
 ): Promise<{
   success: boolean;
   testMode?: boolean;
@@ -42,10 +39,9 @@ export const createPayment = async (
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({ items, shipping, userEmail, userId }),
+      body: JSON.stringify({ items, shipping, userEmail, userId, paymentMethod }),
     });
 
-    // Edge Function not deployed or errored → fallback to direct mode
     if (!res.ok) {
       const text = await res.text().catch(() => '');
       console.warn('[Payment] Edge Function unavailable, using direct mode.', res.status, text);
@@ -54,13 +50,11 @@ export const createPayment = async (
 
     return await res.json();
   } catch (err) {
-    // Network error (Edge Function not deployed) → fallback
     console.warn('[Payment] Edge Function unreachable, using direct mode.', err);
     return { success: false, testMode: true, error: 'DIRECT_MODE' };
   }
 };
 
-// Search Mondial Relay service points via Sendcloud Edge Function
 export const searchServicePoints = async (
   postalCode: string,
   country = 'FR',

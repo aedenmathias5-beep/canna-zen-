@@ -18,7 +18,7 @@ const providerConfig = {
         <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
       </svg>
     ),
-    className: 'bg-white text-[#2c2520] hover:bg-[#f7f3ec] border border-[#e8efe4]/60',
+    className: 'bg-white text-[var(--text-primary)] hover:bg-[var(--bg-surface)] border border-[var(--border-color)]/60',
   },
 };
 
@@ -32,7 +32,7 @@ export default function SocialButton({ provider, onClick, loading, label }: Soci
       disabled={loading}
       className={`flex w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all shadow-sm disabled:cursor-not-allowed disabled:opacity-50 ${config.className}`}
     >
-      {loading ? <Loader2 className="h-5 w-5 animate-spin text-[#6b8f5e]" /> : config.icon}
+      {loading ? <Loader2 className="h-5 w-5 animate-spin text-teal-500" /> : config.icon}
       <span>{label || config.label}</span>
     </button>
   );

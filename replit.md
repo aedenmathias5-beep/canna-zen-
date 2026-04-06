@@ -1,7 +1,7 @@
 # CannaZen — CBD Premium
 
 ## Overview
-CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + Tailwind CSS v4. Warm botanical theme matching original design from git commit 6d000f1. Uses sage green (#6b8f5e) as primary button color, moss green (#3d5a3a) for banner/footer, cream (#f7f3ec) background, Cormorant Garamond display font + Inter body font. Internal product catalog (28 products), Supabase auth with PostgreSQL profiles, cart with localStorage persistence, Smokellier keyword chatbot, and sandbox checkout.
+CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + Tailwind CSS v4. Modern artistic design with vivid teal/emerald/cyan color palette, light/dark theme toggle, aurora gradient backgrounds, glassmorphism cards, and smooth animations. Cormorant Garamond display font + Inter body font. Internal product catalog (28 products), Supabase auth with PostgreSQL profiles, cart with localStorage persistence, Smokellier keyword chatbot, and sandbox checkout.
 
 ## Architecture
 - **Dev Server**: Vite on port 5000 (host 0.0.0.0, allowedHosts: true)
@@ -18,21 +18,25 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **Accessibility**: aria-labels on all icon-only buttons, focus-visible outlines, proper alt text
 - **SEO files**: public/robots.txt, public/sitemap.xml
 
-## Design System (EXACT original from git 6d000f1)
-- Background: #f7f3ec (cream)
-- Cards: white/80 with backdrop-blur, border-[#e8efe4]/50
-- Primary sage: #6b8f5e (buttons, accents, links)
-- Sage dark: #4a6741 (hover states)
-- Sage light: #e8efe4 (light backgrounds)
-- Moss: #3d5a3a (promo banner, footer, age gate backdrop)
-- Warm gray: #7a7267 (secondary text)
-- Earth: #8b7355
-- Gold: #c4a35a (Smokellier accents)
-- Gold light: #f5ecd7
-- Foreground: #2c2520 (primary text)
-- Display font: Cormorant Garamond (italic, semibold, serif)
-- Body font: Inter (400, 500, 600, 700)
-- Logo: Inline SVG component (src/components/ui/Logo.tsx) + PNG logo at public/logo-cannazen.png (golden leaf, used on Home hero)
+## Design System (Vivid Blue-Green Theme with Light/Dark Toggle)
+- **Theme**: CSS custom properties in :root (light) and .dark (dark), toggled via ThemeContext
+- **ThemeContext**: src/lib/ThemeContext.tsx — persists to localStorage('cannazen-theme'), toggles .dark class on html
+- **ThemeToggle**: src/components/ui/ThemeToggle.tsx — Moon/Sun icon button in Header top-left
+- **Light mode bg**: Gradient #eef7f3 → #f0f4f1 → #edf5fa (subtle green-blue gradient, fixed)
+- **Dark mode bg**: Gradient #0a1a15 → #0a0f0d → #0a1520
+- **Accent colors**: Teal #0d9488 (--accent-1), Emerald #10b981 (--accent-2), Cyan #06b6d4 (--accent-3)
+- **CSS Variables**: --bg-main, --bg-card, --bg-header, --bg-surface, --text-primary, --text-secondary, --text-muted, --border-color, --border-light, --glass-bg, --glass-border, --shadow-color
+- **Cards**: glass-card class (var(--bg-card) + backdrop-blur + var(--border-color))
+- **Buttons**: btn-vivid (teal-to-emerald gradient), btn-magnetic (hover lift+glow)
+- **Gradients**: text-gradient-vivid (teal→emerald→cyan), text-gradient-sage, text-gradient-blue
+- **Effects**: aurora-bg-light, floating orbs (orb-1/2/3), neon-glow, animate-shimmer, animate-float, stagger-child
+- **Header banner**: Gradient from-teal-500 via-emerald-500 to-cyan-500 (white text)
+- **Footer**: Dark gradient (teal/emerald deep), teal-400 accents
+- **Gold**: #c4a35a (Smokellier accents, unchanged)
+- **Display font**: Cormorant Garamond (italic, semibold, serif)
+- **Body font**: Inter (400, 500, 600, 700)
+- **Logo**: Inline SVG component (src/components/ui/Logo.tsx) + PNG logo at public/logo-cannazen.png
+- **Logo variant**: Uses theme === 'dark' ? 'light' : 'dark' in Header
 
 ## Key Files
 - **src/lib/supabase.ts**: Supabase client SDK init (graceful: works without config)
@@ -76,7 +80,19 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **AgeGate**: "Bienvenue au jardin" + "l'univers de Mary Jane" text, 18+ verification, localStorage (cannazen-age-verified)
 - **CartDrawer**: Slide-in from right, quantity controls, free shipping threshold with conditional messaging
 - **ChatWidget (Smokellier)**: "Le Smokellier" header, sage green (#6b8f5e) theme, keyword responses, product suggestions
-- **ProductCard**: Image (lazy-loaded, 300x300), badge, Cormorant Garamond name, rating stars, price
+- **ProductCard**: Image (lazy-loaded, 300x300), badge, Cormorant Garamond name, rating stars, price, hover lift effect with "Voir le produit" overlay
+- **AnimatedSection** (src/components/ui/AnimatedSection.tsx): Scroll-reveal wrapper using IntersectionObserver (fade-up, fade-left, fade-right, scale-in, fade-in)
+
+## Animation System
+- **useInView hook** (src/hooks/useInView.ts): IntersectionObserver-based visibility detection
+- **AnimatedSection**: Reusable scroll-reveal component with configurable animation and delay
+- **CSS animations** (index.css): shimmer, float, pulse-glow, count-pop, slide-down, leaf-fall, gradient-shift
+- **CSS utility classes**: card-hover-lift, img-zoom, btn-magnetic, text-gradient-sage, border-glow, stagger-child (cascading delays)
+- **Header**: Shrinks on scroll, cart badge bounce on add, nav link underline animation, search slide-down
+- **Home**: Staged hero entrance, floating leaf particles, scroll indicator, animated gradient background
+- **ProductDetail**: Image fade-in on load, intensity bar animation, "Ajouté !" button feedback
+- **CartDrawer**: Smooth backdrop transition, staggered item entrance, gradient shipping bar
+- **prefers-reduced-motion**: All animations disabled for accessibility
 
 ## Product Categories (28 total)
 - Gummies D9 (Cookies®): 2 products
@@ -108,7 +124,13 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 
 ## Checkout
 - Shipping: Colissimo (4.90€, free >49€), Chronopost Express (9.90€), Point Relais (3.90€, free >39€)
-- Payment: Card (PayGreen/OVRI sandbox), Virement (IBAN LU61 6060 0020 0000 5401), Klarna 3x (coming soon)
+- Payment methods:
+  - Carte bancaire (Visa/MC/CB via Mollie — redirects to hosted checkout)
+  - Apple Pay (via Mollie — redirects to hosted checkout)
+  - Cryptomonnaie (BTC/ETH/USDT — manual payment, order pending until confirmed)
+  - Virement bancaire (IBAN LU61 6060 0020 0000 5401 — order pending until confirmed)
+- Card/Apple Pay: server-side via Supabase Edge Function → Mollie API (never creates "paid" order without real payment)
+- Crypto/Transfer: client-side order creation with pending status
 - Sandbox mode with yellow MODE TEST banner
 
 ## Legal Info
@@ -116,5 +138,14 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - 11 rue de Tourraine, 67100 Strasbourg
 - contact@cannazen.space
 
-## Build
-- `npx vite build` — Zero TypeScript errors, zero build errors
+## Deployment
+- **Platform**: Vercel (SPA mode, framework: vite)
+- **Config**: vercel.json with explicit buildCommand, outputDirectory, framework, and SPA rewrite
+- **Build**: `vite build` (no tsc — Vite handles TS transpilation via esbuild; typecheck via `npm run typecheck`)
+- **Vercel URL**: https://canna-zen-eta.vercel.app
+- **Domain**: https://cannazen.fun
+- **Env vars**: .env.production in repo (public keys only: Supabase URL, anon key, Mollie test key, site URL)
+- **Node**: requires >=20 (set in engines field)
+- **Error handling**: ErrorBoundary wraps entire app — never shows blank page on crash
+- **Google OAuth redirect**: uses getRedirectUrl() (dynamic from VITE_SITE_URL), must be allowed in Supabase dashboard
+- **Mollie redirect**: returns to /checkout/confirmation/:id (matches frontend route)

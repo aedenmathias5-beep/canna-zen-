@@ -28,13 +28,13 @@ export default function UserMenu() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 p-1.5 text-[#7a7267] hover:text-[#2c2520] transition-colors"
+        className="flex items-center gap-1.5 p-1.5 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
         aria-label="Menu utilisateur"
       >
         {profile?.photoURL ? (
-          <img src={profile.photoURL} alt="" className="h-7 w-7 rounded-full border border-[#e8efe4]" />
+          <img src={profile.photoURL} alt="" className="h-7 w-7 rounded-full border border-[var(--border-color)]" />
         ) : (
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e8efe4]/50 text-[#6b8f5e]">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--border-color)]/50 text-teal-500">
             <User className="h-4 w-4" />
           </div>
         )}
@@ -42,12 +42,12 @@ export default function UserMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-[#e8efe4]/50 bg-white shadow-xl shadow-[#6b8f5e]/10">
-          <div className="border-b border-[#e8efe4]/50 px-4 py-3">
-            <p className="text-sm font-medium text-[#2c2520]">{profile?.displayName || 'Utilisateur'}</p>
-            <p className="text-xs text-[#7a7267] font-light">{user?.email}</p>
+        <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-[var(--border-color)]/50 bg-white shadow-xl shadow-teal-500/10">
+          <div className="border-b border-[var(--border-color)]/50 px-4 py-3">
+            <p className="text-sm font-medium text-[var(--text-primary)]">{profile?.displayName || 'Utilisateur'}</p>
+            <p className="text-xs text-[var(--text-secondary)] font-light">{user?.email}</p>
             {(profile?.stats?.loyaltyPoints ?? 0) > 0 && (
-              <p className="mt-1 text-xs text-[#6b8f5e] font-medium">{profile?.stats.loyaltyPoints} points fidélité</p>
+              <p className="mt-1 text-xs text-teal-500 font-medium">{profile?.stats.loyaltyPoints} points fidélité</p>
             )}
           </div>
 
@@ -57,7 +57,7 @@ export default function UserMenu() {
                 key={item.href}
                 to={item.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#7a7267] transition-colors hover:bg-[#f7f3ec] hover:text-[#2c2520]"
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)]"
               >
                 <item.icon className="h-4 w-4" />
                 {item.label}
@@ -65,7 +65,7 @@ export default function UserMenu() {
             ))}
           </div>
 
-          <div className="border-t border-[#e8efe4]/50 py-1">
+          <div className="border-t border-[var(--border-color)]/50 py-1">
             <button
               onClick={() => { signOut(); setOpen(false); }}
               className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-500 transition-colors hover:bg-red-50 hover:text-red-600"

@@ -2,29 +2,28 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import ErrorBoundary from './components/ErrorBoundary'
+import { ThemeProvider } from './lib/ThemeContext'
 import App from './App'
 import './index.css'
 
-const root = document.getElementById('root')
-if (root) {
-  ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <HelmetProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </HelmetProvider>
-    </React.StrictMode>,
-  )
-} else {
-  document.body.innerHTML = '<div id="root"></div>'
-  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-      <HelmetProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </HelmetProvider>
-    </React.StrictMode>,
-  )
-}
+const rootEl = document.getElementById('root') ?? (() => {
+  const el = document.createElement('div')
+  el.id = 'root'
+  document.body.appendChild(el)
+  return el
+})()
+
+ReactDOM.createRoot(rootEl).render(
+  <React.StrictMode>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <HelmetProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </HelmetProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  </React.StrictMode>,
+)

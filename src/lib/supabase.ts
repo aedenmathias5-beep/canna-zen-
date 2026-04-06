@@ -8,17 +8,14 @@ const siteUrl = import.meta.env.VITE_SITE_URL || 'https://cannazen.fun'
 
 export const isSupabaseConfigured = true
 
-export const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY,
-  {
-    auth: {
-      flowType: 'implicit',
-      detectSessionInUrl: true,
-      persistSession: true,
-      autoRefreshToken: true,
-    }
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: {
+    flowType: 'implicit',
+    detectSessionInUrl: true,
+    persistSession: true,
+    autoRefreshToken: true,
+    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
   }
-)
+})
 
 export const getRedirectUrl = () => `${siteUrl}/auth/callback`
