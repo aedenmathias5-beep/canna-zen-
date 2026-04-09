@@ -40,7 +40,7 @@ export default function MobileMenu({ open, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0" style={{ background: 'rgba(13,148,136,0.1)', backdropFilter: 'blur(4px)' }} onClick={onClose} />
+      <div className="absolute inset-0" style={{ background: 'rgba(26,47,35,0.15)', backdropFilter: 'blur(6px)' }} onClick={onClose} />
       <div className="fixed inset-y-0 left-0 z-50 w-4/5 max-w-sm p-6 shadow-xl lg:hidden flex flex-col overflow-y-auto" style={{ background: 'var(--bg-surface)', borderRight: '1px solid var(--border-color)' }}>
         <div className="flex items-center justify-between mb-8">
           <Logo variant={theme === 'dark' ? 'light' : 'dark'} />
@@ -56,7 +56,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                   <>
                     <button
                       onClick={() => setExpandedItem(isExpanded ? null : item.label)}
-                      className="w-full flex items-center justify-between text-sm font-medium py-3 px-3 rounded-lg transition-colors hover:bg-teal-500/5"
+                      className="w-full flex items-center justify-between text-sm font-medium py-3 px-3 rounded-lg transition-colors hover:bg-[#c4956a]/5"
                       style={{ color: 'var(--text-secondary)' }}
                     >
                       {item.label}
@@ -69,7 +69,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                             key={child.label}
                             to={child.to}
                             onClick={onClose}
-                            className="block text-sm py-2 px-3 rounded-lg transition-colors hover:bg-teal-500/5 hover:text-teal-600"
+                            className="block text-sm py-2 px-3 rounded-lg transition-colors hover:bg-[#c4956a]/5 hover:text-[#c4956a]"
                             style={{ color: 'var(--text-secondary)' }}
                           >
                             {child.label}
@@ -82,7 +82,7 @@ export default function MobileMenu({ open, onClose }: Props) {
                   <Link
                     to={'to' in item ? item.to! : '/'}
                     onClick={onClose}
-                    className="text-sm font-medium py-3 px-3 rounded-lg transition-colors hover:bg-teal-500/5 hover:text-teal-600"
+                    className="text-sm font-medium py-3 px-3 rounded-lg transition-colors hover:bg-[#c4956a]/5 hover:text-[#c4956a]"
                     style={{ color: 'var(--text-secondary)' }}
                   >
                     {item.label}

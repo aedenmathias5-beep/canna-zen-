@@ -10,8 +10,8 @@ import Breadcrumbs from '../components/ui/Breadcrumbs';
 
 const STATUS_LABELS: Record<string, { label: string; bg: string; text: string }> = {
   pending: { label: 'En attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
-  paid: { label: 'Payée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
-  shipped: { label: 'Expédiée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
+  paid: { label: 'Payée', bg: 'bg-[var(--border-color)]/60', text: 'text-[#c4956a]' },
+  shipped: { label: 'Expédiée', bg: 'bg-[var(--border-color)]/60', text: 'text-[#c4956a]' },
   delivered: { label: 'Livrée', bg: 'bg-[var(--border-color)]/80', text: 'text-[#4a6741]' },
   awaiting_transfer: { label: 'Virement en attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
 };
@@ -78,7 +78,7 @@ function AccountContent() {
           {profile?.photoURL ? (
             <img src={profile.photoURL} alt={`Photo de ${profile.displayName || 'profil'}`} className="w-16 h-16 rounded-full border-2 border-[var(--border-color)]" />
           ) : (
-            <div className="w-16 h-16 rounded-full bg-[var(--border-color)]/50 flex items-center justify-center text-teal-500 text-xl font-semibold">
+            <div className="w-16 h-16 rounded-full bg-[var(--border-color)]/50 flex items-center justify-center text-[#c4956a] text-xl font-semibold">
               {(profile?.displayName || user?.email || '?')[0].toUpperCase()}
             </div>
           )}
@@ -107,7 +107,7 @@ function AccountContent() {
               <p className="text-xs text-[var(--text-secondary)] font-light">Dépensé</p>
             </div>
             <div className="text-center">
-              <p className="text-lg font-semibold text-teal-500 flex items-center justify-center gap-1">
+              <p className="text-lg font-semibold text-[#c4956a] flex items-center justify-center gap-1">
                 <Star className="h-4 w-4" /> {profile.stats.loyaltyPoints}
               </p>
               <p className="text-xs text-[var(--text-secondary)] font-light">Points</p>
@@ -123,7 +123,7 @@ function AccountContent() {
             to={item.to}
             className="flex items-center gap-4 bg-white/80 border border-[var(--border-color)]/50 rounded-xl p-4 hover:border-[#6b8f5e]/30 transition-colors shadow-sm group"
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--border-color)]/30 text-teal-500 group-hover:bg-gradient-to-r from-teal-500 to-emerald-500/10 transition-colors">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--border-color)]/30 text-[#c4956a] group-hover:bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e]/10 transition-colors">
               <item.icon size={20} />
             </div>
             <div>
@@ -138,7 +138,7 @@ function AccountContent() {
         <div className="bg-white/80 border border-[var(--border-color)]/50 rounded-2xl p-6 mb-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-[var(--text-primary)]">Commandes récentes</h3>
-            <Link to="/compte/commandes" className="text-xs text-teal-500 hover:text-[#4a6741] font-medium flex items-center gap-0.5">
+            <Link to="/compte/commandes" className="text-xs text-[#c4956a] hover:text-[#4a6741] font-medium flex items-center gap-0.5">
               Tout voir <ChevronRight size={12} />
             </Link>
           </div>

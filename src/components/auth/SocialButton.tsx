@@ -32,7 +32,7 @@ export default function SocialButton({ provider, onClick, loading, label }: Soci
       disabled={loading}
       className={`flex w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all shadow-sm disabled:cursor-not-allowed disabled:opacity-50 ${config.className}`}
     >
-      {loading ? <Loader2 className="h-5 w-5 animate-spin text-teal-500" /> : config.icon}
+      {loading ? <Loader2 className="h-5 w-5 animate-spin text-[#c4956a]" /> : config.icon}
       <span>{label || config.label}</span>
     </button>
   );

@@ -28,8 +28,8 @@ interface Order {
 const getStatusBadge = (status: string) => {
   const statuses: Record<string, { label: string; bg: string; text: string }> = {
     pending: { label: 'En attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
-    confirmed: { label: 'Confirmée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
-    paid: { label: 'Payée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
+    confirmed: { label: 'Confirmée', bg: 'bg-[var(--border-color)]/60', text: 'text-[#c4956a]' },
+    paid: { label: 'Payée', bg: 'bg-[var(--border-color)]/60', text: 'text-[#c4956a]' },
     test_paid: { label: 'Payée (test)', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
     awaiting_crypto: { label: 'Crypto en attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
     processing: { label: 'En préparation', bg: 'bg-blue-50', text: 'text-blue-600' },
@@ -37,7 +37,7 @@ const getStatusBadge = (status: string) => {
     delivered: { label: 'Livrée', bg: 'bg-[var(--border-color)]/80', text: 'text-[#4a6741]' },
     cancelled: { label: 'Annulée', bg: 'bg-red-50', text: 'text-red-500' },
     awaiting_transfer: { label: 'Virement en attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
-    test_mode: { label: 'Confirmée', bg: 'bg-[var(--border-color)]/60', text: 'text-teal-500' },
+    test_mode: { label: 'Confirmée', bg: 'bg-[var(--border-color)]/60', text: 'text-[#c4956a]' },
   };
   return statuses[status] || statuses.pending;
 };
@@ -84,7 +84,7 @@ function OrderTimeline({ status }: { status: string }) {
             <div key={step.key} className="flex items-center gap-3">
               <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shrink-0 border ${
                 isDone
-                  ? 'bg-[var(--border-color)]/60 border-[#6b8f5e]/30 text-teal-500'
+                  ? 'bg-[var(--border-color)]/60 border-[#6b8f5e]/30 text-[#c4956a]'
                   : 'bg-[var(--bg-surface)] border-[var(--border-color)]/40 text-[var(--text-secondary)]/40'
               }`}>
                 {isDone ? '✓' : (i + 1)}
@@ -97,7 +97,7 @@ function OrderTimeline({ status }: { status: string }) {
                   {step.label}
                 </p>
                 {isCurrent && (
-                  <p className="text-xs text-teal-500 mt-0.5 font-light">Statut actuel</p>
+                  <p className="text-xs text-[#c4956a] mt-0.5 font-light">Statut actuel</p>
                 )}
               </div>
             </div>
@@ -200,7 +200,7 @@ function OrdersContent() {
         <div className="text-center py-20">
           <Package size={48} className="text-[var(--border-color)] mx-auto mb-4" />
           <p className="text-[var(--text-secondary)] mb-4 font-light">Aucune commande pour le moment</p>
-          <Link to="/boutique" className="text-teal-500 hover:text-[#4a6741] font-medium">Voir la boutique</Link>
+          <Link to="/boutique" className="text-[#c4956a] hover:text-[#4a6741] font-medium">Voir la boutique</Link>
         </div>
       ) : (
         <div className="space-y-4">

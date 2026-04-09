@@ -101,24 +101,25 @@ export default function ChatWidget() {
       <button
         onClick={() => setOpen(!open)}
         aria-label={open ? "Fermer le Smokellier" : "Ouvrir le Smokellier"}
-        className="fixed bottom-6 right-6 z-[60] w-14 h-14 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-500/30 hover:from-teal-600 hover:to-emerald-600 hover:scale-105 transition-all flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-[60] w-14 h-14 rounded-full text-white shadow-lg hover:scale-105 transition-all flex items-center justify-center"
+        style={{ background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)', boxShadow: '0 8px 32px rgba(26,47,35,0.25)' }}
       >
         {open ? <X size={24} /> : <MessageCircle size={24} />}
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-[60] w-[380px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-[var(--bg-surface)] border border-[var(--border-color)]/50 rounded-2xl shadow-2xl shadow-teal-500/10 flex flex-col overflow-hidden">
-          <div className="px-5 py-3 bg-gradient-to-r from-teal-500 to-emerald-500 text-white flex items-center justify-between">
+        <div className="fixed bottom-24 right-6 z-[60] w-[380px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-8rem)] bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl shadow-2xl flex flex-col overflow-hidden premium-shadow">
+          <div className="px-5 py-3 text-white flex items-center justify-between" style={{ background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)' }}>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
                 <span className="text-sm">🌿</span>
               </div>
               <div>
                 <h3 className="font-semibold text-sm">Le Smokellier</h3>
-                <span className="text-[10px] text-white/70 font-medium">En ligne</span>
+                <span className="text-[10px] text-white/50 font-medium">En ligne</span>
               </div>
             </div>
-            <button onClick={() => setOpen(false)} aria-label="Fermer le chat" className="text-white/70 hover:text-white">
+            <button onClick={() => setOpen(false)} aria-label="Fermer le chat" className="text-white/50 hover:text-white transition-colors">
               <X size={18} />
             </button>
           </div>
@@ -129,9 +130,9 @@ export default function ChatWidget() {
                 <div className={`max-w-[85%] ${msg.sender === 'user' ? 'ml-auto' : ''}`}>
                   <div className={`rounded-2xl px-4 py-2.5 text-sm whitespace-pre-line ${
                     msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white'
-                      : 'bg-white text-[var(--text-primary)] border border-[var(--border-color)]/50'
-                  }`}>
+                      ? 'text-white'
+                      : 'text-[var(--text-primary)] border border-[var(--border-color)]'
+                  }`} style={msg.sender === 'user' ? { background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)' } : { background: 'var(--bg-card)' }}>
                     {msg.text}
                   </div>
                 </div>
@@ -142,14 +143,14 @@ export default function ChatWidget() {
                         key={p.id}
                         to={`/boutique/${p.slug}`}
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-color)]/50 rounded-xl p-2.5 hover:border-[#6b8f5e]/30 transition-all"
+                        className="flex items-center gap-3 bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-xl p-2.5 hover:border-[#c4956a]/30 transition-all"
                       >
-                        <div className="w-10 h-10 rounded-lg bg-[var(--border-color)]/30 flex items-center justify-center overflow-hidden">
+                        <div className="w-10 h-10 rounded-lg bg-[var(--border-color)] flex items-center justify-center overflow-hidden">
                           <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-medium text-[var(--text-primary)] truncate">{p.name}</p>
-                          <p className="text-xs text-teal-500 font-medium">
+                          <p className="text-xs text-[#c4956a] font-medium">
                             {p.prices.length > 1 ? `Dès ${Math.min(...p.prices.map(pr => pr.amount)).toFixed(2)}€` : `${p.prices[0].amount.toFixed(2)}€`}
                           </p>
                         </div>
@@ -168,7 +169,7 @@ export default function ChatWidget() {
                 <button
                   key={s.label}
                   onClick={() => sendMessage(s.query)}
-                  className="text-xs bg-[var(--bg-surface)] border border-[var(--border-color)]/60 rounded-full px-3 py-1.5 text-[var(--text-secondary)] hover:border-[#6b8f5e]/30 hover:text-[var(--text-primary)] transition-all"
+                  className="text-xs bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-full px-3 py-1.5 text-[var(--text-secondary)] hover:border-[#c4956a]/30 hover:text-[#c4956a] transition-all"
                 >
                   {s.label}
                 </button>
@@ -176,15 +177,15 @@ export default function ChatWidget() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="p-3 border-t border-[var(--border-color)]/50 bg-white flex gap-2">
+          <form onSubmit={handleSubmit} className="p-3 border-t border-[var(--border-color)] flex gap-2" style={{ background: 'var(--bg-surface)' }}>
             <input
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}
               placeholder="Pose ta question..."
-              className="flex-1 bg-[var(--bg-surface)] border border-[var(--border-color)]/50 rounded-xl px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:outline-none focus:border-teal-500"
+              className="flex-1 bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[#c4956a]/40"
             />
-            <button type="submit" aria-label="Envoyer le message" className="bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white p-2.5 rounded-xl transition-colors">
+            <button type="submit" aria-label="Envoyer le message" className="text-white p-2.5 rounded-xl transition-colors" style={{ background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)' }}>
               <Send size={16} />
             </button>
           </form>

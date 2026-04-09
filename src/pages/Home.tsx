@@ -47,57 +47,57 @@ export default function Home() {
       </Helmet>
 
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden aurora-bg-light">
-        <div className="absolute top-1/4 left-[10%] w-72 h-72 bg-teal-400/10 rounded-full blur-[120px] orb-1" />
-        <div className="absolute bottom-1/4 right-[15%] w-80 h-80 bg-emerald-400/10 rounded-full blur-[120px] orb-2" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-400/8 rounded-full blur-[150px] orb-3" />
-        <div className="absolute top-[20%] right-[25%] w-40 h-40 bg-blue-400/6 rounded-full blur-[80px] orb-1" />
+        <div className="absolute top-1/4 left-[10%] w-80 h-80 bg-[#c4956a]/6 rounded-full blur-[140px] orb-1" />
+        <div className="absolute bottom-1/4 right-[15%] w-96 h-96 bg-[#1a2f23]/8 rounded-full blur-[140px] orb-2" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#c9a96e]/4 rounded-full blur-[180px] orb-3" />
 
-        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(13,148,136,0.4) 1px, transparent 0)', backgroundSize: '50px 50px' }} />
+        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(26,47,35,0.3) 1px, transparent 0)', backgroundSize: '60px 60px' }} />
 
-        {Array.from({ length: 6 }, (_, i) => (
+        {Array.from({ length: 8 }, (_, i) => (
           <div
             key={i}
-            className="absolute pointer-events-none opacity-0"
+            className="absolute pointer-events-none"
             style={{
-              left: `${10 + i * 15}%`,
+              left: `${5 + i * 12}%`,
               top: '-20px',
-              animation: `leaf-fall ${14 + i * 2}s ${i * 2}s ease-in-out infinite`,
+              opacity: 0,
+              animation: `leaf-fall ${16 + i * 2.5}s ${i * 1.8}s ease-in-out infinite`,
             }}
           >
-            <Leaf size={10 + (i % 3) * 5} className="text-teal-500/20" />
+            <Leaf size={8 + (i % 4) * 4} className="text-[#1a2f23]/15 dark:text-[#c4956a]/10" style={{ filter: 'blur(0.5px)' }} />
           </div>
         ))}
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <div
-            className="transition-all duration-1000 ease-out"
+            className="transition-all duration-1200 ease-out"
             style={{
               opacity: heroLoaded ? 1 : 0,
-              transform: heroLoaded ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+              transform: heroLoaded ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.95)',
             }}
           >
             <img
               src="/logo-cannazen.png"
               alt="CannaZen"
-              className="mx-auto h-[90px] sm:h-[140px] object-contain mb-5 drop-shadow-lg animate-float"
+              className="mx-auto h-[90px] sm:h-[140px] object-contain mb-6 drop-shadow-lg animate-float"
             />
           </div>
 
           <div
-            className="transition-all duration-700 delay-300"
+            className="transition-all duration-800 delay-300"
             style={{
               opacity: heroLoaded ? 1 : 0,
               transform: heroLoaded ? 'translateY(0)' : 'translateY(16px)',
             }}
           >
-            <div className="inline-flex items-center gap-2 text-xs font-medium px-5 py-2.5 rounded-full mb-6 tracking-wider animate-shimmer" style={{ background: 'rgba(13,148,136,0.08)', color: 'var(--accent-1)', border: '1px solid rgba(13,148,136,0.15)' }}>
-              <Sparkles size={12} className="text-cyan-500" />
-              CANNABIS LÉGAL · THC &lt; 0.3%
+            <div className="inline-flex items-center gap-2.5 text-[10px] font-medium px-5 py-2.5 rounded-full mb-6 tracking-[0.3em] uppercase animate-shimmer" style={{ background: 'rgba(196,149,106,0.08)', color: '#c4956a', border: '1px solid rgba(196,149,106,0.15)' }}>
+              <Sparkles size={11} className="text-[#c9a96e]" />
+              Cannabis Légal · THC &lt; 0.3%
             </div>
           </div>
 
           <h1
-            className="font-['Cormorant_Garamond'] text-4xl sm:text-5xl md:text-7xl font-semibold leading-tight mb-4 italic transition-all duration-700 delay-500"
+            className="font-['Cormorant_Garamond'] text-4xl sm:text-5xl md:text-7xl font-semibold leading-tight mb-5 italic transition-all duration-800 delay-500"
             style={{
               color: 'var(--text-primary)',
               opacity: heroLoaded ? 1 : 0,
@@ -109,7 +109,7 @@ export default function Home() {
           </h1>
 
           <p
-            className="text-base sm:text-lg mb-10 max-w-2xl mx-auto font-light leading-relaxed transition-all duration-700 delay-700"
+            className="text-base sm:text-lg mb-10 max-w-2xl mx-auto font-light leading-relaxed transition-all duration-800 delay-700"
             style={{
               color: 'var(--text-secondary)',
               opacity: heroLoaded ? 1 : 0,
@@ -120,7 +120,7 @@ export default function Home() {
           </p>
 
           <div
-            className="flex flex-col sm:flex-row gap-4 justify-center transition-all duration-700 delay-[900ms]"
+            className="flex flex-col sm:flex-row gap-4 justify-center transition-all duration-800 delay-[900ms]"
             style={{
               opacity: heroLoaded ? 1 : 0,
               transform: heroLoaded ? 'translateY(0)' : 'translateY(16px)',
@@ -128,16 +128,16 @@ export default function Home() {
           >
             <Link
               to="/boutique"
-              className="inline-flex items-center justify-center gap-2 text-white px-8 py-4 rounded-xl font-semibold btn-vivid neon-glow group text-lg"
+              className="inline-flex items-center justify-center gap-2.5 text-white px-8 py-4 rounded-xl font-semibold btn-vivid neon-glow group text-base tracking-wide"
             >
-              Découvrir la boutique <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              Découvrir la boutique <ArrowRight size={18} className="group-hover:translate-x-1.5 transition-transform duration-300" />
             </Link>
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-30">
-          <div className="w-5 h-8 rounded-full border-2 border-teal-500/40 flex items-start justify-center p-1">
-            <div className="w-1 h-2 bg-teal-500/40 rounded-full animate-bounce" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-25">
+          <div className="w-5 h-8 rounded-full border-2 border-[#c4956a]/40 flex items-start justify-center p-1">
+            <div className="w-1 h-2 bg-[#c4956a]/40 rounded-full animate-bounce" />
           </div>
         </div>
       </section>
@@ -145,13 +145,13 @@ export default function Home() {
       <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-child">
           {[
-            { icon: Shield, text: 'THC < 0.3%', sub: '100% légal en France', color: 'text-teal-500' },
-            { icon: Truck, text: 'Livraison offerte', sub: "Dès 49€ d'achat", color: 'text-emerald-500' },
-            { icon: Star, text: 'Qualité premium', sub: 'Sélection rigoureuse', color: 'text-cyan-500' },
-            { icon: Droplets, text: "Cannabis d'exception", sub: 'Cultivé avec soin', color: 'text-blue-500' },
+            { icon: Shield, text: 'THC < 0.3%', sub: '100% légal en France', color: 'text-[#1a2f23] dark:text-[#c4956a]' },
+            { icon: Truck, text: 'Livraison offerte', sub: "Dès 49€ d'achat", color: 'text-[#2d4a3e] dark:text-[#d4a574]' },
+            { icon: Star, text: 'Qualité premium', sub: 'Sélection rigoureuse', color: 'text-[#c4956a]' },
+            { icon: Droplets, text: "Cannabis d'exception", sub: 'Cultivé avec soin', color: 'text-[#c9a96e]' },
           ].map((item, i) => (
             <div key={i} className="glass-card rounded-xl p-5 text-center card-hover-lift group transition-all duration-300">
-              <div className="w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(13,148,136,0.06)' }}>
+              <div className="w-12 h-12 mx-auto mb-3 rounded-full flex items-center justify-center transition-all duration-300" style={{ background: 'rgba(196,149,106,0.06)' }}>
                 <item.icon size={22} className={`${item.color} group-hover:scale-110 transition-transform duration-300`} />
               </div>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{item.text}</p>
@@ -174,12 +174,12 @@ export default function Home() {
             >
               <div className="relative z-10">
                 <span className="text-3xl mb-3 block group-hover:scale-125 transition-transform duration-500">{cat.emoji}</span>
-                <h3 className="font-['Cormorant_Garamond'] font-semibold text-sm group-hover:text-teal-600 transition-colors" style={{ color: 'var(--text-primary)' }}>{cat.name}</h3>
+                <h3 className="font-['Cormorant_Garamond'] font-semibold text-sm group-hover:text-[#c4956a] transition-colors" style={{ color: 'var(--text-primary)' }}>{cat.name}</h3>
                 <p className="text-xs mt-1 font-light" style={{ color: 'var(--text-muted)' }}>
                   {products.filter(p => p.categorySlug === cat.slug).length} produits
                 </p>
                 <div className="mt-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  <span className="text-[10px] text-teal-500 font-medium tracking-wider uppercase flex items-center justify-center gap-1">
+                  <span className="text-[9px] text-[#c4956a] font-medium tracking-[0.2em] uppercase flex items-center justify-center gap-1">
                     Explorer <ArrowRight size={10} />
                   </span>
                 </div>
@@ -191,7 +191,7 @@ export default function Home() {
 
       <div className="relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-[#c4956a]/20 to-transparent" />
         </div>
       </div>
 
@@ -200,7 +200,7 @@ export default function Home() {
           <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-3xl font-semibold italic" style={{ color: 'var(--text-primary)' }}>
             <span className="text-gradient-vivid">Best-sellers</span>
           </h2>
-          <Link to="/boutique" className="text-teal-500 text-sm font-medium hover:text-teal-600 flex items-center gap-1 transition-colors group">
+          <Link to="/boutique" className="text-[#c4956a] text-sm font-medium hover:text-[#a07850] flex items-center gap-1 transition-colors group">
             Voir tout <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -214,7 +214,7 @@ export default function Home() {
           <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-3xl font-semibold italic" style={{ color: 'var(--text-primary)' }}>
             <span className="text-gradient-blue">Nouveautés</span>
           </h2>
-          <Link to="/boutique" className="text-cyan-500 text-sm font-medium hover:text-cyan-600 flex items-center gap-1 transition-colors group">
+          <Link to="/boutique" className="text-[#c4956a] text-sm font-medium hover:text-[#a07850] flex items-center gap-1 transition-colors group">
             Voir tout <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -224,15 +224,15 @@ export default function Home() {
       </AnimatedSection>
 
       <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" animation="scale-in">
-        <div className="relative rounded-2xl p-8 md:p-12 text-center overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(13,148,136,0.06), rgba(6,182,212,0.04), rgba(16,185,129,0.06))', border: '1px solid rgba(13,148,136,0.12)' }}>
-          <div className="absolute top-0 left-0 w-64 h-64 bg-teal-400/5 rounded-full blur-[80px] orb-1" />
-          <div className="absolute bottom-0 right-0 w-72 h-72 bg-cyan-400/5 rounded-full blur-[80px] orb-2" />
-          <div className="absolute top-4 right-4 opacity-5">
-            <Leaf size={100} className="text-teal-500 animate-rotate-slow" />
+        <div className="relative rounded-2xl p-8 md:p-12 text-center overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(26,47,35,0.04), rgba(196,149,106,0.04), rgba(26,47,35,0.04))', border: '1px solid rgba(196,149,106,0.1)' }}>
+          <div className="absolute top-0 left-0 w-64 h-64 bg-[#c4956a]/3 rounded-full blur-[100px] orb-1" />
+          <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#1a2f23]/3 rounded-full blur-[100px] orb-2" />
+          <div className="absolute top-4 right-4 opacity-[0.03]">
+            <Leaf size={100} className="text-[#1a2f23] animate-rotate-slow" />
           </div>
           <div className="relative z-10">
-            <div className="w-16 h-16 mx-auto mb-5 rounded-full flex items-center justify-center neon-glow" style={{ background: 'rgba(13,148,136,0.08)' }}>
-              <Mail size={26} className="text-teal-500" />
+            <div className="w-16 h-16 mx-auto mb-5 rounded-full flex items-center justify-center neon-glow" style={{ background: 'rgba(196,149,106,0.08)' }}>
+              <Mail size={26} className="text-[#c4956a]" />
             </div>
             <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-3xl font-semibold italic mb-3" style={{ color: 'var(--text-primary)' }}>
               Restez dans le <span className="text-gradient-vivid">jardin</span>
@@ -241,7 +241,7 @@ export default function Home() {
               Recevez nos nouveautés, offres exclusives et conseils du Smokellier directement dans votre boîte mail.
             </p>
             {subscribed ? (
-              <div className="flex items-center justify-center gap-2 text-emerald-500 fade-in-up">
+              <div className="flex items-center justify-center gap-2 text-[#1a2f23] dark:text-[#c4956a] fade-in-up">
                 <CheckCircle size={20} />
                 <span className="font-medium">Merci ! Vous êtes inscrit(e).</span>
               </div>
@@ -253,7 +253,7 @@ export default function Home() {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="votre@email.com"
                   required
-                  className="flex-1 px-5 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-teal-500/30"
+                  className="flex-1 px-5 py-3 rounded-xl text-sm transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-[#c4956a]/30"
                   style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
                 />
                 <button

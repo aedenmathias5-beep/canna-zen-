@@ -143,10 +143,10 @@ export default function Checkout() {
     }
   };
 
-  const inputClass = "w-full px-4 py-3 rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20 text-sm transition-colors";
+  const inputClass = "w-full px-4 py-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[#c4956a]/40 focus:ring-1 focus:ring-[#c4956a]/15 text-sm transition-colors";
 
   const paymentOptionClass = (pm: PaymentMethod) =>
-    `flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${payment === pm ? 'border-teal-500 bg-[var(--border-color)]/20' : 'border-[var(--border-color)]/50 hover:border-[var(--border-color)]'}`;
+    `flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${payment === pm ? 'border-[#c4956a] bg-[rgba(196,149,106,0.04)]' : 'border-[var(--border-color)] hover:border-[#c4956a]/30'}`;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -188,19 +188,19 @@ export default function Checkout() {
           <div className="bg-[var(--bg-card)] backdrop-blur-sm border border-[var(--border-color)]/50 rounded-2xl p-6 shadow-sm">
             <h2 className="font-semibold text-[var(--text-primary)] mb-4">Mode de livraison</h2>
             <div className="space-y-3">
-              <label className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${shipping === 'colissimo' ? 'border-teal-500 bg-[var(--border-color)]/20' : 'border-[var(--border-color)]/50 hover:border-[var(--border-color)]'}`}>
+              <label className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${shipping === 'colissimo' ? 'border-[#c4956a] bg-[rgba(196,149,106,0.04)]' : 'border-[var(--border-color)] hover:border-[#c4956a]/30'}`}>
                 <div className="flex items-center gap-3">
-                  <input type="radio" checked={shipping === 'colissimo'} onChange={() => setShipping('colissimo')} className="accent-teal-500" />
+                  <input type="radio" checked={shipping === 'colissimo'} onChange={() => setShipping('colissimo')} className="accent-[#c4956a]" />
                   <div>
                     <p className="text-sm font-medium text-[var(--text-primary)]">Colissimo domicile</p>
                     <p className="text-xs text-[var(--text-secondary)] font-light">2-3 jours ouvrés</p>
                   </div>
                 </div>
-                <span className="text-sm font-semibold">{cartTotal >= 49 ? <span className="text-teal-500">GRATUIT</span> : '4,90€'}</span>
+                <span className="text-sm font-semibold">{cartTotal >= 49 ? <span className="text-[#1a2f23] dark:text-[#c4956a]">GRATUIT</span> : '4,90€'}</span>
               </label>
-              <label className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${shipping === 'chronopost' ? 'border-teal-500 bg-[var(--border-color)]/20' : 'border-[var(--border-color)]/50 hover:border-[var(--border-color)]'}`}>
+              <label className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${shipping === 'chronopost' ? 'border-[#c4956a] bg-[rgba(196,149,106,0.04)]' : 'border-[var(--border-color)] hover:border-[#c4956a]/30'}`}>
                 <div className="flex items-center gap-3">
-                  <input type="radio" checked={shipping === 'chronopost'} onChange={() => setShipping('chronopost')} className="accent-teal-500" />
+                  <input type="radio" checked={shipping === 'chronopost'} onChange={() => setShipping('chronopost')} className="accent-[#c4956a]" />
                   <div>
                     <p className="text-sm font-medium text-[var(--text-primary)]">Chronopost Express 24h</p>
                     <p className="text-xs text-[var(--text-secondary)] font-light">Livraison lendemain avant 13h</p>
@@ -208,15 +208,15 @@ export default function Checkout() {
                 </div>
                 <span className="text-sm font-semibold">9,90€</span>
               </label>
-              <label className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${shipping === 'relay' ? 'border-teal-500 bg-[var(--border-color)]/20' : 'border-[var(--border-color)]/50 hover:border-[var(--border-color)]'}`}>
+              <label className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${shipping === 'relay' ? 'border-[#c4956a] bg-[rgba(196,149,106,0.04)]' : 'border-[var(--border-color)] hover:border-[#c4956a]/30'}`}>
                 <div className="flex items-center gap-3">
-                  <input type="radio" checked={shipping === 'relay'} onChange={() => setShipping('relay')} className="accent-teal-500" />
+                  <input type="radio" checked={shipping === 'relay'} onChange={() => setShipping('relay')} className="accent-[#c4956a]" />
                   <div>
                     <p className="text-sm font-medium text-[var(--text-primary)]">Point Relais (Mondial Relay)</p>
                     <p className="text-xs text-[var(--text-secondary)] font-light">3-5 jours ouvrés</p>
                   </div>
                 </div>
-                <span className="text-sm font-semibold">{cartTotal >= 39 ? <span className="text-teal-500">GRATUIT</span> : '3,90€'}</span>
+                <span className="text-sm font-semibold">{cartTotal >= 39 ? <span className="text-[#1a2f23] dark:text-[#c4956a]">GRATUIT</span> : '3,90€'}</span>
               </label>
             </div>
             <div className="mt-4 flex flex-wrap gap-4 text-xs text-[var(--text-secondary)] font-light">
@@ -230,8 +230,8 @@ export default function Checkout() {
             <h2 className="font-semibold text-[var(--text-primary)] mb-4">Moyen de paiement</h2>
             <div className="space-y-3">
               <label className={paymentOptionClass('card')}>
-                <input type="radio" checked={payment === 'card'} onChange={() => setPayment('card')} className="accent-teal-500" />
-                <CreditCard size={20} className="text-teal-500 shrink-0" />
+                <input type="radio" checked={payment === 'card'} onChange={() => setPayment('card')} className="accent-[#c4956a]" />
+                <CreditCard size={20} className="text-[#c4956a] shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-[var(--text-primary)]">Carte bancaire</p>
                   <p className="text-xs text-[var(--text-secondary)] font-light">Visa, Mastercard, CB — via Mollie</p>
@@ -239,7 +239,7 @@ export default function Checkout() {
               </label>
 
               <label className={paymentOptionClass('applepay')}>
-                <input type="radio" checked={payment === 'applepay'} onChange={() => setPayment('applepay')} className="accent-teal-500" />
+                <input type="radio" checked={payment === 'applepay'} onChange={() => setPayment('applepay')} className="accent-[#c4956a]" />
                 <Smartphone size={20} className="text-[var(--text-primary)] shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-[var(--text-primary)]">Apple Pay</p>
@@ -248,7 +248,7 @@ export default function Checkout() {
               </label>
 
               <label className={paymentOptionClass('crypto')}>
-                <input type="radio" checked={payment === 'crypto'} onChange={() => setPayment('crypto')} className="accent-teal-500" />
+                <input type="radio" checked={payment === 'crypto'} onChange={() => setPayment('crypto')} className="accent-[#c4956a]" />
                 <Bitcoin size={20} className="text-[#c4a35a] shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-[var(--text-primary)]">Cryptomonnaie</p>
@@ -257,7 +257,7 @@ export default function Checkout() {
               </label>
 
               <label className={paymentOptionClass('transfer')}>
-                <input type="radio" checked={payment === 'transfer'} onChange={() => setPayment('transfer')} className="accent-teal-500" />
+                <input type="radio" checked={payment === 'transfer'} onChange={() => setPayment('transfer')} className="accent-[#c4956a]" />
                 <Landmark size={20} className="text-[var(--text-secondary)] shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-[var(--text-primary)]">Virement bancaire</p>
@@ -269,7 +269,7 @@ export default function Checkout() {
             {payment === 'card' && (
               <div className="mt-4 bg-[var(--border-color)]/20 border border-[var(--border-color)]/40 rounded-xl p-4 text-sm">
                 <div className="flex items-center gap-2 mb-2">
-                  <Lock size={14} className="text-teal-500" />
+                  <Lock size={14} className="text-[#1a2f23] dark:text-[#c4956a]" />
                   <p className="text-[var(--text-primary)] font-medium">Paiement sécurisé via Mollie</p>
                 </div>
                 <div className="flex gap-2 flex-wrap mb-2">
@@ -320,7 +320,7 @@ export default function Checkout() {
         </div>
 
         <div>
-          <div className="bg-[var(--bg-card)] backdrop-blur-sm border border-[var(--border-color)]/50 rounded-2xl p-6 shadow-lg shadow-teal-500/5 sticky top-24">
+          <div className="bg-[var(--bg-card)] backdrop-blur-sm border border-[var(--border-color)] rounded-2xl p-6 premium-shadow sticky top-24">
             <h2 className="font-semibold text-[var(--text-primary)] mb-4">Récapitulatif</h2>
             <div className="space-y-3 mb-4">
               {cartItems.map(item => (
@@ -337,7 +337,7 @@ export default function Checkout() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-[var(--text-secondary)] font-light">Livraison ({shipping === 'chronopost' ? 'Express' : shipping === 'relay' ? 'Relais' : 'Colissimo'})</span>
-                <span className={`font-medium ${shippingCost === 0 ? 'text-teal-500' : ''}`}>{shippingCost === 0 ? 'Offerte' : `${shippingCost.toFixed(2)}€`}</span>
+                <span className={`font-medium ${shippingCost === 0 ? 'text-[#1a2f23] dark:text-[#c4956a]' : ''}`}>{shippingCost === 0 ? 'Offerte' : `${shippingCost.toFixed(2)}€`}</span>
               </div>
               <div className="flex justify-between font-semibold text-lg pt-2 border-t border-[var(--border-color)]/40">
                 <span>Total</span>
@@ -347,7 +347,7 @@ export default function Checkout() {
             {error && (
               <div className="mt-4 bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-600">{error}</div>
             )}
-            <button type="submit" disabled={submitting} className="w-full mt-6 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold transition-colors shadow-md shadow-teal-500/20">
+            <button type="submit" disabled={submitting} className="w-full mt-6 btn-vivid disabled:opacity-50 disabled:cursor-not-allowed text-white py-3 rounded-xl font-semibold transition-all neon-glow">
               {submitting ? 'Traitement...' : 'Confirmer la commande'}
             </button>
           </div>

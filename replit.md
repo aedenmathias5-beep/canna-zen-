@@ -1,7 +1,7 @@
 # CannaZen — CBD Premium
 
 ## Overview
-CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + Tailwind CSS v4. Modern artistic design with vivid teal/emerald/cyan color palette, light/dark theme toggle, aurora gradient backgrounds, glassmorphism cards, and smooth animations. Cormorant Garamond display font + Inter body font. Internal product catalog (28 products), Supabase auth with PostgreSQL profiles, cart with localStorage persistence, Smokellier keyword chatbot, and sandbox checkout.
+CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + Tailwind CSS v4. Premium "luxe nature & bien-être" design with forest green (#1a2f23/#2d4a3e) and warm amber (#c4956a) palette, cream backgrounds, light/dark theme toggle, aurora gradients, 3D card effects, smoke animations, and premium shadows. Cormorant Garamond display font + Inter body font. Internal product catalog (28 products), Supabase auth with PostgreSQL profiles, cart with localStorage persistence, Smokellier keyword chatbot, and sandbox checkout.
 
 ## Architecture
 - **Dev Server**: Vite on port 5000 (host 0.0.0.0, allowedHosts: true)
@@ -18,25 +18,27 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **Accessibility**: aria-labels on all icon-only buttons, focus-visible outlines, proper alt text
 - **SEO files**: public/robots.txt, public/sitemap.xml
 
-## Design System (Vivid Blue-Green Theme with Light/Dark Toggle)
+## Design System ("Luxe Nature & Bien-Être" Premium Palette)
 - **Theme**: CSS custom properties in :root (light) and .dark (dark), toggled via ThemeContext
 - **ThemeContext**: src/lib/ThemeContext.tsx — persists to localStorage('cannazen-theme'), toggles .dark class on html
 - **ThemeToggle**: src/components/ui/ThemeToggle.tsx — Moon/Sun icon button in Header top-left
-- **Light mode bg**: Gradient #eef7f3 → #f0f4f1 → #edf5fa (subtle green-blue gradient, fixed)
-- **Dark mode bg**: Gradient #0a1a15 → #0a0f0d → #0a1520
-- **Accent colors**: Teal #0d9488 (--accent-1), Emerald #10b981 (--accent-2), Cyan #06b6d4 (--accent-3)
+- **Light mode bg**: Cream #f5f0ea / #faf8f5
+- **Dark mode bg**: Deep forest #0a1a15 → #0a0f0d
+- **Primary palette**: Forest green #1a2f23 (deep), #2d4a3e (medium), Warm amber #c4956a / #d4a574
+- **Accent greens**: #4a6741 (logo), #6b8f5e (olive accents), #6b8f5e (ChatWidget)
+- **Gold**: #c4a35a (Smokellier accents, Bitcoin icon)
 - **CSS Variables**: --bg-main, --bg-card, --bg-header, --bg-surface, --text-primary, --text-secondary, --text-muted, --border-color, --border-light, --glass-bg, --glass-border, --shadow-color
-- **Cards**: glass-card class (var(--bg-card) + backdrop-blur + var(--border-color))
-- **Buttons**: btn-vivid (teal-to-emerald gradient), btn-magnetic (hover lift+glow)
-- **Gradients**: text-gradient-vivid (teal→emerald→cyan), text-gradient-sage, text-gradient-blue
-- **Effects**: aurora-bg-light, floating orbs (orb-1/2/3), neon-glow, animate-shimmer, animate-float, stagger-child
-- **Header banner**: Gradient from-teal-500 via-emerald-500 to-cyan-500 (white text)
-- **Footer**: Dark gradient (teal/emerald deep), teal-400 accents
-- **Gold**: #c4a35a (Smokellier accents, unchanged)
+- **Cards**: card-3d class (3D hover effect), glass-card (backdrop-blur)
+- **Buttons**: btn-vivid (#1a2f23→#2d4a3e gradient), btn-amber (warm amber), btn-magnetic (hover lift+glow)
+- **Gradients**: text-gradient-vivid (amber→gold), text-gradient-sage
+- **Effects**: aurora-bg-light, floating orbs, smoke-effect, premium-shadow, img-zoom, leaf-fall, smoke-drift
+- **Header banner**: Dark forest green #1a2f23 with amber accents
+- **Footer**: Deep forest green #1a2f23, amber link accents
 - **Display font**: Cormorant Garamond (italic, semibold, serif)
 - **Body font**: Inter (400, 500, 600, 700)
-- **Logo**: Inline SVG component (src/components/ui/Logo.tsx) + PNG logo at public/logo-cannazen.png
+- **Logo**: Inline SVG component (src/components/ui/Logo.tsx) with amber accent + PNG at public/logo-cannazen.png
 - **Logo variant**: Uses theme === 'dark' ? 'light' : 'dark' in Header
+- **Zero teal/emerald/cyan**: Entire codebase migrated to forest green + amber palette
 
 ## Key Files
 - **src/lib/supabase.ts**: Supabase client SDK init (graceful: works without config)

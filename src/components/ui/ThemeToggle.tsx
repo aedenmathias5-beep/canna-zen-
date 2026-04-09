@@ -12,9 +12,9 @@ export default function ThemeToggle() {
       style={{ color: 'var(--text-secondary)' }}
     >
       {theme === 'light' ? (
-        <Moon size={18} className="hover:text-teal-600 transition-colors" />
+        <Moon size={18} className="hover:text-[#1a2f23] transition-colors" />
       ) : (
-        <Sun size={18} className="text-amber-400 hover:text-amber-300 transition-colors" />
+        <Sun size={18} className="text-[#c9a96e] hover:text-[#d4a574] transition-colors" />
       )}
     </button>
   );

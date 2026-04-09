@@ -48,13 +48,13 @@ function WishlistContent() {
       {wishlistProducts.length === 0 ? (
         <div className="text-center py-16">
           <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--border-color)]/30">
-            <Heart className="h-10 w-10 text-teal-500/40" />
+            <Heart className="h-10 w-10 text-[#c4956a]/40" />
           </div>
           <h2 className="text-lg font-medium text-[var(--text-primary)] mb-2">Votre liste de favoris est vide</h2>
           <p className="text-sm text-[var(--text-secondary)] font-light mb-6">Ajoutez des produits à vos favoris pour les retrouver facilement</p>
           <Link
             to="/boutique"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white px-6 py-3 rounded-xl font-medium transition-colors shadow-md shadow-teal-500/20"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e] hover:from-[#2d4a3e] hover:to-[#3d6050] text-white px-6 py-3 rounded-xl font-medium transition-colors shadow-md shadow-[#1a2f23]/15"
           >
             Découvrir nos produits
           </Link>
@@ -69,16 +69,16 @@ function WishlistContent() {
 
               <div className="flex-1 min-w-0">
                 <Link to={`/boutique/${product.slug}`} className="block">
-                  <h3 className="font-medium text-[var(--text-primary)] truncate hover:text-teal-500 transition-colors">{product.name}</h3>
+                  <h3 className="font-medium text-[var(--text-primary)] truncate hover:text-[#c4956a] transition-colors">{product.name}</h3>
                 </Link>
                 <p className="text-sm text-[var(--text-secondary)] font-light mt-0.5">{product.category}</p>
-                <p className="text-teal-500 font-semibold mt-1">{product.prices[0].amount.toFixed(2)} €</p>
+                <p className="text-[#c4956a] font-semibold mt-1">{product.prices[0].amount.toFixed(2)} €</p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => handleAddToCart(product)}
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="flex items-center gap-1.5 bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e] hover:from-[#2d4a3e] hover:to-[#3d6050] text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 >
                   <ShoppingCart className="h-4 w-4" />
                   <span className="hidden sm:inline">Ajouter</span>

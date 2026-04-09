@@ -37,8 +37,8 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
 
     if (score <= 2) return { score, label: 'Faible', color: 'bg-red-400' };
     if (score <= 3) return { score, label: 'Moyen', color: 'bg-amber-400' };
-    if (score <= 4) return { score, label: 'Fort', color: 'bg-gradient-to-r from-teal-500 to-emerald-500' };
-    return { score, label: 'Très fort', color: 'bg-emerald-500' };
+    if (score <= 4) return { score, label: 'Fort', color: 'bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e]' };
+    return { score, label: 'Très fort', color: 'bg-[#2d4a3e]' };
   };
 
   const strength = passwordStrength(formData.password);
@@ -86,15 +86,15 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
   const inputClass = (field: string) =>
     `w-full rounded-xl border ${
       errors[field] ? 'border-red-300' : 'border-[var(--border-color)]/60'
-    } bg-[var(--bg-surface)]/50 py-3 px-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500/20`;
+    } bg-[var(--bg-surface)]/50 py-3 px-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-[#c4956a] focus:outline-none focus:ring-1 focus:ring-[#c4956a]/20`;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#2c2520]/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="relative mx-4 my-8 w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)]/50 bg-[var(--bg-surface)] shadow-2xl shadow-teal-500/10"
+        className="relative mx-4 my-8 w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)]/50 bg-[var(--bg-surface)] shadow-2xl shadow-[#1a2f23]/10"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c4956a] to-transparent" />
 
         <button onClick={onClose} className="absolute right-4 top-4 rounded-full p-1 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]">
           <X className="h-5 w-5" />
@@ -167,7 +167,7 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
                       <div key={i} className={`h-1 flex-1 rounded-full ${i <= strength.score ? strength.color : 'bg-[var(--border-color)]'}`} />
                     ))}
                   </div>
-                  <p className={`text-xs ${strength.score <= 2 ? 'text-red-500' : strength.score <= 3 ? 'text-amber-600' : 'text-teal-500'}`}>
+                  <p className={`text-xs ${strength.score <= 2 ? 'text-red-500' : strength.score <= 3 ? 'text-amber-600' : 'text-[#c4956a]'}`}>
                     {strength.label}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
 
             <div className="space-y-3 pt-2">
               <label className="flex cursor-pointer items-start gap-3">
-                <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${formData.acceptAge ? 'border-teal-500 bg-gradient-to-r from-teal-500 to-emerald-500' : 'border-[var(--border-color)] bg-white'} transition-colors`}>
+                <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${formData.acceptAge ? 'border-[#c4956a] bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e]' : 'border-[var(--border-color)] bg-white'} transition-colors`}>
                   {formData.acceptAge && <Check className="h-3 w-3 text-white" />}
                 </div>
                 <input type="checkbox" className="sr-only" checked={formData.acceptAge as boolean} onChange={(e) => setFormData({ ...formData, acceptAge: e.target.checked as any })} />
@@ -198,15 +198,15 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
               {errors.acceptAge && <p className="ml-8 text-xs text-red-500">{errors.acceptAge}</p>}
 
               <label className="flex cursor-pointer items-start gap-3">
-                <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${formData.acceptTerms ? 'border-teal-500 bg-gradient-to-r from-teal-500 to-emerald-500' : 'border-[var(--border-color)] bg-white'} transition-colors`}>
+                <div className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${formData.acceptTerms ? 'border-[#c4956a] bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e]' : 'border-[var(--border-color)] bg-white'} transition-colors`}>
                   {formData.acceptTerms && <Check className="h-3 w-3 text-white" />}
                 </div>
                 <input type="checkbox" className="sr-only" checked={formData.acceptTerms as boolean} onChange={(e) => setFormData({ ...formData, acceptTerms: e.target.checked as any })} />
                 <span className="text-sm text-[var(--text-secondary)] font-light">
                   J'accepte les{' '}
-                  <Link to="/cgv" className="text-teal-500 underline" target="_blank">CGV</Link>{' '}
+                  <Link to="/cgv" className="text-[#c4956a] underline" target="_blank">CGV</Link>{' '}
                   et la{' '}
-                  <Link to="/politique-de-confidentialite" className="text-teal-500 underline" target="_blank">politique de confidentialité</Link>
+                  <Link to="/politique-de-confidentialite" className="text-[#c4956a] underline" target="_blank">politique de confidentialité</Link>
                 </span>
               </label>
               {errors.acceptTerms && <p className="ml-8 text-xs text-red-500">{errors.acceptTerms}</p>}
@@ -215,7 +215,7 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
             <button
               type="submit"
               disabled={actionLoading}
-              className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 py-3 text-sm font-semibold text-white shadow-md shadow-teal-500/20 transition-all hover:from-teal-600 hover:to-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-xl bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e] py-3 text-sm font-semibold text-white shadow-md shadow-[#1a2f23]/15 transition-all hover:from-[#2d4a3e] hover:to-[#3d6050] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {actionLoading ? <Loader2 className="mx-auto h-5 w-5 animate-spin" /> : 'Créer mon compte'}
             </button>
@@ -223,7 +223,7 @@ export default function RegisterModal({ isOpen, onClose, onSwitchToLogin }: Regi
 
           <p className="mt-6 text-center text-sm text-[var(--text-secondary)] font-light">
             Déjà un compte ?{' '}
-            <button onClick={onSwitchToLogin} className="font-medium text-teal-500 hover:text-teal-600">Se connecter</button>
+            <button onClick={onSwitchToLogin} className="font-medium text-[#c4956a] hover:text-[#a07850]">Se connecter</button>
           </p>
         </div>
       </div>

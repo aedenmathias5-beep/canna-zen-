@@ -34,15 +34,15 @@ const navItems = [
 function DropdownMenu({ item, onClose }: { item: typeof navItems[0]; onClose: () => void }) {
   if (!('children' in item) || !item.children) return null;
   return (
-    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 rounded-lg shadow-lg overflow-hidden py-1 min-w-[180px] z-50 animate-slide-down" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}>
+    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 rounded-xl shadow-xl overflow-hidden py-1.5 min-w-[200px] z-50 animate-slide-down premium-shadow" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)' }}>
       {item.children.map(child => (
         <Link
           key={child.label}
           to={child.to}
           onClick={onClose}
-          className="block px-4 py-2.5 text-sm hover:pl-5 transition-all duration-200"
+          className="block px-5 py-3 text-sm hover:pl-6 transition-all duration-200 font-light"
           style={{ color: 'var(--text-secondary)' }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(13,148,136,0.08)'; e.currentTarget.style.color = 'var(--accent-1)'; }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(196,149,106,0.06)'; e.currentTarget.style.color = 'var(--accent-1)'; }}
           onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
         >
           {child.label}
@@ -105,30 +105,29 @@ export default function Header() {
 
   return (
     <>
-      <div className="relative text-[11px] font-light py-2.5 overflow-hidden whitespace-nowrap tracking-widest" style={{ background: 'linear-gradient(90deg, #0d9488, #10b981, #06b6d4, #0d9488)', color: 'white' }}>
+      <div className="relative text-[10px] font-light py-2.5 overflow-hidden whitespace-nowrap tracking-[0.25em] uppercase" style={{ background: 'linear-gradient(90deg, #1a2f23, #2d4a3e, #1a2f23)', color: 'rgba(250,248,245,0.7)' }}>
         <div className="inline-flex animate-marquee">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="inline-flex items-center">
-              <span className="inline-flex items-center gap-1.5 mx-8 opacity-90"><span className="font-light italic">Livraison offerte dès 49€</span></span>
-              <span className="inline-flex items-center gap-1.5 mx-8 opacity-90"><span className="font-light italic">THC &lt; 0.3% · 100% Légal</span></span>
-              <span className="inline-flex items-center gap-1.5 mx-8 opacity-90"><span className="font-light italic">Cannabis d'exception cultivé avec soin</span></span>
-              <span className="inline-flex items-center gap-1.5 mx-8 opacity-90"><span className="font-light italic">Expédition sous 24h</span></span>
-              <span className="inline-flex items-center gap-1.5 mx-8 opacity-90"><span className="font-light italic">Gamme complète CBD · D10 · OH+</span></span>
+              <span className="inline-flex items-center gap-2 mx-10"><span className="w-1 h-1 rounded-full bg-[#c4956a]/60" />Livraison offerte dès 49€</span>
+              <span className="inline-flex items-center gap-2 mx-10"><span className="w-1 h-1 rounded-full bg-[#c4956a]/60" />THC &lt; 0.3% · 100% Légal</span>
+              <span className="inline-flex items-center gap-2 mx-10"><span className="w-1 h-1 rounded-full bg-[#c4956a]/60" />Cannabis d'exception cultivé avec soin</span>
+              <span className="inline-flex items-center gap-2 mx-10"><span className="w-1 h-1 rounded-full bg-[#c4956a]/60" />Expédition sous 24h</span>
+              <span className="inline-flex items-center gap-2 mx-10"><span className="w-1 h-1 rounded-full bg-[#c4956a]/60" />Gamme complète CBD · D10 · OH+</span>
             </div>
           ))}
         </div>
       </div>
 
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 backdrop-blur-xl ${scrolled ? 'shadow-lg' : ''}`}
+        className={`sticky top-0 z-40 transition-all duration-500 backdrop-blur-2xl ${scrolled ? 'premium-shadow' : ''}`}
         style={{
           background: 'var(--bg-header)',
           borderBottom: `1px solid ${scrolled ? 'var(--border-color)' : 'var(--border-light)'}`,
-          boxShadow: scrolled ? '0 4px 20px var(--shadow-color)' : 'none',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex justify-between items-center transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
+          <div className={`flex justify-between items-center transition-all duration-500 ${scrolled ? 'h-14' : 'h-16'}`}>
             <div className="flex items-center gap-3">
               <ThemeToggle />
               <button onClick={() => setMenuOpen(true)} aria-label="Ouvrir le menu" className="lg:hidden p-1.5 transition-colors hover:scale-110 active:scale-95 duration-200" style={{ color: 'var(--text-secondary)' }}>
@@ -164,7 +163,7 @@ export default function Header() {
               >
                 <ShoppingCart size={20} />
                 {cartCount > 0 && (
-                  <span className={`absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-teal-500 to-emerald-500 text-white text-[9px] font-semibold flex items-center justify-center rounded-full ${cartBounce ? 'animate-count-pop' : ''}`}>
+                  <span className={`absolute -top-1 -right-1 w-4.5 h-4.5 bg-[#c4956a] text-white text-[9px] font-semibold flex items-center justify-center rounded-full ${cartBounce ? 'animate-count-pop' : ''}`}>
                     {cartCount}
                   </span>
                 )}
@@ -173,8 +172,8 @@ export default function Header() {
           </div>
         </div>
 
-        <nav className="hidden lg:flex justify-center py-2" style={{ borderTop: '1px solid var(--border-light)' }}>
-          <div className="flex items-center gap-8 text-[11px] font-medium tracking-[0.2em]" style={{ color: 'var(--text-muted)' }}>
+        <nav className="hidden lg:flex justify-center py-2.5" style={{ borderTop: '1px solid var(--border-light)' }}>
+          <div className="flex items-center gap-10 text-[10px] font-medium tracking-[0.25em]" style={{ color: 'var(--text-muted)' }}>
             {navItems.map(item => {
               const hasChildren = 'children' in item && item.children;
               return (
@@ -185,14 +184,14 @@ export default function Header() {
                   onMouseLeave={() => hasChildren && handleDropdownLeave()}
                 >
                   {'to' in item && item.to ? (
-                    <Link to={item.to} className="py-1.5 transition-colors uppercase relative group hover:text-teal-600">
+                    <Link to={item.to} className="py-1.5 transition-colors uppercase relative group hover:text-[#c4956a]">
                       {item.label}
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-gradient-to-r from-teal-500 to-cyan-500 group-hover:w-full transition-all duration-300" />
+                      <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-[#c4956a] group-hover:w-full transition-all duration-400" />
                     </Link>
                   ) : (
-                    <button className="py-1.5 transition-colors uppercase flex items-center gap-1 relative group hover:text-teal-600">
+                    <button className="py-1.5 transition-colors uppercase flex items-center gap-1 relative group hover:text-[#c4956a]">
                       {item.label} <ChevronDown size={10} className={`transition-transform duration-200 ${openDropdown === item.label ? 'rotate-180' : ''}`} />
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-gradient-to-r from-teal-500 to-cyan-500 group-hover:w-full transition-all duration-300" />
+                      <span className="absolute -bottom-0.5 left-0 w-0 h-[1px] bg-[#c4956a] group-hover:w-full transition-all duration-400" />
                     </button>
                   )}
                   {hasChildren && openDropdown === item.label && (
@@ -212,7 +211,7 @@ export default function Header() {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Rechercher un produit..."
-                className="flex-1 glass rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-teal-500/30 transition-all duration-300"
+                className="flex-1 glass rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#c4956a]/30 transition-all duration-300"
                 style={{ color: 'var(--text-primary)', borderColor: 'var(--border-color)' }}
                 autoFocus
               />

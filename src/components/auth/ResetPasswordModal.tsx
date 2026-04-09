@@ -37,10 +37,10 @@ export default function ResetPasswordModal({ isOpen, onClose, onSwitchToLogin }:
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2c2520]/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="relative mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)]/50 bg-[var(--bg-surface)] shadow-2xl shadow-teal-500/10"
+        className="relative mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)]/50 bg-[var(--bg-surface)] shadow-2xl shadow-[#1a2f23]/10"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c4956a] to-transparent" />
 
         <button onClick={onClose} className="absolute right-4 top-4 rounded-full p-1 text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]">
           <X className="h-5 w-5" />
@@ -50,7 +50,7 @@ export default function ResetPasswordModal({ isOpen, onClose, onSwitchToLogin }:
           {sent ? (
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--border-color)]/50">
-                <Mail className="h-8 w-8 text-teal-500" />
+                <Mail className="h-8 w-8 text-[#c4956a]" />
               </div>
               <h2 className="mb-2 font-['Cormorant_Garamond'] text-2xl font-bold text-[var(--text-primary)] italic">Email envoyé !</h2>
               <p className="mb-6 text-sm text-[var(--text-secondary)] font-light">
@@ -58,7 +58,7 @@ export default function ResetPasswordModal({ isOpen, onClose, onSwitchToLogin }:
               </p>
               <button
                 onClick={onSwitchToLogin}
-                className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 py-3 text-sm font-semibold text-white shadow-md shadow-teal-500/20 transition-all hover:from-teal-600 hover:to-emerald-600"
+                className="w-full rounded-xl bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e] py-3 text-sm font-semibold text-white shadow-md shadow-[#1a2f23]/15 transition-all hover:from-[#2d4a3e] hover:to-[#3d6050]"
               >
                 Retour à la connexion
               </button>
@@ -82,7 +82,7 @@ export default function ResetPasswordModal({ isOpen, onClose, onSwitchToLogin }:
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500/20"
+                      className="w-full rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-[#c4956a] focus:outline-none focus:ring-1 focus:ring-[#c4956a]/20"
                       placeholder="votre@email.com"
                       autoFocus
                     />
@@ -93,7 +93,7 @@ export default function ResetPasswordModal({ isOpen, onClose, onSwitchToLogin }:
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 py-3 text-sm font-semibold text-white shadow-md shadow-teal-500/20 transition-all hover:from-teal-600 hover:to-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full rounded-xl bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e] py-3 text-sm font-semibold text-white shadow-md shadow-[#1a2f23]/15 transition-all hover:from-[#2d4a3e] hover:to-[#3d6050] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {actionLoading ? <Loader2 className="mx-auto h-5 w-5 animate-spin" /> : 'Envoyer le lien'}
                 </button>

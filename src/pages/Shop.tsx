@@ -97,7 +97,7 @@ export default function Shop() {
           <p className="text-sm font-light mb-4" style={{ color: 'var(--text-muted)' }}>Essayez avec d'autres mots-clés ou catégories</p>
           <button
             onClick={handleReset}
-            className="text-teal-500 hover:text-teal-600 font-medium text-sm transition-colors"
+            className="text-[#c4956a] hover:text-[#a07850] font-medium text-sm transition-colors"
           >
             Réinitialiser les filtres
           </button>

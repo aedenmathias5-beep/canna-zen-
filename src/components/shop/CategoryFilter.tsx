@@ -12,12 +12,15 @@ export default function CategoryFilter({ selected, onSelect }: Props) {
         <button
           key={cat.slug}
           onClick={() => onSelect(cat.slug)}
-          className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+          className={`whitespace-nowrap px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
             selected === cat.slug
-              ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-md'
-              : 'glass-card hover:text-teal-600'
+              ? 'text-white shadow-md'
+              : 'glass-card hover:text-[#c4956a]'
           }`}
-          style={selected !== cat.slug ? { color: 'var(--text-secondary)' } : undefined}
+          style={selected === cat.slug
+            ? { background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)' }
+            : { color: 'var(--text-secondary)' }
+          }
         >
           {cat.emoji} {cat.name}
         </button>

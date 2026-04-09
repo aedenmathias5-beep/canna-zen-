@@ -63,10 +63,10 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2c2520]/60 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="relative mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)]/50 bg-[var(--bg-surface)] shadow-2xl shadow-teal-500/10"
+        className="relative mx-4 w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-color)]/50 bg-[var(--bg-surface)] shadow-2xl shadow-[#1a2f23]/10"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c4956a] to-transparent" />
 
         <button
           onClick={onClose}
@@ -101,7 +101,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 py-3 pl-10 pr-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-[#c4956a] focus:outline-none focus:ring-1 focus:ring-[#c4956a]/20"
                   placeholder="votre@email.com"
                 />
               </div>
@@ -115,7 +115,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
                   type={showPassword ? 'text' : 'password'}
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 py-3 pl-4 pr-10 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500/20"
+                  className="w-full rounded-xl border border-[var(--border-color)]/60 bg-[var(--bg-surface)]/50 py-3 pl-4 pr-10 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] transition-colors focus:border-[#c4956a] focus:outline-none focus:ring-1 focus:ring-[#c4956a]/20"
                   placeholder="••••••••"
                 />
                 <button
@@ -130,7 +130,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
             </div>
 
             <div className="flex justify-end">
-              <button type="button" onClick={onSwitchToReset} className="text-xs text-teal-500 hover:text-teal-600 font-medium">
+              <button type="button" onClick={onSwitchToReset} className="text-xs text-[#c4956a] hover:text-[#a07850] font-medium">
                 Mot de passe oublié ?
               </button>
             </div>
@@ -138,7 +138,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
             <button
               type="submit"
               disabled={actionLoading}
-              className="w-full rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 py-3 text-sm font-semibold text-white shadow-md shadow-teal-500/20 transition-all hover:from-teal-600 hover:to-emerald-600 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-xl bg-gradient-to-r from-[#1a2f23] to-[#2d4a3e] py-3 text-sm font-semibold text-white shadow-md shadow-[#1a2f23]/15 transition-all hover:from-[#2d4a3e] hover:to-[#3d6050] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {actionLoading ? <Loader2 className="mx-auto h-5 w-5 animate-spin" /> : 'Se connecter'}
             </button>
@@ -146,7 +146,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToRegister, onSwit
 
           <p className="mt-6 text-center text-sm text-[var(--text-secondary)] font-light">
             Pas encore de compte ?{' '}
-            <button onClick={onSwitchToRegister} className="font-medium text-teal-500 hover:text-teal-600">
+            <button onClick={onSwitchToRegister} className="font-medium text-[#c4956a] hover:text-[#a07850]">
               Créer un compte
             </button>
           </p>

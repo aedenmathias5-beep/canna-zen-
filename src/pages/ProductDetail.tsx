@@ -93,7 +93,7 @@ export default function ProductDetail() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-16">
         <AnimatedSection animation="fade-left">
-          <div className="relative aspect-square rounded-2xl overflow-hidden glass-card flex items-center justify-center group cursor-zoom-in">
+          <div className="relative aspect-square rounded-2xl overflow-hidden glass-card flex items-center justify-center group cursor-zoom-in smoke-effect">
             <img
               src={product.image}
               alt={product.name}
@@ -102,14 +102,14 @@ export default function ProductDetail() {
               onLoad={() => setImageLoaded(true)}
               className={`w-full h-full object-cover group-hover:scale-110 transition-all duration-700 ease-out ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/8 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             {product.badge && (
-              <span className="absolute top-4 left-4 px-3 py-1 text-xs font-bold rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 text-white tracking-wider">
+              <span className="absolute top-4 left-4 px-3 py-1.5 text-[10px] font-bold rounded-full tracking-wider" style={{ background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)', color: '#e8c49a' }}>
                 {product.badge}
               </span>
             )}
             {product.isNew && (
-              <span className="absolute top-4 right-4 px-3 py-1 text-xs font-bold rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+              <span className="absolute top-4 right-4 px-3 py-1.5 text-[10px] font-bold rounded-full text-white" style={{ background: 'linear-gradient(135deg, #c4956a, #d4a574)' }}>
                 NOUVEAU
               </span>
             )}
@@ -118,13 +118,13 @@ export default function ProductDetail() {
 
         <AnimatedSection animation="fade-right" delay={100}>
           <div>
-            <p className="text-[10px] font-medium tracking-[0.15em] uppercase mb-1" style={{ color: 'var(--text-muted)' }}>{product.category}</p>
+            <p className="text-[10px] font-medium tracking-[0.2em] uppercase mb-1" style={{ color: 'var(--text-muted)' }}>{product.category}</p>
             <h1 className="font-['Cormorant_Garamond'] text-2xl sm:text-3xl font-semibold italic mb-3" style={{ color: 'var(--text-primary)' }}>{product.name}</h1>
 
             <div className="flex items-center gap-2 mb-4">
               <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={14} className={`transition-colors duration-300 ${i < Math.round(product.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-200'}`} />
+                  <Star key={i} size={14} className={`transition-colors duration-300 ${i < Math.round(product.rating) ? 'fill-[#c9a96e] text-[#c9a96e]' : 'text-gray-200 dark:text-gray-600'}`} />
                 ))}
               </div>
               <span className="text-sm font-light" style={{ color: 'var(--text-secondary)' }}>{product.rating} ({product.reviewCount} avis)</span>
@@ -133,16 +133,16 @@ export default function ProductDetail() {
             <p className="mb-6 font-light leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{product.description}</p>
 
             <div className="mb-4">
-              <p className="text-xs font-medium tracking-wider uppercase mb-2" style={{ color: 'var(--text-muted)' }}>Effets</p>
+              <p className="text-[10px] font-medium tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--text-muted)' }}>Effets</p>
               <div className="flex flex-wrap gap-2">
                 {product.effects.map((effect, i) => (
                   <span
                     key={effect}
                     className="text-xs font-medium px-3 py-1.5 rounded-full transition-colors duration-300 cursor-default"
                     style={{
-                      background: 'rgba(13,148,136,0.08)',
-                      color: 'var(--accent-1)',
-                      border: '1px solid rgba(13,148,136,0.15)',
+                      background: 'rgba(196,149,106,0.08)',
+                      color: '#c4956a',
+                      border: '1px solid rgba(196,149,106,0.15)',
                       animationDelay: `${i * 50}ms`,
                     }}
                   >
@@ -153,21 +153,21 @@ export default function ProductDetail() {
             </div>
 
             <div className="mb-4">
-              <p className="text-xs font-medium tracking-wider uppercase mb-2" style={{ color: 'var(--text-muted)' }}>Intensité</p>
+              <p className="text-[10px] font-medium tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--text-muted)' }}>Intensité</p>
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'var(--border-color)' }}>
                   <div
-                    className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-1000 ease-out"
-                    style={{ width: imageLoaded ? `${(product.intensity / 5) * 100}%` : '0%' }}
+                    className="h-full rounded-full transition-all duration-1000 ease-out"
+                    style={{ width: imageLoaded ? `${(product.intensity / 5) * 100}%` : '0%', background: 'linear-gradient(90deg, #1a2f23, #c4956a)' }}
                   />
                 </div>
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: 'rgba(13,148,136,0.08)', color: 'var(--accent-1)' }}>{product.intensity}/5</span>
+                <span className="text-xs font-medium px-2.5 py-0.5 rounded-full" style={{ background: 'rgba(196,149,106,0.08)', color: '#c4956a' }}>{product.intensity}/5</span>
               </div>
             </div>
 
             {product.prices.length > 1 && (
               <div className="mb-6">
-                <p className="text-xs font-medium tracking-wider uppercase mb-2" style={{ color: 'var(--text-muted)' }}>Format</p>
+                <p className="text-[10px] font-medium tracking-[0.2em] uppercase mb-2" style={{ color: 'var(--text-muted)' }}>Format</p>
                 <div className="flex flex-wrap gap-2">
                   {product.prices.map((price, i) => (
                     <button
@@ -175,10 +175,13 @@ export default function ProductDetail() {
                       onClick={() => setSelectedPriceIndex(i)}
                       className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all duration-300 ${
                         selectedPriceIndex === i
-                          ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white border-transparent shadow-md scale-105'
-                          : 'hover:scale-105'
+                          ? 'text-white border-transparent shadow-md scale-105'
+                          : 'hover:scale-105 hover:border-[#c4956a]/30'
                       }`}
-                      style={selectedPriceIndex !== i ? { borderColor: 'var(--border-color)', color: 'var(--text-secondary)', background: 'var(--bg-card)' } : undefined}
+                      style={selectedPriceIndex === i
+                        ? { background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)' }
+                        : { borderColor: 'var(--border-color)', color: 'var(--text-secondary)', background: 'var(--bg-card)' }
+                      }
                     >
                       {price.label} — {price.amount.toFixed(2)}€
                     </button>
@@ -204,9 +207,10 @@ export default function ProductDetail() {
                 disabled={addedToCart}
                 className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold transition-all duration-300 btn-magnetic text-white ${
                   addedToCart
-                    ? 'bg-emerald-600 shadow-lg'
+                    ? 'shadow-lg'
                     : 'btn-vivid'
                 }`}
+                style={addedToCart ? { background: '#2d4a3e' } : undefined}
               >
                 {addedToCart ? (
                   <>
@@ -234,9 +238,9 @@ export default function ProductDetail() {
 
             <div className="grid grid-cols-3 gap-3 mb-6">
               {[
-                { icon: Truck, label: 'Livraison 24h', color: 'text-teal-500' },
-                { icon: Shield, label: 'THC < 0.3%', color: 'text-emerald-500' },
-                { icon: Package, label: 'Discret', color: 'text-cyan-500' },
+                { icon: Truck, label: 'Livraison 24h', color: 'text-[#1a2f23] dark:text-[#c4956a]' },
+                { icon: Shield, label: 'THC < 0.3%', color: 'text-[#2d4a3e] dark:text-[#d4a574]' },
+                { icon: Package, label: 'Discret', color: 'text-[#c4956a]' },
               ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-1 text-center p-3 rounded-xl glass-card card-hover-lift group">
                   <item.icon size={16} className={`${item.color} group-hover:scale-110 transition-transform duration-300`} />
@@ -245,9 +249,9 @@ export default function ProductDetail() {
               ))}
             </div>
 
-            <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(13,148,136,0.05), rgba(6,182,212,0.05))', border: '1px solid rgba(13,148,136,0.12)' }}>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-teal-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-              <p className="text-xs font-semibold text-teal-600 italic mb-2">Le Smokellier recommande</p>
+            <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(196,149,106,0.05), rgba(26,47,35,0.03))', border: '1px solid rgba(196,149,106,0.12)' }}>
+              <div className="absolute top-0 right-0 w-20 h-20 bg-[#c4956a]/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+              <p className="text-xs font-semibold text-[#c4956a] italic mb-2">Le Smokellier recommande</p>
               <p className="text-sm italic font-light leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 "{product.smokellierQuote}"
               </p>

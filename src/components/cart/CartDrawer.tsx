@@ -18,19 +18,19 @@ export default function CartDrawer({ open, onClose }: Props) {
   return (
     <>
       <div
-        className={`fixed inset-0 z-[70] transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ background: 'rgba(13,148,136,0.1)', backdropFilter: 'blur(4px)' }}
+        className={`fixed inset-0 z-[70] transition-opacity duration-400 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={{ background: 'rgba(26,47,35,0.15)', backdropFilter: 'blur(6px)' }}
         onClick={onClose}
       />
       <div
-        className={`fixed inset-y-0 right-0 z-[80] w-full sm:w-[400px] shadow-2xl flex flex-col transform transition-transform duration-300 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed inset-y-0 right-0 z-[80] w-full sm:w-[400px] shadow-2xl flex flex-col transform transition-transform duration-400 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
         style={{ background: 'var(--bg-surface)', borderLeft: '1px solid var(--border-color)' }}
       >
         <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid var(--border-color)' }}>
           <h2 className="font-['Cormorant_Garamond'] font-semibold text-xl italic flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             Panier
             {cartItems.length > 0 && (
-              <span className="text-xs font-normal not-italic px-2 py-0.5 rounded-full text-white bg-gradient-to-r from-teal-500 to-emerald-500">
+              <span className="text-xs font-normal not-italic px-2 py-0.5 rounded-full text-white" style={{ background: '#c4956a' }}>
                 {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
               </span>
             )}
@@ -42,8 +42,8 @@ export default function CartDrawer({ open, onClose }: Props) {
 
         {cartItems.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center fade-in-up">
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{ background: 'rgba(13,148,136,0.06)' }}>
-              <ShoppingBag size={32} className="text-teal-400/40" />
+            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{ background: 'rgba(196,149,106,0.06)' }}>
+              <ShoppingBag size={32} className="text-[#c4956a]/30" />
             </div>
             <p className="mb-2 font-light" style={{ color: 'var(--text-secondary)' }}>Votre panier est vide</p>
             <p className="text-xs mb-6 font-light" style={{ color: 'var(--text-muted)' }}>Explorez notre collection pour trouver votre bonheur</p>
@@ -59,19 +59,19 @@ export default function CartDrawer({ open, onClose }: Props) {
           <>
             <div className="px-4 pt-4 pb-2">
               <div className="flex items-center gap-2 mb-2">
-                <Truck size={14} className={`transition-colors duration-300 ${shipping === 0 ? 'text-emerald-500' : 'text-teal-400'}`} />
+                <Truck size={14} className={`transition-colors duration-300 ${shipping === 0 ? 'text-[#1a2f23] dark:text-[#c4956a]' : 'text-[#c4956a]/60'}`} />
                 {shipping === 0 ? (
-                  <p className="text-xs font-semibold text-emerald-500">Livraison offerte !</p>
+                  <p className="text-xs font-semibold text-[#1a2f23] dark:text-[#c4956a]">Livraison offerte !</p>
                 ) : (
                   <p className="text-xs font-light" style={{ color: 'var(--text-secondary)' }}>
-                    Plus que <span className="font-semibold text-teal-600">{remaining.toFixed(2)}€</span> pour la livraison offerte
+                    Plus que <span className="font-semibold text-[#c4956a]">{remaining.toFixed(2)}€</span> pour la livraison offerte
                   </p>
                 )}
               </div>
               <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: 'var(--border-color)' }}>
                 <div
-                  className="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full transition-all duration-700 ease-out"
-                  style={{ width: `${shippingProgress}%` }}
+                  className="h-full rounded-full transition-all duration-700 ease-out"
+                  style={{ width: `${shippingProgress}%`, background: 'linear-gradient(90deg, #1a2f23, #c4956a)' }}
                 />
               </div>
             </div>
@@ -122,7 +122,7 @@ export default function CartDrawer({ open, onClose }: Props) {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="font-light" style={{ color: 'var(--text-secondary)' }}>Livraison estimée</span>
-                <span className={`font-medium ${shipping === 0 ? 'text-emerald-500' : ''}`} style={shipping !== 0 ? { color: 'var(--text-primary)' } : undefined}>{shipping === 0 ? 'Offerte' : `${shipping.toFixed(2)}€`}</span>
+                <span className={`font-medium ${shipping === 0 ? 'text-[#1a2f23] dark:text-[#c4956a]' : ''}`} style={shipping !== 0 ? { color: 'var(--text-primary)' } : undefined}>{shipping === 0 ? 'Offerte' : `${shipping.toFixed(2)}€`}</span>
               </div>
               <div className="flex justify-between font-semibold text-lg pt-2" style={{ borderTop: '1px solid var(--border-color)' }}>
                 <span style={{ color: 'var(--text-primary)' }}>Total</span>

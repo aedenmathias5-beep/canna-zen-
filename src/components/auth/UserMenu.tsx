@@ -34,7 +34,7 @@ export default function UserMenu() {
         {profile?.photoURL ? (
           <img src={profile.photoURL} alt="" className="h-7 w-7 rounded-full border border-[var(--border-color)]" />
         ) : (
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--border-color)]/50 text-teal-500">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--border-color)]/50 text-[#c4956a]">
             <User className="h-4 w-4" />
           </div>
         )}
@@ -42,12 +42,12 @@ export default function UserMenu() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-[var(--border-color)]/50 bg-white shadow-xl shadow-teal-500/10">
+        <div className="absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-xl border border-[var(--border-color)]/50 bg-white shadow-xl shadow-[#1a2f23]/10">
           <div className="border-b border-[var(--border-color)]/50 px-4 py-3">
             <p className="text-sm font-medium text-[var(--text-primary)]">{profile?.displayName || 'Utilisateur'}</p>
             <p className="text-xs text-[var(--text-secondary)] font-light">{user?.email}</p>
             {(profile?.stats?.loyaltyPoints ?? 0) > 0 && (
-              <p className="mt-1 text-xs text-teal-500 font-medium">{profile?.stats.loyaltyPoints} points fidélité</p>
+              <p className="mt-1 text-xs text-[#c4956a] font-medium">{profile?.stats.loyaltyPoints} points fidélité</p>
             )}
           </div>
 
