@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Star, ArrowRight } from 'lucide-react';
 import type { Product } from '../../data/products';
+import WishlistHeart from '../ui/WishlistHeart';
+import BestSellerBadge from '../ui/BestSellerBadge';
 
 interface Props {
   product: Product;
@@ -24,7 +26,10 @@ export default function ProductCard({ product }: Props) {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        {product.badge && (
+        {product.isBestSeller && (
+          <BestSellerBadge className="absolute top-3 left-3 z-10" />
+        )}
+        {product.badge && !product.isBestSeller && (
           <span className="absolute top-3 left-3 px-2.5 py-1 text-[9px] font-bold rounded-full tracking-wider" style={{ background: 'linear-gradient(135deg, #1a2f23, #2d4a3e)', color: '#e8c49a' }}>
             {product.badge}
           </span>
@@ -34,7 +39,10 @@ export default function ProductCard({ product }: Props) {
             NOUVEAU
           </span>
         )}
-        <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-400">
+        <div className="absolute bottom-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <WishlistHeart productId={product.id} size={16} className="bg-white/80 backdrop-blur-sm rounded-full p-1.5 shadow-md" />
+        </div>
+        <div className="absolute bottom-3 left-3 right-14 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-400">
           <span className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm text-[#1a2f23] text-[10px] font-medium px-3.5 py-2 rounded-full shadow-lg tracking-wide">
             Voir le produit <ArrowRight size={10} />
           </span>

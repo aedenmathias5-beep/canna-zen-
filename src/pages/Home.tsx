@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Shield, Truck, Star, Droplets, Mail, CheckCircle, Leaf, Sparkles } from 'lucide-react';
+import { ArrowRight, Shield, Truck, Star, Droplets, Mail, CheckCircle, Leaf, Sparkles, Gift, MapPin, Brain } from 'lucide-react';
 import { products } from '../data/products';
 import ProductCard from '../components/shop/ProductCard';
 import AnimatedSection from '../components/ui/AnimatedSection';
@@ -53,19 +53,31 @@ export default function Home() {
 
         <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(26,47,35,0.3) 1px, transparent 0)', backgroundSize: '60px 60px' }} />
 
-        {Array.from({ length: 8 }, (_, i) => (
+        {Array.from({ length: 10 }, (_, i) => (
           <div
-            key={i}
+            key={`leaf-${i}`}
             className="absolute pointer-events-none"
             style={{
-              left: `${5 + i * 12}%`,
+              left: `${3 + i * 10}%`,
               top: '-20px',
               opacity: 0,
-              animation: `leaf-fall ${16 + i * 2.5}s ${i * 1.8}s ease-in-out infinite`,
+              animation: `leaf-fall ${14 + i * 2}s ${i * 1.5}s ease-in-out infinite`,
             }}
           >
-            <Leaf size={8 + (i % 4) * 4} className="text-[#1a2f23]/15 dark:text-[#c4956a]/10" style={{ filter: 'blur(0.5px)' }} />
+            <Leaf size={6 + (i % 4) * 4} className="text-[#1a2f23]/12 dark:text-[#c4956a]/8" style={{ filter: 'blur(0.3px)' }} />
           </div>
+        ))}
+
+        {Array.from({ length: 6 }, (_, i) => (
+          <div
+            key={`drop-${i}`}
+            className="absolute pointer-events-none w-1 h-1 rounded-full bg-[#c4956a]/15"
+            style={{
+              left: `${15 + i * 14}%`,
+              top: '-5px',
+              animation: `droplet-fall ${10 + i * 3}s ${i * 2.5 + 3}s ease-in infinite`,
+            }}
+          />
         ))}
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
@@ -209,6 +221,35 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
+      <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" animation="scale-in">
+        <div className="relative rounded-2xl overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(26,47,35,0.06), rgba(196,149,106,0.04))', border: '1px solid rgba(196,149,106,0.12)' }}>
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[#c4956a]/5 rounded-full blur-[80px]" />
+          <div className="flex flex-col md:flex-row items-center gap-6 p-6 md:p-10">
+            <div className="flex-1 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 text-[10px] font-medium px-3 py-1.5 rounded-full mb-3 tracking-[0.2em] uppercase" style={{ background: 'rgba(196,149,106,0.08)', color: '#c4956a', border: '1px solid rgba(196,149,106,0.15)' }}>
+                <Brain size={10} /> Quiz personnalisé
+              </div>
+              <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-3xl font-semibold italic mb-2" style={{ color: 'var(--text-primary)' }}>
+                Quel <span className="text-gradient-vivid">CBD</span> est fait pour vous ?
+              </h2>
+              <p className="text-sm font-light mb-4 max-w-md" style={{ color: 'var(--text-secondary)' }}>
+                Répondez à 4 questions et découvrez les produits parfaitement adaptés à vos besoins.
+              </p>
+              <Link to="/quiz" className="inline-flex items-center gap-2 text-white px-6 py-3 rounded-xl font-semibold text-sm btn-amber group">
+                Faire le quiz <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+            <div className="flex gap-3">
+              {['🧘', '⚡', '🌙', '✨'].map((emoji, i) => (
+                <div key={i} className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl glass-card card-hover-lift" style={{ animationDelay: `${i * 100}ms` }}>
+                  {emoji}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
       <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex items-center justify-between mb-8">
           <h2 className="font-['Cormorant_Garamond'] text-2xl md:text-3xl font-semibold italic" style={{ color: 'var(--text-primary)' }}>
@@ -220,6 +261,42 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-child">
           {newProducts.map(p => <ProductCard key={p.id} product={p} />)}
+        </div>
+      </AnimatedSection>
+
+      <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-2 gap-6">
+          <Link to="/coffrets" className="group relative rounded-2xl overflow-hidden p-6 card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(26,47,35,0.06), rgba(196,149,106,0.04))', border: '1px solid rgba(196,149,106,0.12)' }}>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#c4956a]/5 rounded-full blur-[60px]" />
+            <div className="relative z-10">
+              <Gift size={28} className="text-[#c4956a] mb-3" />
+              <h3 className="font-['Cormorant_Garamond'] text-xl font-semibold italic mb-2" style={{ color: 'var(--text-primary)' }}>
+                Coffrets <span className="text-gradient-vivid">Surprise</span>
+              </h3>
+              <p className="text-sm font-light mb-3" style={{ color: 'var(--text-secondary)' }}>
+                Sélections thématiques avec animation d'ouverture. Jusqu'à -30%.
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-[#c4956a] group-hover:gap-2 transition-all">
+                Découvrir <ArrowRight size={12} />
+              </span>
+            </div>
+          </Link>
+
+          <Link to="/terroirs" className="group relative rounded-2xl overflow-hidden p-6 card-hover-lift" style={{ background: 'linear-gradient(135deg, rgba(26,47,35,0.06), rgba(196,149,106,0.04))', border: '1px solid rgba(196,149,106,0.12)' }}>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#1a2f23]/5 rounded-full blur-[60px]" />
+            <div className="relative z-10">
+              <MapPin size={28} className="text-[#1a2f23] dark:text-[#c4956a] mb-3" />
+              <h3 className="font-['Cormorant_Garamond'] text-xl font-semibold italic mb-2" style={{ color: 'var(--text-primary)' }}>
+                Nos <span className="text-gradient-vivid">Terroirs</span>
+              </h3>
+              <p className="text-sm font-light mb-3" style={{ color: 'var(--text-secondary)' }}>
+                Explorez les régions françaises qui cultivent notre chanvre d'exception.
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs font-medium text-[#c4956a] group-hover:gap-2 transition-all">
+                Explorer la carte <ArrowRight size={12} />
+              </span>
+            </div>
+          </Link>
         </div>
       </AnimatedSection>
 

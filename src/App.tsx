@@ -7,6 +7,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import AgeGate from './components/layout/AgeGate';
 import ChatWidget from './components/smokellier/ChatWidget';
+import CbdChat from './components/ui/CbdChat';
 import LoadingSpinner from './components/ui/LoadingSpinner';
 import ScrollToTopButton from './components/ui/ScrollToTopButton';
 
@@ -24,6 +25,9 @@ const Legal = lazy(() => import('./pages/Legal'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Wishlist = lazy(() => import('./pages/Wishlist'));
 const AuthCallback = lazy(() => import('./pages/AuthCallback'));
+const Quiz = lazy(() => import('./pages/Quiz'));
+const Terroirs = lazy(() => import('./pages/Terroirs'));
+const Coffrets = lazy(() => import('./pages/Coffrets'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function ScrollToTop() {
@@ -53,6 +57,9 @@ export default function App() {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/checkout/confirmation/:id" element={<Confirmation />} />
+                <Route path="/quiz" element={<Quiz />} />
+                <Route path="/terroirs" element={<Terroirs />} />
+                <Route path="/coffrets" element={<Coffrets />} />
                 <Route path="/a-propos" element={<About />} />
                 <Route path="/cgv" element={<CGV />} />
                 <Route path="/mentions-legales" element={<Legal />} />
@@ -64,9 +71,10 @@ export default function App() {
           <Footer />
         </div>
         <ScrollToTopButton />
+        <CbdChat />
         <ChatWidget />
         <Toaster
-          position="bottom-left"
+          position="top-center"
           toastOptions={{
             duration: 3000,
             style: {

@@ -38,6 +38,9 @@ export default function Footer() {
                 {[
                   { label: 'Accueil', to: '/' },
                   { label: 'Boutique', to: '/boutique' },
+                  { label: 'Quiz CBD', to: '/quiz' },
+                  { label: 'Coffrets', to: '/coffrets' },
+                  { label: 'Nos Terroirs', to: '/terroirs' },
                   { label: 'À propos', to: '/a-propos' },
                 ].map(link => (
                   <Link key={link.to} to={link.to} className="text-sm text-white/40 hover:text-[#c4956a] hover:translate-x-1 transition-all duration-300 font-light inline-block">

@@ -60,9 +60,12 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **src/components/auth/SocialButton.tsx**: Google sign-in button component
 
 ## Pages & Routes
-- `/` — Home (hero "L'univers de Mary Jane", categories, best-sellers, nouveautés, newsletter)
+- `/` — Home (hero "L'univers de Mary Jane", categories, best-sellers, quiz CTA, coffrets+terroirs teasers, nouveautés, newsletter)
 - `/boutique` — Shop (28 products, category filter, search with URL params)
 - `/boutique/:slug` — Product detail (effects, intensity, Smokellier quote, wishlist heart, add to cart)
+- `/quiz` — CBD Quiz (4-step personalized quiz with product recommendations + effect simulator)
+- `/terroirs` — France Terroirs Map (interactive SVG map with 5 regions: Alsace, Provence, Bretagne, Auvergne, Occitanie)
+- `/coffrets` — Mystery Coffrets (4 themed boxes with shake+reveal animation, discount pricing)
 - `/connexion` — Login/Register/Reset (modal-based, redirects when authenticated)
 - `/compte` — Account (AuthGuard, profile card with stats, menu links)
 - `/compte/commandes` — Orders history (AuthGuard, localStorage)
@@ -82,14 +85,18 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **AgeGate**: "Bienvenue au jardin" + "l'univers de Mary Jane" text, 18+ verification, localStorage (cannazen-age-verified)
 - **CartDrawer**: Slide-in from right, quantity controls, free shipping threshold with conditional messaging
 - **ChatWidget (Smokellier)**: "Le Smokellier" header, sage green (#6b8f5e) theme, keyword responses, product suggestions
-- **ProductCard**: Image (lazy-loaded, 300x300), badge, Cormorant Garamond name, rating stars, price, hover lift effect with "Voir le produit" overlay
+- **ProductCard**: Image (lazy-loaded, 300x300), badge, BestSellerBadge (neon pulse), WishlistHeart (pulsing heart), Cormorant Garamond name, rating stars, price, hover lift effect with "Voir le produit" overlay
+- **CbdChat**: Bottom-left educational FAQ chatbot with keyword matching, quick question buttons, forest green header
+- **ShippingProgress**: Leaf-animated progress bar for free shipping threshold in CartDrawer
+- **WishlistHeart**: Pulsing heart with particle burst animation on add to favorites
+- **BestSellerBadge**: Amber neon-pulse badge with flame icon for best-seller products
 - **AnimatedSection** (src/components/ui/AnimatedSection.tsx): Scroll-reveal wrapper using IntersectionObserver (fade-up, fade-left, fade-right, scale-in, fade-in)
 
 ## Animation System
 - **useInView hook** (src/hooks/useInView.ts): IntersectionObserver-based visibility detection
 - **AnimatedSection**: Reusable scroll-reveal component with configurable animation and delay
-- **CSS animations** (index.css): shimmer, float, pulse-glow, count-pop, slide-down, leaf-fall, gradient-shift
-- **CSS utility classes**: card-hover-lift, img-zoom, btn-magnetic, text-gradient-sage, border-glow, stagger-child (cascading delays)
+- **CSS animations** (index.css): shimmer, float, pulse-glow, count-pop, slide-down, leaf-fall, gradient-shift, wishlist-pulse, heart-burst, neon-pulse, coffret-shake, coffret-reveal, shipping-bounce, effect-float, droplet-fall
+- **CSS utility classes**: card-hover-lift, img-zoom, btn-magnetic, text-gradient-sage, border-glow, stagger-child, bestseller-neon, bestseller-flame, coffret-opening, coffret-item, shipping-leaf, effect-particle
 - **Header**: Shrinks on scroll, cart badge bounce on add, nav link underline animation, search slide-down
 - **Home**: Staged hero entrance, floating leaf particles, scroll indicator, animated gradient background
 - **ProductDetail**: Image fade-in on load, intensity bar animation, "Ajouté !" button feedback

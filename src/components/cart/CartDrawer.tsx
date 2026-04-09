@@ -1,6 +1,7 @@
-import { X, ShoppingBag, Minus, Plus, Trash2, Truck, Trash } from 'lucide-react';
+import { X, ShoppingBag, Minus, Plus, Trash2, Trash } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../lib/CartContext';
+import ShippingProgress from '../ui/ShippingProgress';
 
 interface Props {
   open: boolean;
@@ -12,8 +13,6 @@ export default function CartDrawer({ open, onClose }: Props) {
   const FREE_SHIPPING_THRESHOLD = 49;
   const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : 4.90;
   const total = cartTotal + shipping;
-  const shippingProgress = Math.min((cartTotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
-  const remaining = FREE_SHIPPING_THRESHOLD - cartTotal;
 
   return (
     <>
@@ -58,22 +57,7 @@ export default function CartDrawer({ open, onClose }: Props) {
         ) : (
           <>
             <div className="px-4 pt-4 pb-2">
-              <div className="flex items-center gap-2 mb-2">
-                <Truck size={14} className={`transition-colors duration-300 ${shipping === 0 ? 'text-[#1a2f23] dark:text-[#c4956a]' : 'text-[#c4956a]/60'}`} />
-                {shipping === 0 ? (
-                  <p className="text-xs font-semibold text-[#1a2f23] dark:text-[#c4956a]">Livraison offerte !</p>
-                ) : (
-                  <p className="text-xs font-light" style={{ color: 'var(--text-secondary)' }}>
-                    Plus que <span className="font-semibold text-[#c4956a]">{remaining.toFixed(2)}€</span> pour la livraison offerte
-                  </p>
-                )}
-              </div>
-              <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: 'var(--border-color)' }}>
-                <div
-                  className="h-full rounded-full transition-all duration-700 ease-out"
-                  style={{ width: `${shippingProgress}%`, background: 'linear-gradient(90deg, #1a2f23, #c4956a)' }}
-                />
-              </div>
+              <ShippingProgress currentAmount={cartTotal} threshold={FREE_SHIPPING_THRESHOLD} />
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
