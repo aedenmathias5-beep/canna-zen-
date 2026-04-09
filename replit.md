@@ -139,12 +139,10 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - contact@cannazen.space
 
 ## Deployment
-- **Platform**: Vercel (SPA mode, framework: vite)
-- **Config**: vercel.json with explicit buildCommand, outputDirectory, framework, and SPA rewrite
+- **Platform**: Replit (migrated from Vercel)
+- **Dev Server**: Vite on port 5000 (host 0.0.0.0, allowedHosts: true)
 - **Build**: `vite build` (no tsc — Vite handles TS transpilation via esbuild; typecheck via `npm run typecheck`)
-- **Vercel URL**: https://canna-zen-eta.vercel.app
-- **Domain**: https://cannazen.fun
-- **Env vars**: .env.production in repo (public keys only: Supabase URL, anon key, Mollie test key, site URL)
+- **Env vars**: Stored as Replit secrets (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_MOLLIE_API_KEY, VITE_SITE_URL)
 - **Node**: requires >=20 (set in engines field)
 - **Error handling**: ErrorBoundary wraps entire app — never shows blank page on crash
 - **Google OAuth redirect**: uses getRedirectUrl() (dynamic from VITE_SITE_URL), must be allowed in Supabase dashboard
