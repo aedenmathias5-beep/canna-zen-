@@ -167,7 +167,7 @@ export function ProductCard3D({ product }: Props) {
               border: '1px solid rgba(201,168,76,0.2)',
               borderRadius: '50%',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer',
+              cursor: 'none',
               opacity: isHovered ? 1 : 0,
               transform: isHovered ? 'scale(1)' : 'scale(0.8)',
               transition: 'opacity 0.3s, transform 0.3s',
@@ -196,7 +196,7 @@ export function ProductCard3D({ product }: Props) {
                 color: '#e8d5a0',
                 fontFamily: 'DM Sans, sans-serif',
                 fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase',
-                cursor: 'pointer',
+                cursor: 'none',
                 backdropFilter: 'blur(10px)',
               }}
             >
@@ -303,7 +303,7 @@ export function ProductCard3D({ product }: Props) {
                 fontFamily: 'DM Sans, sans-serif',
                 fontSize: '0.6rem', fontWeight: 600,
                 letterSpacing: '0.1em', textTransform: 'uppercase',
-                cursor: 'pointer',
+                cursor: 'none',
                 transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 transform: addedToCart ? 'scale(0.95)' : 'scale(1)',
                 whiteSpace: 'nowrap',

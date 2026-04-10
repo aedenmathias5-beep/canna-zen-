@@ -62,7 +62,7 @@ function Dropdown({ item, onClose }: { item: typeof navItems[0]; onClose: () => 
             textDecoration: 'none',
             letterSpacing: '0.1em',
             transition: 'color 0.2s, background 0.2s, padding-left 0.3s',
-            cursor: 'pointer',
+            cursor: 'none',
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLElement).style.color = 'var(--or)';
@@ -137,7 +137,7 @@ export default function Header() {
 
   const iconStyle = {
     color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)',
-    cursor: 'pointer',
+    cursor: 'none',
     padding: '8px',
     background: 'transparent',
     border: 'none',
@@ -229,7 +229,7 @@ export default function Header() {
                 position: 'absolute',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                cursor: 'pointer',
+                cursor: 'none',
                 textDecoration: 'none',
                 display: 'flex',
                 alignItems: 'center',
@@ -316,7 +316,7 @@ export default function Header() {
                         textTransform: 'uppercase',
                         color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)',
                         textDecoration: 'none',
-                        cursor: 'pointer',
+                        cursor: 'none',
                         transition: 'color 0.3s',
                       }}
                       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
@@ -337,7 +337,7 @@ export default function Header() {
                         color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)',
                         background: 'none',
                         border: 'none',
-                        cursor: 'pointer',
+                        cursor: 'none',
                         transition: 'color 0.3s',
                       }}
                       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
@@ -383,7 +383,7 @@ export default function Header() {
                   fontFamily: 'var(--font-body)',
                   fontSize: '0.85rem',
                   outline: 'none',
-                  cursor: 'pointer',
+                  cursor: 'none',
                 }}
               />
               <button
@@ -395,7 +395,7 @@ export default function Header() {
                   border: `1px solid ${isDark ? 'rgba(201,168,76,0.1)' : 'rgba(74,103,65,0.15)'}`,
                   borderRadius: '4px',
                   color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.6)',
-                  cursor: 'pointer',
+                  cursor: 'none',
                 }}
               >
                 <X size={16} />

@@ -19,7 +19,7 @@ export default function ThemeToggle() {
         background: 'transparent',
         border: `1px solid ${isDark ? 'rgba(201,168,76,0.2)' : 'rgba(74,103,65,0.2)'}`,
         borderRadius: '50%',
-        cursor: 'pointer',
+        cursor: 'none',
         transition: 'border-color 0.3s, background 0.3s',
         color: isDark ? 'rgba(201,168,76,0.7)' : 'rgba(74,103,65,0.7)',
         flexShrink: 0,

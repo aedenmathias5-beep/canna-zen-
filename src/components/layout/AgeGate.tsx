@@ -164,7 +164,7 @@ export default function AgeGate() {
               fontSize: '0.75rem',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              cursor: 'pointer',
+              cursor: 'none',
               transition: 'border-color 0.3s, color 0.3s',
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.25)'; (e.currentTarget as HTMLElement).style.color = 'var(--or-pale)'; }}

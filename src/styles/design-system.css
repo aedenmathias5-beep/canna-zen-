@@ -60,7 +60,52 @@
   --z-sticky:    100;
   --z-drawer:    200;
   --z-modal:     300;
+  --z-cursor:    9999;
   --z-loader:    10000;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: var(--or);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%);
+  transition: width 0.2s var(--ease-silk), height 0.2s var(--ease-silk), background 0.2s;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 40px; height: 40px;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s var(--ease-luxury), height 0.4s var(--ease-luxury), border-color 0.3s, opacity 0.3s;
+  will-change: transform;
+}
+
+.cursor-dot.hovering {
+  width: 16px; height: 16px;
+  background: var(--or-chaud);
+}
+
+.cursor-ring.hovering {
+  width: 60px; height: 60px;
+  border-color: rgba(201, 168, 76, 0.8);
+}
+
+.cursor-dot.clicking {
+  transform: translate(-50%, -50%) scale(0.7);
+}
+
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
 }
 
 .text-display-xl {
@@ -124,7 +169,7 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  cursor: pointer;
+  cursor: none;
   transition: color var(--dur-mid) var(--ease-luxury);
 }
 
@@ -155,7 +200,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-  cursor: pointer;
+  cursor: none;
   transition: color var(--dur-fast) var(--ease-silk), border-color var(--dur-fast) var(--ease-silk);
 }
 .btn-ghost:hover {
@@ -412,7 +457,7 @@ html.light .text-or {
   border: 1px solid rgba(201,168,76,0.15);
   border-radius: 6px;
   overflow: hidden;
-  cursor: pointer;
+  cursor: none;
   transition: border-color 0.3s, transform 0.3s var(--ease-spring);
 }
 

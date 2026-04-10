@@ -51,7 +51,7 @@ export default class ErrorBoundary extends Component<Props, State> {
                 padding: '0.75rem 2rem',
                 borderRadius: '0.5rem',
                 fontSize: '1rem',
-                cursor: 'pointer',
+                cursor: 'none',
               }}
             >
               Rafraîchir la page

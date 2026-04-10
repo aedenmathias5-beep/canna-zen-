@@ -15,7 +15,7 @@ export function MarqueeBanner() {
   const doubled = [...items, ...items];
 
   return (
-    <div className="marquee-wrapper" style={{ cursor: 'pointer' }}>
+    <div className="marquee-wrapper" style={{ cursor: 'none' }}>
       <div className="marquee-track">
         {doubled.map((item, i) => (
           <div key={i} className="marquee-item">
