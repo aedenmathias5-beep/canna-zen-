@@ -28,6 +28,7 @@ const AuthCallback = lazy(() => import('./pages/AuthCallback'));
 const Quiz = lazy(() => import('./pages/Quiz'));
 const Terroirs = lazy(() => import('./pages/Terroirs'));
 const Coffrets = lazy(() => import('./pages/Coffrets'));
+const Loyalty = lazy(() => import('./pages/Loyalty'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function ScrollToTop() {
@@ -60,6 +61,7 @@ export default function App() {
                 <Route path="/quiz" element={<Quiz />} />
                 <Route path="/terroirs" element={<Terroirs />} />
                 <Route path="/coffrets" element={<Coffrets />} />
+                <Route path="/loyalty" element={<Loyalty />} />
                 <Route path="/a-propos" element={<About />} />
                 <Route path="/cgv" element={<CGV />} />
                 <Route path="/mentions-legales" element={<Legal />} />

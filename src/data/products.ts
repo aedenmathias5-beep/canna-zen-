@@ -17,6 +17,8 @@ export interface Product {
   inStock: boolean;
   isNew?: boolean;
   isBestSeller?: boolean;
+  stock?: number;
+  cbdPercent?: number;
 }
 
 export const products: Product[] = [

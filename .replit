@@ -1,6 +1,7 @@
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "web", "python-3.11"]
 [agent]
 expertMode = true
+integrations = ["github:1.0.0"]
 
 [nix]
 channel = "stable-25_05"
@@ -36,7 +37,7 @@ externalPort = 80
 [userenv]
 
 [userenv.shared]
-VITE_SUPABASE_URL = "https://wsfufhzdxhqimbokxwcw.supabase.co"
-VITE_SUPABASE_ANON_KEY = "sb_publishable_iFHuddg53-NTSxu3YTuw-w_LvcgsDVE"
+VITE_SUPABASE_URL = "https://iaisoihmrbfvbllabnsl.supabase.co"
+VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlhaXNvaWhtcmJmdmJsbGFibnNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MjkwMzcsImV4cCI6MjA5MDEwNTAzN30.KkWfaLn5Ic7UR0qIjqreKvpOIv46e64uciCYZwz8Yso"
 VITE_MOLLIE_API_KEY = "test_rNAJUpSxpzsFDAsGMR2DtVMUnJUf5T"
 VITE_SITE_URL = "https://cannazen.fun"

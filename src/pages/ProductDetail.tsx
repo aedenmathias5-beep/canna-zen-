@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Star, Minus, Plus, ShoppingCart, Shield, Truck, Package, Heart, Check } from 'lucide-react';
+import { Star, Minus, Plus, ShoppingCart, Shield, Truck, Package, Heart, Check, MessageSquare } from 'lucide-react';
 import { products } from '../data/products';
 import { useCart } from '../lib/CartContext';
 import { useAuth } from '../lib/AuthContext';
@@ -9,6 +9,8 @@ import { addToWishlist, removeFromWishlist } from '../lib/supabaseDb';
 import ProductCard from '../components/shop/ProductCard';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import ReviewForm from '../components/reviews/ReviewForm';
+import ReviewList from '../components/reviews/ReviewList';
 import toast from 'react-hot-toast';
 
 export default function ProductDetail() {
@@ -20,6 +22,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [reviewKey, setReviewKey] = useState(0);
 
   const productIdStr = product ? String(product.id) : '';
   const isInWishlist = product ? (profile?.wishlist || []).includes(productIdStr) : false;
@@ -270,6 +273,27 @@ export default function ProductDetail() {
           </section>
         </AnimatedSection>
       )}
+
+      <AnimatedSection className="mt-8">
+        <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid var(--border-color)' }}>
+          <div className="px-6 py-4 flex items-center gap-2" style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border-color)' }}>
+            <MessageSquare size={16} className="text-[#c4956a]" />
+            <h2 className="font-['Cormorant_Garamond'] text-xl font-semibold italic" style={{ color: 'var(--text-primary)' }}>
+              Avis clients
+            </h2>
+          </div>
+          <div className="p-6 grid md:grid-cols-2 gap-8">
+            <div>
+              <p className="text-xs font-medium mb-4 uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Laisser un avis</p>
+              <ReviewForm productSlug={product.slug} onSubmitted={() => setReviewKey(k => k + 1)} />
+            </div>
+            <div>
+              <p className="text-xs font-medium mb-4 uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Avis publiés</p>
+              <ReviewList productSlug={product.slug} refreshKey={reviewKey} />
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
     </div>
   );
 }

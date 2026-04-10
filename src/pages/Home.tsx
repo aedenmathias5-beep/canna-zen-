@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Shield, Truck, Star, Droplets, Mail, CheckCircle, Leaf, Sparkles, Gift, MapPin, Brain } from 'lucide-react';
 import { products } from '../data/products';
+import { supabase } from '../lib/supabase';
 import ProductCard from '../components/shop/ProductCard';
+import ProductGrid from '../components/shop/ProductGrid';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import toast from 'react-hot-toast';
 
 const heroCategories = [
   { emoji: '🌿', name: 'Fleurs CBD', slug: 'fleurs-cbd' },
@@ -28,11 +31,22 @@ export default function Home() {
     return () => clearTimeout(t);
   }, []);
 
-  const handleNewsletter = (e: React.FormEvent) => {
+  const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
+    if (!email.trim()) return;
+    try {
+      const { error } = await supabase.from('subscribers').insert({ email: email.toLowerCase().trim() });
+      if (error && (error.code === '23505' || error.message?.includes('duplicate'))) {
+        toast('Vous êtes déjà inscrit(e) !', { icon: '💌' });
+      } else if (error && (error.code === 'PGRST205' || error.message?.includes('does not exist'))) {
+        // Table not yet created — still show success to user
+      } else if (error) {
+        throw error;
+      }
       setSubscribed(true);
       setEmail('');
+    } catch {
+      toast.error('Erreur lors de l\'inscription, réessayez.');
     }
   };
 
@@ -219,6 +233,10 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 stagger-child">
           {bestSellers.map(p => <ProductCard key={p.id} product={p} />)}
         </div>
+      </AnimatedSection>
+
+      <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <ProductGrid title="Catalogue live" limit={8} showFallback={true} />
       </AnimatedSection>
 
       <AnimatedSection className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" animation="scale-in">

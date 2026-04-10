@@ -1,7 +1,9 @@
 # CannaZen — CBD Premium
 
 ## Overview
-CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + Tailwind CSS v4. Premium "luxe nature & bien-être" design with forest green (#1a2f23/#2d4a3e) and warm amber (#c4956a) palette, cream backgrounds, light/dark theme toggle, aurora gradients, 3D card effects, smoke animations, and premium shadows. Cormorant Garamond display font + Inter body font. Internal product catalog (28 products), Supabase auth with PostgreSQL profiles, cart with localStorage persistence, Smokellier keyword chatbot, and sandbox checkout.
+CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + Tailwind CSS v4. Premium "luxe nature & bien-être" design with forest green (#1a2f23/#2d4a3e) and warm amber (#c4956a) palette, cream backgrounds, light/dark theme toggle, aurora gradients, 3D card effects, smoke animations, and premium shadows. Cormorant Garamond display font + Inter body font. Internal product catalog (28 products), Supabase auth with PostgreSQL profiles, cart with localStorage persistence, AI chatbot (Groq), and sandbox checkout.
+
+**Active Supabase project**: `iaisoihmrbfvbllabnsl` (eu-central-1) — 7 tables: profiles, carts, orders, products (28 seeded), loyalty_points, reviews, subscribers
 
 ## Architecture
 - **Dev Server**: Vite on port 5000 (host 0.0.0.0, allowedHosts: true)
@@ -45,6 +47,9 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **src/lib/supabaseAuth.ts**: Auth helpers (signInWithGoogle, signInWithEmail, registerWithEmail, resetPassword, supabaseSignOut)
 - **src/lib/supabaseDb.ts**: Supabase DB CRUD (UserProfile, wishlist, addresses, cart sync)
 - **src/lib/validators/auth.ts**: Zod schemas (loginSchema, registerSchema, resetPasswordSchema, updateProfileSchema, addressSchema)
+- **src/lib/compliance.ts**: Zod schema (ProductComplianceSchema), validateCompliance(), and complianceData map for all 28 products (THC %, CBD %, origin, batch number)
+- **src/lib/loyalty-engine.ts**: Tier system (bronze/silver/gold/platinum), getTierFromPoints(), getTierConfig(), calculateLoyaltyPoints(), getPointsToNextTier()
+- **src/hooks/useRecommendations.ts**: Intent-based product scoring hook (goal + format → ranked Product[]); maps English intent values to French product effects
 - **src/lib/AuthContext.tsx**: Auth provider with Supabase onAuthStateChange + PostgreSQL profile loading
 - **src/hooks/useAuthActions.ts**: Hook with auth actions + toast feedback
 - **src/lib/constants.ts**: Site name, routes, storage keys, shipping config
@@ -69,6 +74,8 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - `/connexion` — Login/Register/Reset (modal-based, redirects when authenticated)
 - `/compte` — Account (AuthGuard, profile card with stats, menu links)
 - `/compte/commandes` — Orders history (AuthGuard, localStorage)
+- `/loyalty` — Loyalty programme (AuthGuard) — points balance, tier, perks, tier progression table
+- `/boutique` — **Shop now fully Supabase-powered**: live products, live category counts with `useShopProducts` hook, "● Live" indicator, Supabase fallback to local products
 - `/wishlist` — Wishlist (AuthGuard, Firestore-backed product favorites)
 - `/checkout` — Checkout (3 shipping + 3 payment options)
 - `/checkout/confirmation/:id` — Order confirmation
@@ -86,7 +93,13 @@ CannaZen is a CBD e-commerce website built with Vite + React 19 + TypeScript + T
 - **CartDrawer**: Slide-in from right, quantity controls, free shipping threshold with conditional messaging
 - **ChatWidget (Smokellier)**: "Le Smokellier" header, sage green (#6b8f5e) theme, keyword responses, product suggestions
 - **ProductCard**: Image (lazy-loaded, 300x300), badge, BestSellerBadge (neon pulse), WishlistHeart (pulsing heart), Cormorant Garamond name, rating stars, price, hover lift effect with "Voir le produit" overlay
-- **CbdChat**: Bottom-left educational FAQ chatbot with keyword matching, quick question buttons, forest green header
+- **ProductGrid** (src/components/shop/ProductGrid.tsx): Fetches from Supabase `products` table; falls back to local catalog if table missing. Shows "● Live" badge when reading from Supabase. Used on homepage ("Catalogue live")
+- **ReviewForm** / **ReviewList** (src/components/reviews/): Star rating form + reviews list per product. Writes to `reviews` table; gracefully hidden if table doesn't exist.
+- **useShopProducts** (src/hooks/useShopProducts.ts): Hook that fetches all products from Supabase `products` table with live category counts and search. Falls back to local catalog. Used by Shop page.
+- **CbdChat**: Bottom-left AI-powered chatbot (Groq Llama 3.1 8B via /api/chat proxy), conversation history, typing indicator, quick question buttons, leaf avatar, forest green header. Server proxy at server/gemini-handler.ts (dev) and api/chat.ts (Vercel). Uses GROQ_API_KEY secret. Includes rate limiting (15 req/min/IP), input validation (max 20 messages, 1000 chars/msg), body size limits (32KB)
+- **ProductBadge** (src/components/ui/ProductBadge.tsx): Inline "Conforme <0.3% THC" green badge using compliance data; shown on every ProductCard
+- **LoyaltyWidget** (src/components/ui/LoyaltyWidget.tsx): Loyalty tier card (Bronze/Argent/Or/Platine) with progress bar, points balance and earned preview; shown on Account page
+- **QuizCard** (src/components/ui/QuizCard.tsx): Compact quiz CTA card with 4 goal pills (Dormir/Détente/Focus/Découvrir); shown as sticky sidebar on desktop shop, inline banner on mobile
 - **ShippingProgress**: Leaf-animated progress bar for free shipping threshold in CartDrawer
 - **WishlistHeart**: Pulsing heart with particle burst animation on add to favorites
 - **BestSellerBadge**: Amber neon-pulse badge with flame icon for best-seller products

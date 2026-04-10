@@ -1,11 +1,12 @@
-import { categories } from '../../data/products';
+import type { ShopCategory } from '../../hooks/useShopProducts';
 
 interface Props {
+  categories: ShopCategory[];
   selected: string;
   onSelect: (slug: string) => void;
 }
 
-export default function CategoryFilter({ selected, onSelect }: Props) {
+export default function CategoryFilter({ categories, selected, onSelect }: Props) {
   return (
     <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
       {categories.map(cat => (
@@ -23,6 +24,9 @@ export default function CategoryFilter({ selected, onSelect }: Props) {
           }
         >
           {cat.emoji} {cat.name}
+          {cat.slug !== 'all' && (
+            <span className="ml-1.5 text-[10px] opacity-60">({cat.count})</span>
+          )}
         </button>
       ))}
     </div>

@@ -3,7 +3,19 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      name: 'gemini-api-proxy',
+      configureServer(server) {
+        server.middlewares.use('/api/chat', async (req, res) => {
+          const { handleGeminiChat } = await import('./server/gemini-handler.ts');
+          handleGeminiChat(req, res);
+        });
+      },
+    },
+  ],
   base: '/',
   build: {
     outDir: 'dist',

@@ -7,6 +7,7 @@ import { useAuthActions } from '../hooks/useAuthActions';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import AuthGuard from '../components/auth/AuthGuard';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
+import { LoyaltyWidget } from '../components/ui/LoyaltyWidget';
 
 const STATUS_LABELS: Record<string, { label: string; bg: string; text: string }> = {
   pending: { label: 'En attente', bg: 'bg-[#f5ecd7]/60', text: 'text-[#8b7355]' },
@@ -63,6 +64,7 @@ function AccountContent() {
   const menuItems = [
     { to: '/compte/commandes', icon: Package, label: 'Mes commandes', desc: 'Suivez vos commandes en cours et passées' },
     { to: '/wishlist', icon: Heart, label: 'Mes favoris', desc: 'Retrouvez vos produits préférés' },
+    { to: '/loyalty', icon: Star, label: 'Programme fidélité', desc: 'Vos points et avantages exclusifs' },
   ];
 
   return (
@@ -114,6 +116,10 @@ function AccountContent() {
             </div>
           </div>
         )}
+      </div>
+
+      <div className="mb-6">
+        <LoyaltyWidget points={profile?.stats?.loyaltyPoints ?? 0} />
       </div>
 
       <div className="space-y-3 mb-6">

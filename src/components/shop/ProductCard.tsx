@@ -3,6 +3,7 @@ import { Star, ArrowRight } from 'lucide-react';
 import type { Product } from '../../data/products';
 import WishlistHeart from '../ui/WishlistHeart';
 import BestSellerBadge from '../ui/BestSellerBadge';
+import { ProductBadge } from '../ui/ProductBadge';
 
 interface Props {
   product: Product;
@@ -34,9 +35,19 @@ export default function ProductCard({ product }: Props) {
             {product.badge}
           </span>
         )}
-        {product.isNew && (
+        {product.isNew && !product.stock && (
           <span className="absolute top-3 right-3 px-2.5 py-1 text-[9px] font-bold rounded-full" style={{ background: 'linear-gradient(135deg, #c4956a, #d4a574)', color: 'white' }}>
             NOUVEAU
+          </span>
+        )}
+        {product.stock !== undefined && product.stock === 0 && (
+          <span className="absolute top-3 right-3 px-2.5 py-1 text-[9px] font-bold rounded-full" style={{ background: 'rgba(180,60,50,0.85)', color: 'white' }}>
+            ÉPUISÉ
+          </span>
+        )}
+        {product.stock !== undefined && product.stock > 0 && product.stock <= 8 && (
+          <span className="absolute top-3 right-3 px-2.5 py-1 text-[9px] font-bold rounded-full" style={{ background: 'rgba(196,149,106,0.9)', color: 'white' }}>
+            ⚡ {product.stock} restants
           </span>
         )}
         <div className="absolute bottom-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -51,9 +62,12 @@ export default function ProductCard({ product }: Props) {
       <div className="p-4">
         <p className="text-[9px] font-medium tracking-[0.2em] uppercase mb-1" style={{ color: 'var(--text-muted)' }}>{product.category}</p>
         <h3 className="font-['Cormorant_Garamond'] font-semibold text-sm line-clamp-1 group-hover:text-[#c4956a] transition-colors duration-300" style={{ color: 'var(--text-primary)' }}>{product.name}</h3>
-        <div className="flex items-center gap-1 mt-1.5 mb-2">
+        <div className="flex items-center gap-1 mt-1.5 mb-1.5">
           <Star size={11} className="fill-[#c9a96e] text-[#c9a96e]" />
           <span className="text-[10px] font-light" style={{ color: 'var(--text-secondary)' }}>{product.rating} ({product.reviewCount})</span>
+        </div>
+        <div className="mb-2">
+          <ProductBadge productId={product.id} />
         </div>
         <div className="flex items-center justify-between">
           <p className="font-semibold text-sm text-gradient-vivid">
