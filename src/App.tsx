@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { CartProvider } from './lib/CartContext';
 import { AuthProvider } from './lib/AuthContext';
 import Header from './components/layout/Header';
@@ -94,6 +95,7 @@ export default function App() {
             },
           }}
         />
+        <SpeedInsights />
       </CartProvider>
     </AuthProvider>
   );
