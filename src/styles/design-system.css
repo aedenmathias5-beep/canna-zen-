@@ -406,3 +406,135 @@ html.light .text-or {
 }
 
 .card-3d:hover .card-shine { opacity: 1; }
+
+/* =============================================
+   MOBILE RESPONSIVE
+   ============================================= */
+
+@media (max-width: 768px) {
+  .cursor-dot, .cursor-ring { display: none; }
+  body { cursor: auto; }
+
+  .section-luxury {
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  header nav { display: none !important; }
+  header button:last-child { display: flex !important; }
+}
+
+@media (max-width: 480px) {
+  .text-display-xl { font-size: 2.5rem; }
+  .text-display-lg { font-size: 1.8rem; }
+}
+
+/* =============================================
+   UTILITAIRES SUPPLÉMENTAIRES
+   ============================================= */
+
+.glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.text-balance { text-wrap: balance; }
+
+.no-scroll { overflow: hidden; }
+
+:focus-visible {
+  outline: 1px solid rgba(201,168,76,0.6);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(201,168,76,0.25);
+  color: #f5f0e8;
+}
+
+/* =============================================
+   PRODUCT PAGE SPECIFIC
+   ============================================= */
+
+.product-gallery-thumb {
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s, transform 0.3s var(--ease-spring);
+}
+
+.product-gallery-thumb:hover,
+.product-gallery-thumb.active {
+  border-color: rgba(201,168,76,0.6);
+  transform: scale(1.03);
+}
+
+.product-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-badge.cbd {
+  background: rgba(122,184,147,0.1);
+  border: 1px solid rgba(122,184,147,0.25);
+  color: #7ab893;
+}
+
+.product-badge.thc {
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.2);
+  color: #c9a84c;
+}
+
+/* =============================================
+   CHECKOUT LUXURY
+   ============================================= */
+
+.checkout-step {
+  padding: 28px;
+  background: rgba(26,51,32,0.15);
+  border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.input-luxury {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(245,240,232,0.1);
+  border-radius: 6px;
+  color: #f5f0e8;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.input-luxury:focus {
+  border-color: rgba(201,168,76,0.4);
+  background: rgba(201,168,76,0.04);
+}
+
+.input-luxury::placeholder {
+  color: rgba(245,240,232,0.25);
+  font-size: 0.8rem;
+}
+
+.input-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.4);
+  margin-bottom: 8px;
+}

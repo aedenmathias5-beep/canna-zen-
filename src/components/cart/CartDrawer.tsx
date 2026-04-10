@@ -1,7 +1,6 @@
-import { X, ShoppingBag, Minus, Plus, Trash2, Trash } from 'lucide-react';
+import { X, ShoppingBag, Minus, Plus, ArrowRight, Trash2, Trash } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../lib/CartContext';
-import ShippingProgress from '../ui/ShippingProgress';
 
 interface Props {
   open: boolean;
@@ -9,134 +8,380 @@ interface Props {
 }
 
 export default function CartDrawer({ open, onClose }: Props) {
-  const { cartItems, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart();
-  const FREE_SHIPPING_THRESHOLD = 49;
-  const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : 4.90;
-  const total = cartTotal + shipping;
+  const { cartItems, cartTotal, cartCount, updateQuantity, removeFromCart, clearCart } = useCart();
+  const FREE_THRESHOLD = 49;
+  const remaining = Math.max(0, FREE_THRESHOLD - cartTotal);
+  const progress = Math.min(100, (cartTotal / FREE_THRESHOLD) * 100);
 
   return (
     <>
+      {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[70] transition-opacity duration-400 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ background: 'rgba(26,47,35,0.15)', backdropFilter: 'blur(6px)' }}
         onClick={onClose}
+        style={{
+          position: 'fixed', inset: 0,
+          background: 'rgba(5,5,4,0.7)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 70,
+          opacity: open ? 1 : 0,
+          pointerEvents: open ? 'all' : 'none',
+          transition: 'opacity 0.4s ease',
+        }}
       />
-      <div
-        className={`fixed inset-y-0 right-0 z-[80] w-full sm:w-[400px] shadow-2xl flex flex-col transform transition-transform duration-400 ease-out ${open ? 'translate-x-0' : 'translate-x-full'}`}
-        style={{ background: 'var(--bg-surface)', borderLeft: '1px solid var(--border-color)' }}
-      >
-        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid var(--border-color)' }}>
-          <h2 className="font-['Cormorant_Garamond'] font-semibold text-xl italic flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-            Panier
-            {cartItems.length > 0 && (
-              <span className="text-xs font-normal not-italic px-2 py-0.5 rounded-full text-white" style={{ background: '#c4956a' }}>
-                {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+
+      {/* Panel */}
+      <div style={{
+        position: 'fixed',
+        top: 0, right: 0, bottom: 0,
+        width: '420px',
+        maxWidth: '100vw',
+        background: 'linear-gradient(180deg, #0d1a10 0%, #0a0a08 100%)',
+        border: '1px solid rgba(201,168,76,0.12)',
+        borderRight: 'none',
+        zIndex: 80,
+        display: 'flex',
+        flexDirection: 'column',
+        transform: open ? 'translateX(0)' : 'translateX(100%)',
+        transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        boxShadow: open ? '-20px 0 80px rgba(0,0,0,0.5)' : 'none',
+      }}>
+        {/* Header */}
+        <div style={{
+          padding: '28px 28px 20px',
+          borderBottom: '1px solid rgba(201,168,76,0.08)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <ShoppingBag size={18} color="#c9a84c" strokeWidth={1.2} />
+            <span style={{
+              fontFamily: 'Cormorant Garamond, serif',
+              fontSize: '1.2rem',
+              fontWeight: 400,
+              color: '#f5f0e8',
+              letterSpacing: '0.02em',
+            }}>
+              Panier
+            </span>
+            {cartCount > 0 && (
+              <span style={{
+                padding: '2px 8px',
+                background: 'rgba(201,168,76,0.15)',
+                border: '1px solid rgba(201,168,76,0.3)',
+                borderRadius: '20px',
+                fontSize: '0.6rem',
+                color: '#c9a84c',
+                fontFamily: 'DM Sans, sans-serif',
+              }}>
+                {cartCount}
               </span>
             )}
-          </h2>
-          <button onClick={onClose} aria-label="Fermer le panier" className="hover:rotate-90 transition-all duration-300" style={{ color: 'var(--text-secondary)' }}>
-            <X size={20} />
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none', border: 'none',
+              color: 'rgba(245,240,232,0.4)',
+              cursor: 'pointer',
+              display: 'flex',
+              transition: 'color 0.2s',
+            }}
+          >
+            <X size={18} />
           </button>
         </div>
 
-        {cartItems.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center fade-in-up">
-            <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{ background: 'rgba(196,149,106,0.06)' }}>
-              <ShoppingBag size={32} className="text-[#c4956a]/30" />
+        {/* Free shipping progress */}
+        {cartTotal > 0 && cartTotal < FREE_THRESHOLD && (
+          <div style={{
+            padding: '16px 28px',
+            background: 'rgba(26,51,32,0.3)',
+            borderBottom: '1px solid rgba(201,168,76,0.06)',
+          }}>
+            <div style={{
+              fontFamily: 'DM Sans, sans-serif',
+              fontSize: '0.65rem',
+              color: 'rgba(245,240,232,0.5)',
+              marginBottom: '8px',
+              letterSpacing: '0.05em',
+            }}>
+              Plus que <strong style={{ color: '#c9a84c' }}>{remaining.toFixed(2).replace('.', ',')} €</strong> pour la livraison offerte
             </div>
-            <p className="mb-2 font-light" style={{ color: 'var(--text-secondary)' }}>Votre panier est vide</p>
-            <p className="text-xs mb-6 font-light" style={{ color: 'var(--text-muted)' }}>Explorez notre collection pour trouver votre bonheur</p>
-            <Link
-              to="/boutique"
-              onClick={onClose}
-              className="text-white px-6 py-2.5 rounded-xl text-sm font-semibold btn-vivid"
-            >
-              Voir la boutique
-            </Link>
+            <div style={{
+              height: '2px',
+              background: 'rgba(245,240,232,0.08)',
+              borderRadius: '2px',
+              overflow: 'hidden',
+            }}>
+              <div style={{
+                height: '100%',
+                width: `${progress}%`,
+                background: 'linear-gradient(90deg, #c9a84c, #f0c060)',
+                borderRadius: '2px',
+                transition: 'width 0.5s var(--ease-luxury)',
+                boxShadow: '0 0 8px rgba(201,168,76,0.5)',
+              }} />
+            </div>
           </div>
-        ) : (
-          <>
-            <div className="px-4 pt-4 pb-2">
-              <ShippingProgress currentAmount={cartTotal} threshold={FREE_SHIPPING_THRESHOLD} />
-            </div>
+        )}
+        {cartTotal >= FREE_THRESHOLD && (
+          <div style={{
+            padding: '12px 28px',
+            background: 'rgba(26,51,32,0.5)',
+            borderBottom: '1px solid rgba(122,184,147,0.15)',
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: '0.65rem',
+            color: '#7ab893',
+            letterSpacing: '0.05em',
+          }}>
+            🌿 Livraison offerte !
+          </div>
+        )}
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {/* Items */}
+        <div style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '20px 28px',
+        }}>
+          {cartItems.length === 0 ? (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+              gap: '16px',
+              opacity: 0.4,
+            }}>
+              <ShoppingBag size={40} color="#c9a84c" strokeWidth={0.8} />
+              <span style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: '1.1rem',
+                color: '#f5f0e8',
+                fontWeight: 300,
+              }}>
+                Votre panier est vide
+              </span>
+              <Link
+                to="/boutique"
+                onClick={onClose}
+                className="btn-ghost"
+                style={{ marginTop: '8px' }}
+              >
+                <span>Voir la boutique</span>
+              </Link>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <style>{`
+                @keyframes cart-item-in {
+                  from { opacity: 0; transform: translateX(20px); }
+                  to { opacity: 1; transform: translateX(0); }
+                }
+              `}</style>
               {cartItems.map((item, i) => (
                 <div
                   key={item.id}
-                  className="group relative glass-card rounded-xl p-3 transition-all duration-300"
-                  style={{ animation: `slide-up 0.3s cubic-bezier(0.22, 1, 0.36, 1) ${i * 50}ms both` }}
+                  style={{
+                    display: 'flex',
+                    gap: '14px',
+                    padding: '14px',
+                    background: 'rgba(26,51,32,0.2)',
+                    border: '1px solid rgba(201,168,76,0.06)',
+                    borderRadius: '8px',
+                    animation: `cart-item-in 0.4s var(--ease-luxury) ${i * 50}ms both`,
+                  }}
                 >
-                  <div className="flex gap-3">
-                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0" style={{ border: '1px solid var(--border-light)' }}>
-                      <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="text-sm font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{item.product.name}</h4>
-                      <p className="text-xs font-light" style={{ color: 'var(--text-secondary)' }}>{item.selectedPrice.label}</p>
-                      <div className="flex items-center justify-between mt-1.5">
-                        <p className="text-sm font-semibold text-gradient-vivid">{(item.selectedPrice.amount * item.quantity).toFixed(2)}€</p>
-                        {item.quantity > 1 && (
-                          <p className="text-[10px] font-light" style={{ color: 'var(--text-muted)' }}>{item.selectedPrice.amount.toFixed(2)}€/u</p>
-                        )}
-                      </div>
-                    </div>
-                    <button onClick={() => removeFromCart(item.id)} aria-label={`Retirer ${item.product.name}`} className="absolute -top-2 -right-2 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-sm hover:scale-110 hover:text-red-400" style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
-                      <Trash2 size={12} />
-                    </button>
+                  <div style={{
+                    width: '64px', height: '64px',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    background: '#1a3320',
+                  }}>
+                    <img
+                      src={item.product.image}
+                      alt={item.product.name}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   </div>
-                  <div className="flex items-center justify-end mt-2">
-                    <div className="flex items-center gap-2 rounded-lg" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}>
-                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label="Réduire la quantité" className="p-1.5 hover:scale-110 active:scale-90 transition-transform" style={{ color: 'var(--text-secondary)' }}>
-                        <Minus size={14} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      fontFamily: 'Cormorant Garamond, serif',
+                      fontSize: '0.95rem',
+                      fontWeight: 400,
+                      color: '#f5f0e8',
+                      marginBottom: '2px',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}>
+                      {item.product.name}
+                    </div>
+                    <div style={{
+                      fontFamily: 'DM Sans, sans-serif',
+                      fontSize: '0.6rem',
+                      color: 'rgba(245,240,232,0.35)',
+                      marginBottom: '6px',
+                      letterSpacing: '0.05em',
+                    }}>
+                      {item.selectedPrice.label}
+                    </div>
+                    <div style={{
+                      fontFamily: 'Cormorant Garamond, serif',
+                      fontSize: '1rem',
+                      color: '#c9a84c',
+                      marginBottom: '10px',
+                    }}>
+                      {(item.selectedPrice.amount * item.quantity).toFixed(2).replace('.', ',')} €
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        style={{
+                          width: '24px', height: '24px',
+                          border: '1px solid rgba(201,168,76,0.2)',
+                          borderRadius: '4px',
+                          background: 'none',
+                          color: '#c9a84c',
+                          cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}
+                      >
+                        <Minus size={10} />
                       </button>
-                      <span className="text-sm w-5 text-center font-medium" style={{ color: 'var(--text-primary)' }}>{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} aria-label="Augmenter la quantité" className="p-1.5 hover:scale-110 active:scale-90 transition-transform" style={{ color: 'var(--text-secondary)' }}>
-                        <Plus size={14} />
+                      <span style={{
+                        fontFamily: 'DM Sans, sans-serif',
+                        fontSize: '0.75rem',
+                        color: '#f5f0e8',
+                        minWidth: '20px',
+                        textAlign: 'center',
+                      }}>
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        style={{
+                          width: '24px', height: '24px',
+                          border: '1px solid rgba(201,168,76,0.2)',
+                          borderRadius: '4px',
+                          background: 'none',
+                          color: '#c9a84c',
+                          cursor: 'pointer',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        }}
+                      >
+                        <Plus size={10} />
+                      </button>
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        style={{
+                          marginLeft: 'auto',
+                          background: 'none', border: 'none',
+                          color: 'rgba(245,240,232,0.2)',
+                          cursor: 'pointer',
+                          display: 'flex', alignItems: 'center',
+                          transition: 'color 0.2s',
+                        }}
+                      >
+                        <Trash2 size={12} />
                       </button>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="p-5 space-y-3" style={{ borderTop: '1px solid var(--border-color)' }}>
-              <div className="flex justify-between text-sm">
-                <span className="font-light" style={{ color: 'var(--text-secondary)' }}>Sous-total</span>
-                <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{cartTotal.toFixed(2)}€</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="font-light" style={{ color: 'var(--text-secondary)' }}>Livraison estimée</span>
-                <span className={`font-medium ${shipping === 0 ? 'text-[#1a2f23] dark:text-[#c4956a]' : ''}`} style={shipping !== 0 ? { color: 'var(--text-primary)' } : undefined}>{shipping === 0 ? 'Offerte' : `${shipping.toFixed(2)}€`}</span>
-              </div>
-              <div className="flex justify-between font-semibold text-lg pt-2" style={{ borderTop: '1px solid var(--border-color)' }}>
-                <span style={{ color: 'var(--text-primary)' }}>Total</span>
-                <span className="text-gradient-vivid">{total.toFixed(2)}€</span>
-              </div>
-              <Link
-                to="/checkout"
-                onClick={onClose}
-                className="block w-full text-center text-white py-3 rounded-xl font-semibold btn-vivid neon-glow"
-              >
-                Commander — {total.toFixed(2)}€
-              </Link>
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={onClose}
-                  className="text-sm font-light transition-colors"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  Continuer mes achats
-                </button>
-                <button
-                  onClick={() => { clearCart(); }}
-                  className="flex items-center gap-1.5 text-xs font-light transition-colors duration-200 hover:text-red-400"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  <Trash size={12} /> Vider le panier
-                </button>
-              </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        {cartItems.length > 0 && (
+          <div style={{
+            padding: '20px 28px 28px',
+            borderTop: '1px solid rgba(201,168,76,0.08)',
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '16px',
+            }}>
+              <span style={{
+                fontFamily: 'DM Sans, sans-serif',
+                fontSize: '0.7rem',
+                letterSpacing: '0.1em',
+                color: 'rgba(245,240,232,0.5)',
+                textTransform: 'uppercase',
+              }}>
+                Sous-total
+              </span>
+              <span style={{
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: '1.4rem',
+                fontWeight: 500,
+                color: '#c9a84c',
+              }}>
+                {cartTotal.toFixed(2).replace('.', ',')} €
+              </span>
             </div>
-          </>
+            <Link
+              to="/checkout"
+              onClick={onClose}
+              className="btn-luxury"
+              style={{ width: '100%', justifyContent: 'center', boxSizing: 'border-box', display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              <span>Commander</span>
+              <ArrowRight size={14} />
+            </Link>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: '12px',
+            }}>
+              <button
+                onClick={onClose}
+                style={{
+                  background: 'none', border: 'none',
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '0.65rem',
+                  color: 'rgba(245,240,232,0.3)',
+                  cursor: 'pointer',
+                  letterSpacing: '0.05em',
+                  transition: 'color 0.2s',
+                }}
+              >
+                Continuer mes achats
+              </button>
+              <button
+                onClick={() => clearCart()}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '4px',
+                  background: 'none', border: 'none',
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontSize: '0.6rem',
+                  color: 'rgba(245,240,232,0.2)',
+                  cursor: 'pointer',
+                  letterSpacing: '0.05em',
+                  transition: 'color 0.2s',
+                }}
+              >
+                <Trash size={11} /> Vider
+              </button>
+            </div>
+            <p style={{
+              textAlign: 'center',
+              marginTop: '12px',
+              fontFamily: 'DM Sans, sans-serif',
+              fontSize: '0.6rem',
+              color: 'rgba(245,240,232,0.15)',
+              letterSpacing: '0.05em',
+            }}>
+              Livraison calculée à la commande
+            </p>
+          </div>
         )}
       </div>
     </>
