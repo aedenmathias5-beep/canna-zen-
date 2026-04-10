@@ -150,7 +150,7 @@ export default function Home() {
                   fontFamily: 'var(--font-body)',
                   fontSize: '0.85rem',
                   outline: 'none',
-                  cursor: 'none',
+                  cursor: 'pointer',
                 }}
                 onFocus={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.5)'; }}
                 onBlur={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.2)'; }}
@@ -190,7 +190,7 @@ export default function Home() {
                   border: '1px solid rgba(201,168,76,0.1)',
                   borderRadius: '12px',
                   textDecoration: 'none',
-                  cursor: 'none',
+                  cursor: 'pointer',
                   transition: 'border-color 0.3s, transform 0.3s',
                 }}
                 onMouseEnter={e => {

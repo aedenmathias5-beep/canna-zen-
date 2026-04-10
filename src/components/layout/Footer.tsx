@@ -92,7 +92,7 @@ export default function Footer() {
                   fontFamily: 'var(--font-body)',
                   fontSize: '0.6rem',
                   color: 'var(--or-pale)',
-                  cursor: 'none',
+                  cursor: 'pointer',
                   transition: 'background 0.3s, border-color 0.3s',
                 }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.08)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; }}
@@ -126,7 +126,7 @@ export default function Footer() {
                     textDecoration: 'none',
                     fontWeight: 300,
                     transition: 'color 0.3s, paddingLeft 0.3s',
-                    cursor: 'none',
+                    cursor: 'pointer',
                   }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
@@ -159,7 +159,7 @@ export default function Footer() {
                     textDecoration: 'none',
                     fontWeight: 300,
                     transition: 'color 0.3s',
-                    cursor: 'none',
+                    cursor: 'pointer',
                   }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
@@ -211,7 +211,7 @@ export default function Footer() {
                     fontFamily: 'var(--font-body)',
                     fontSize: '0.82rem',
                     outline: 'none',
-                    cursor: 'none',
+                    cursor: 'pointer',
                     transition: 'border-color 0.3s',
                   }}
                   onFocus={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; }}
@@ -279,7 +279,7 @@ export default function Footer() {
                     color: 'rgba(201,168,76,0.25)',
                     textDecoration: 'none',
                     letterSpacing: '0.1em',
-                    cursor: 'none',
+                    cursor: 'pointer',
                     transition: 'color 0.3s',
                   }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.6)'; }}

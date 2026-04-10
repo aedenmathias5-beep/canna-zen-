@@ -8,11 +8,12 @@ export function SmoothScroll({ children }: Props) {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 1.6,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
-    });
+      lerp: 0.08,
+    } as any);
     lenisRef.current = lenis;
 
     function raf(time: number) {

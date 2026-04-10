@@ -7,7 +7,6 @@ import { ThemeProvider } from './lib/ThemeContext'
 import App from './App'
 import './index.css'
 import './styles/design-system.css'
-import { MagneticCursor } from './components/MagneticCursor'
 import { SmoothScroll } from './components/SmoothScroll'
 import { Preloader } from './components/Preloader'
 
@@ -25,7 +24,6 @@ ReactDOM.createRoot(rootEl).render(
         <HelmetProvider>
           <BrowserRouter>
             <Preloader />
-            <MagneticCursor />
             <SmoothScroll>
               <App />
             </SmoothScroll>

@@ -124,9 +124,11 @@ export function TrustSection() {
                   position: 'relative',
                   overflow: 'hidden',
                   background: isHov ? 'rgba(26,51,32,0.35)' : '#0a0a08',
-                  transition: `background 0.4s ease, opacity 0.6s var(--ease-luxury) ${i * 80}ms, transform 0.6s var(--ease-luxury) ${i * 80}ms`,
+                  transition: `background 0.5s ease, opacity 0.7s var(--ease-luxury) ${i * 100}ms, transform 0.7s var(--ease-luxury) ${i * 100}ms`,
                   opacity: visible ? 1 : 0,
-                  transform: visible ? 'translateY(0)' : 'translateY(30px)',
+                  transform: visible
+                    ? (isHov ? 'translateY(-4px) scale(1.01)' : 'translateY(0) scale(1)')
+                    : 'translateY(40px) scale(0.96)',
                   cursor: 'default',
                 }}
               >

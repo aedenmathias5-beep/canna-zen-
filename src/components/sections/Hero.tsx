@@ -141,6 +141,25 @@ export function Hero() {
         }
       `}</style>
 
+      <style>{`
+        @keyframes hero-reveal {
+          from { opacity: 0; transform: translateY(40px); filter: blur(6px); }
+          to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        @keyframes hero-line-reveal {
+          from { opacity: 0; transform: translateY(30px) skewY(2deg); }
+          to   { opacity: 1; transform: translateY(0) skewY(0); }
+        }
+        @keyframes hero-scale-in {
+          from { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+          to   { opacity: 1; transform: scale(1) rotate(0); }
+        }
+        @keyframes stat-count-in {
+          from { opacity: 0; transform: translateY(20px) scale(0.9); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
+
       <div style={{
         position: 'relative', zIndex: 1,
         textAlign: 'center',
@@ -152,14 +171,17 @@ export function Hero() {
         gap: '0',
       }}>
         {/* Badge légal */}
-        <div className="badge-luxury" style={{ marginBottom: '36px' }}>
+        <div className="badge-luxury" style={{
+          marginBottom: '36px',
+          animation: 'hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s both',
+        }}>
           Cannabis légal · THC &lt; 0.3%
         </div>
 
         {/* Feuille animée */}
         <div style={{
           marginBottom: '32px',
-          animation: 'leaf-breathe 4s ease-in-out infinite',
+          animation: 'hero-scale-in 1s cubic-bezier(0.16,1,0.3,1) 0.4s both, leaf-breathe 4s ease-in-out 1.4s infinite',
           transformOrigin: 'bottom center',
         }}>
           <AnimatedLeaf isDark={isDark} size={140} />
@@ -175,6 +197,7 @@ export function Hero() {
           color: titleColor,
           marginBottom: '16px',
           transition: 'color 0.4s',
+          animation: 'hero-line-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.6s both',
         }}>
           L'univers de
         </h1>
@@ -186,6 +209,7 @@ export function Hero() {
           letterSpacing: '-0.02em',
           marginBottom: '32px',
           fontStyle: 'italic',
+          animation: 'hero-line-reveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.8s both',
         }}>
           <span style={{
             background: isDark
@@ -207,6 +231,7 @@ export function Hero() {
           alignItems: 'center',
           justifyContent: 'center',
           gap: '12px',
+          animation: 'hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1s both',
         }}>
           <span style={{
             fontFamily: 'var(--font-body)',
@@ -223,8 +248,8 @@ export function Hero() {
               color: accentColor,
               fontStyle: 'italic',
               opacity: wordVisible ? 1 : 0,
-              transform: wordVisible ? 'translateY(0)' : 'translateY(10px)',
-              transition: 'opacity 0.4s var(--ease-luxury), transform 0.4s var(--ease-luxury)',
+              transform: wordVisible ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.95)',
+              transition: 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)',
             }}
           >
             {WORDS[wordIdx]}
@@ -240,13 +265,17 @@ export function Hero() {
           maxWidth: '560px',
           margin: '0 auto 48px',
           transition: 'color 0.4s',
+          animation: 'hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.1s both',
         }}>
           Sélection premium de fleurs CBD, D10, OH+, résines, vapes et huiles biologiques.
           L'excellence du cannabis légal français.
         </p>
 
         {/* CTAs */}
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{
+          display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap',
+          animation: 'hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.3s both',
+        }}>
           <Link to="/boutique" className="btn-luxury">
             <span>Découvrir la boutique</span>
             <span style={{ fontSize: '1rem' }}>→</span>
@@ -266,13 +295,17 @@ export function Hero() {
           borderTop: `1px solid ${isDark ? 'rgba(201,168,76,0.08)' : 'rgba(74,103,65,0.1)'}`,
           flexWrap: 'wrap',
           transition: 'border-color 0.4s',
+          animation: 'hero-reveal 0.8s cubic-bezier(0.16,1,0.3,1) 1.5s both',
         }}>
           {[
             { num: '28', label: 'Produits premium' },
             { num: '7', label: 'Catégories' },
             { num: '4.9★', label: 'Note moyenne' },
           ].map((stat, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
+            <div key={i} style={{
+              textAlign: 'center',
+              animation: `stat-count-in 0.6s cubic-bezier(0.16,1,0.3,1) ${1.6 + i * 0.15}s both`,
+            }}>
               <div style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',

@@ -150,10 +150,12 @@ export function CategoryGrid() {
                   overflow: 'hidden',
                   position: 'relative',
                   opacity: visible ? 1 : 0,
-                  transform: visible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.98)',
-                  transition: `opacity 0.7s var(--ease-luxury) ${i * 90}ms, transform 0.7s var(--ease-luxury) ${i * 90}ms, box-shadow 0.4s ease, border-color 0.3s`,
+                  transform: visible
+                    ? (hovered === cat.slug ? 'translateY(-6px) scale(1.02)' : 'translateY(0) scale(1)')
+                    : 'translateY(30px) scale(0.95)',
+                  transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${i * 100}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease, border-color 0.4s`,
                   boxShadow: hovered === cat.slug
-                    ? `0 20px 60px rgba(0,0,0,0.4), 0 0 40px ${cat.accent}22`
+                    ? `0 24px 70px rgba(0,0,0,0.5), 0 0 50px ${cat.accent}18`
                     : '0 4px 20px rgba(0,0,0,0.2)',
                   cursor: 'pointer',
                 }}
