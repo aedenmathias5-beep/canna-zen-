@@ -3,19 +3,39 @@ import { useTheme } from '../../lib/ThemeContext';
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <button
       onClick={toggleTheme}
-      aria-label={theme === 'light' ? 'Passer en mode sombre' : 'Passer en mode clair'}
-      className="relative p-1.5 rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
-      style={{ color: 'var(--text-secondary)' }}
+      aria-label={isDark ? 'Passer en mode clair' : 'Passer en mode sombre'}
+      style={{
+        position: 'relative',
+        width: '36px',
+        height: '36px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'transparent',
+        border: `1px solid ${isDark ? 'rgba(201,168,76,0.2)' : 'rgba(74,103,65,0.2)'}`,
+        borderRadius: '50%',
+        cursor: 'none',
+        transition: 'border-color 0.3s, background 0.3s',
+        color: isDark ? 'rgba(201,168,76,0.7)' : 'rgba(74,103,65,0.7)',
+        flexShrink: 0,
+      }}
+      onMouseEnter={e => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = isDark ? 'rgba(201,168,76,0.6)' : 'rgba(74,103,65,0.5)';
+        el.style.background = isDark ? 'rgba(201,168,76,0.08)' : 'rgba(74,103,65,0.08)';
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.borderColor = isDark ? 'rgba(201,168,76,0.2)' : 'rgba(74,103,65,0.2)';
+        el.style.background = 'transparent';
+      }}
     >
-      {theme === 'light' ? (
-        <Moon size={18} className="hover:text-[#1a2f23] transition-colors" />
-      ) : (
-        <Sun size={18} className="text-[#c9a96e] hover:text-[#d4a574] transition-colors" />
-      )}
+      {isDark ? <Sun size={15} /> : <Moon size={15} />}
     </button>
   );
 }

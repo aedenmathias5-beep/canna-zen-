@@ -1,268 +1,237 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import { useTheme } from '../../lib/ThemeContext';
 import '../../styles/design-system.css';
 
-const words = ['Détente', 'Bien-être', 'Sérénité', 'Euphorie', 'Équilibre'];
+const HERO_WORDS = ['Fleurs', 'Résines', 'Huiles', 'Vapes', 'Gummies'];
 
 export function Hero() {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [wordVisible, setWordVisible] = useState(true);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [wordIdx, setWordIdx] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const { theme } = useTheme();
+  const heroRef = useRef<HTMLDivElement>(null);
+  const parallax1 = useRef<HTMLDivElement>(null);
+  const parallax2 = useRef<HTMLDivElement>(null);
+  const isDark = theme === 'dark';
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setWordVisible(false);
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
       setTimeout(() => {
-        setWordIndex(i => (i + 1) % words.length);
-        setWordVisible(true);
+        setWordIdx(i => (i + 1) % HERO_WORDS.length);
+        setIsTransitioning(false);
       }, 400);
     }, 2800);
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-    let rafId: number;
-
-    const particles: Array<{
-      x: number; y: number; vx: number; vy: number;
-      size: number; opacity: number; color: string;
-    }> = [];
-
-    const colors = ['rgba(201,168,76,', 'rgba(122,184,147,', 'rgba(248,240,232,'];
-
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.2 - 0.1,
-        size: Math.random() * 1.5 + 0.3,
-        opacity: Math.random() * 0.4 + 0.05,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + p.opacity + ')';
-        ctx.fill();
-      });
-      rafId = requestAnimationFrame(draw);
+    const hero = heroRef.current;
+    if (!hero) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = hero.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      if (parallax1.current) {
+        parallax1.current.style.transform = `translate(${dx * -30}px, ${dy * -20}px)`;
+      }
+      if (parallax2.current) {
+        parallax2.current.style.transform = `translate(${dx * 20}px, ${dy * 15}px)`;
+      }
     };
-    draw();
-
-    const onResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', onResize);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', onResize);
-    };
+    hero.addEventListener('mousemove', onMove);
+    return () => hero.removeEventListener('mousemove', onMove);
   }, []);
 
+  const titleColor = isDark ? '#f5f0e8' : '#1a2f23';
+  const subtitleColor = isDark ? 'rgba(245,240,232,0.55)' : 'rgba(26,47,35,0.65)';
+  const wordGradient = isDark
+    ? 'linear-gradient(135deg, #c9a84c 0%, #f0c060 50%, #e8d5a0 100%)'
+    : 'linear-gradient(135deg, #4A6741 0%, #6B8F5E 50%, #4A6741 100%)';
+  const heroBg = isDark
+    ? 'var(--grad-hero)'
+    : 'linear-gradient(135deg, #faf8f5 0%, #f0ece4 40%, #e5e0d6 100%)';
+  const radialBg = isDark
+    ? 'radial-gradient(ellipse 80% 60% at 50% 60%, rgba(26,51,32,0.6) 0%, transparent 70%)'
+    : 'radial-gradient(ellipse 80% 60% at 50% 60%, rgba(74,103,65,0.15) 0%, transparent 70%)';
+
   return (
-    <section style={{
-      position: 'relative',
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-      background: 'var(--grad-hero)',
-    }}>
-      <canvas
-        ref={canvasRef}
+    <section
+      ref={heroRef}
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        background: heroBg,
+        transition: 'background 0.6s',
+      }}
+    >
+      <div style={{ position: 'absolute', inset: 0, background: radialBg }} />
+
+      <ParticleField isDark={isDark} />
+
+      <div
+        ref={parallax1}
         style={{
           position: 'absolute',
-          inset: 0,
+          top: '15%', right: '8%',
+          width: '400px', height: '400px',
+          border: `1px solid ${isDark ? 'rgba(201,168,76,0.08)' : 'rgba(74,103,65,0.1)'}`,
+          borderRadius: '50%',
+          transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
           pointerEvents: 'none',
-          zIndex: 0,
+        }}
+      >
+        <div style={{
+          position: 'absolute', inset: '40px',
+          border: `1px solid ${isDark ? 'rgba(201,168,76,0.05)' : 'rgba(74,103,65,0.06)'}`,
+          borderRadius: '50%',
+        }} />
+        <div style={{
+          position: 'absolute', inset: '80px',
+          border: `1px solid ${isDark ? 'rgba(201,168,76,0.04)' : 'rgba(74,103,65,0.04)'}`,
+          borderRadius: '50%',
+        }} />
+      </div>
+
+      <div
+        ref={parallax2}
+        style={{
+          position: 'absolute',
+          bottom: '10%', left: '5%',
+          width: '250px', height: '250px',
+          border: `1px solid ${isDark ? 'rgba(122,184,147,0.08)' : 'rgba(74,103,65,0.08)'}`,
+          borderRadius: '50%',
+          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+          pointerEvents: 'none',
         }}
       />
 
       <div style={{
         position: 'absolute',
-        top: '25%', left: '10%',
-        width: '500px', height: '500px',
-        background: 'radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%)',
-        borderRadius: '50%',
-        filter: 'blur(60px)',
-        animation: 'float-orb 8s ease-in-out infinite',
+        top: 0, right: '30%',
+        width: '1px', height: '100%',
+        background: isDark
+          ? 'linear-gradient(180deg, transparent 0%, rgba(201,168,76,0.12) 30%, rgba(201,168,76,0.12) 70%, transparent 100%)'
+          : 'linear-gradient(180deg, transparent 0%, rgba(74,103,65,0.1) 30%, rgba(74,103,65,0.1) 70%, transparent 100%)',
+        pointerEvents: 'none',
       }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '20%', right: '10%',
-        width: '400px', height: '400px',
-        background: 'radial-gradient(circle, rgba(26,51,32,0.12) 0%, transparent 70%)',
-        borderRadius: '50%',
-        filter: 'blur(60px)',
-        animation: 'float-orb 10s ease-in-out infinite reverse',
-      }} />
-
-      <style>{`
-        @keyframes float-orb {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-30px) scale(1.05); }
-        }
-        @keyframes fade-word {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
 
       <div style={{
         position: 'relative',
-        zIndex: 1,
+        zIndex: 2,
         textAlign: 'center',
         padding: '0 24px',
         maxWidth: '900px',
       }}>
-        <div className="badge-luxury" style={{ marginBottom: '32px', display: 'inline-flex' }}>
+        <div
+          className="badge-luxury"
+          style={{ marginBottom: '40px', display: 'inline-flex' }}
+        >
           Cannabis légal · THC &lt; 0.3%
         </div>
 
         <h1 style={{
-          fontFamily: 'var(--font-display)',
+          fontFamily: 'Cormorant Garamond, serif',
           fontSize: 'clamp(3.5rem, 9vw, 8rem)',
           fontWeight: 300,
-          lineHeight: 0.92,
+          lineHeight: 0.9,
           letterSpacing: '-0.02em',
-          color: 'var(--ivoire)',
-          marginBottom: '8px',
+          color: titleColor,
+          marginBottom: '24px',
+          transition: 'color 0.4s',
         }}>
-          L'univers de
-        </h1>
-
-        <h1 style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(3.5rem, 9vw, 8rem)',
-          fontWeight: 300,
-          lineHeight: 0.92,
-          letterSpacing: '-0.02em',
-          marginBottom: '32px',
-          fontStyle: 'italic',
-          display: 'inline-block',
-        }}>
-          <span className="text-or">Mary Jane</span>
-        </h1>
-
-        <div style={{ marginBottom: '20px', height: '2.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          L'univers
+          <br />
+          <em style={{ fontStyle: 'italic', fontWeight: 300, color: isDark ? '#c9a84c' : '#4A6741' }}>
+            CBD
+          </em>
+          <br />
           <span style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '1rem',
-            color: 'var(--gris-fin)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginRight: '12px',
-          }}>Pour votre</span>
-          <span
-            key={wordIndex}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '1.5rem',
-              color: 'var(--or)',
-              fontStyle: 'italic',
-              opacity: wordVisible ? 1 : 0,
-              transform: wordVisible ? 'translateY(0)' : 'translateY(8px)',
-              transition: 'opacity 0.4s var(--ease-luxury), transform 0.4s var(--ease-luxury)',
-            }}
-          >
-            {words[wordIndex]}
+            display: 'inline-block',
+            minWidth: '300px',
+            background: wordGradient,
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            opacity: isTransitioning ? 0 : 1,
+            transform: isTransitioning ? 'translateY(20px)' : 'translateY(0)',
+            transition: 'opacity 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}>
+            {HERO_WORDS[wordIdx]}
           </span>
-        </div>
+        </h1>
 
         <p style={{
-          fontFamily: 'var(--font-body)',
-          fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)',
-          color: 'var(--gris-fin)',
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '1rem',
           fontWeight: 300,
           lineHeight: 1.7,
-          maxWidth: '600px',
-          margin: '0 auto 48px',
+          color: subtitleColor,
+          maxWidth: '480px',
+          margin: '0 auto 52px',
+          letterSpacing: '0.01em',
+          transition: 'color 0.4s',
         }}>
-          Sélection premium de fleurs CBD, D10, OH+, résines, vapes et huiles biologiques. 
-          L'excellence du cannabis légal français.
+          Sélection premium de cannabis légal cultivé avec soin.
+          <br />
+          Qualité d'exception, expédition sous 24h.
         </p>
 
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/boutique" className="btn-luxury">
             <span>Découvrir la boutique</span>
-            <span style={{ fontSize: '1rem' }}>→</span>
+            <ArrowRight size={14} />
           </Link>
-          <Link
-            to="/quiz"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '16px 36px',
-              color: 'var(--gris-fin)',
-              fontFamily: 'var(--font-body)',
-              fontSize: '0.75rem',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              textDecoration: 'none',
-              border: '1px solid rgba(201,168,76,0.15)',
-              borderRadius: '2px',
-              transition: 'color 0.3s, border-color 0.3s',
-              cursor: 'none',
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or-pale)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.15)'; }}
-          >
-            <span>Quiz personnalisé</span>
+          <Link to="/boutique?cat=fleurs-cbd" className="btn-ghost">
+            <span>Meilleures ventes</span>
           </Link>
         </div>
 
         <div style={{
           display: 'flex',
-          gap: '40px',
+          gap: '48px',
           justifyContent: 'center',
-          marginTop: '64px',
-          paddingTop: '48px',
-          borderTop: '1px solid rgba(201,168,76,0.08)',
+          marginTop: '72px',
+          paddingTop: '40px',
+          borderTop: `1px solid ${isDark ? 'rgba(201,168,76,0.08)' : 'rgba(74,103,65,0.1)'}`,
+          flexWrap: 'wrap',
+          transition: 'border-color 0.4s',
         }}>
           {[
             { num: '28', label: 'Produits premium' },
-            { num: '7', label: 'Catégories' },
             { num: '4.9★', label: 'Note moyenne' },
-          ].map((stat, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
+            { num: '24h', label: 'Expédition' },
+          ].map(({ num, label }) => (
+            <div key={label} style={{ textAlign: 'center' }}>
               <div style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
-                fontWeight: 300,
-                color: 'var(--or)',
+                fontFamily: 'Cormorant Garamond, serif',
+                fontSize: '2rem',
+                fontWeight: 400,
+                color: isDark ? '#c9a84c' : '#4A6741',
+                letterSpacing: '-0.01em',
                 lineHeight: 1,
-              }}>{stat.num}</div>
+                transition: 'color 0.4s',
+              }}>
+                {num}
+              </div>
               <div style={{
-                fontFamily: 'var(--font-body)',
+                fontFamily: 'DM Sans, sans-serif',
                 fontSize: '0.6rem',
-                color: 'var(--gris-fin)',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
+                color: isDark ? 'rgba(245,240,232,0.4)' : 'rgba(26,47,35,0.5)',
                 marginTop: '6px',
-              }}>{stat.label}</div>
+                transition: 'color 0.4s',
+              }}>
+                {label}
+              </div>
             </div>
           ))}
         </div>
@@ -277,27 +246,101 @@ export function Hero() {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '8px',
-        animation: 'bounce-scroll 2s ease-in-out infinite',
+        animation: 'hero-bounce 2s ease-in-out infinite',
+        pointerEvents: 'none',
       }}>
-        <style>{`@keyframes bounce-scroll { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }`}</style>
+        <style>{`
+          @keyframes hero-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+          }
+        `}</style>
+        <span style={{
+          fontFamily: 'DM Sans, sans-serif',
+          fontSize: '0.55rem',
+          letterSpacing: '0.3em',
+          textTransform: 'uppercase',
+          color: isDark ? 'rgba(245,240,232,0.3)' : 'rgba(26,47,35,0.35)',
+        }}>Défiler</span>
         <div style={{
-          width: '20px', height: '32px',
-          border: '1px solid rgba(201,168,76,0.3)',
-          borderRadius: '10px',
-          display: 'flex',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          padding: '4px',
-        }}>
-          <div style={{
-            width: '3px', height: '8px',
-            background: 'rgba(201,168,76,0.5)',
-            borderRadius: '2px',
-            animation: 'scroll-dot 2s ease-in-out infinite',
-          }} />
-        </div>
-        <style>{`@keyframes scroll-dot { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(6px); opacity: 0.3; } }`}</style>
+          width: '1px', height: '40px',
+          background: isDark
+            ? 'linear-gradient(180deg, rgba(201,168,76,0.5), transparent)'
+            : 'linear-gradient(180deg, rgba(74,103,65,0.4), transparent)',
+        }} />
       </div>
     </section>
+  );
+}
+
+function ParticleField({ isDark }: { isDark: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles: Array<{
+      x: number; y: number; vx: number; vy: number;
+      size: number; opacity: number; phase: number;
+    }> = [];
+
+    for (let i = 0; i < 60; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: -Math.random() * 0.4 - 0.1,
+        size: Math.random() * 2 + 0.5,
+        opacity: Math.random() * 0.4 + 0.1,
+        phase: Math.random() * Math.PI * 2,
+      });
+    }
+
+    let animId: number;
+    let time = 0;
+
+    const color = isDark ? '201, 168, 76' : '74, 103, 65';
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 0.01;
+      particles.forEach(p => {
+        p.x += p.vx + Math.sin(time + p.phase) * 0.2;
+        p.y += p.vy;
+        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+        const pulse = 0.5 + 0.5 * Math.sin(time * 2 + p.phase);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color}, ${p.opacity * pulse})`;
+        ctx.fill();
+      });
+      animId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    const onResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [isDark]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.7 }}
+    />
   );
 }

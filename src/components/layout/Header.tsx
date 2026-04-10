@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, User, Search, Menu, X, ChevronDown } from 'lucide-react';
 import { useCart } from '../../lib/CartContext';
 import { useAuth } from '../../lib/AuthContext';
+import { useTheme } from '../../lib/ThemeContext';
+import Logo from '../ui/Logo';
+import ThemeToggle from '../ui/ThemeToggle';
 import CartDrawer from '../cart/CartDrawer';
 import MobileMenu from './MobileMenu';
 import UserMenu from '../auth/UserMenu';
@@ -58,7 +61,7 @@ function Dropdown({ item, onClose }: { item: typeof navItems[0]; onClose: () => 
             color: 'var(--gris-fin)',
             textDecoration: 'none',
             letterSpacing: '0.1em',
-            transition: 'color 0.2s, background 0.2s, paddingLeft 0.3s',
+            transition: 'color 0.2s, background 0.2s, padding-left 0.3s',
             cursor: 'none',
           }}
           onMouseEnter={e => {
@@ -82,6 +85,7 @@ function Dropdown({ item, onClose }: { item: typeof navItems[0]; onClose: () => 
 export default function Header() {
   const { cartCount } = useCart();
   const { isAuthenticated } = useAuth();
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -92,6 +96,8 @@ export default function Header() {
   const [cartBounce, setCartBounce] = useState(false);
   const dropdownTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevCartCount = useRef(cartCount);
+
+  const isDark = theme === 'dark';
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,7 +136,7 @@ export default function Header() {
   }, [cartCount]);
 
   const iconStyle = {
-    color: 'var(--gris-fin)',
+    color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)',
     cursor: 'none',
     padding: '8px',
     background: 'transparent',
@@ -142,13 +148,18 @@ export default function Header() {
     borderRadius: '8px',
   } as React.CSSProperties;
 
+  const bgMarquee = isDark ? 'rgba(5,5,4,0.95)' : 'rgba(245,242,237,0.97)';
+  const bgHeader = scrolled
+    ? (isDark ? 'rgba(5,5,4,0.97)' : 'rgba(250,248,245,0.97)')
+    : (isDark ? 'rgba(10,10,8,0.85)' : 'rgba(250,248,245,0.85)');
+  const borderHeader = scrolled
+    ? (isDark ? 'rgba(201,168,76,0.12)' : 'rgba(74,103,65,0.12)')
+    : (isDark ? 'rgba(201,168,76,0.06)' : 'rgba(74,103,65,0.06)');
+  const iconHoverColor = isDark ? 'var(--or)' : '#4A6741';
+
   return (
     <>
-      <div style={{
-        background: 'rgba(5,5,4,0.95)',
-        borderBottom: '1px solid rgba(201,168,76,0.06)',
-        overflow: 'hidden',
-      }}>
+      <div style={{ background: bgMarquee, borderBottom: `1px solid ${borderHeader}`, overflow: 'hidden', transition: 'background 0.4s' }}>
         <div className="marquee-wrapper" style={{ border: 'none', background: 'transparent' }}>
           <div className="marquee-track">
             {[...Array(2)].map((_, i) => (
@@ -177,11 +188,11 @@ export default function Header() {
           position: 'sticky',
           top: 0,
           zIndex: 'var(--z-sticky)' as any,
-          background: scrolled ? 'rgba(5,5,4,0.97)' : 'rgba(10,10,8,0.85)',
+          background: bgHeader,
           backdropFilter: 'blur(24px)',
-          borderBottom: `1px solid ${scrolled ? 'rgba(201,168,76,0.12)' : 'rgba(201,168,76,0.06)'}`,
+          borderBottom: `1px solid ${borderHeader}`,
           transition: 'background 0.4s var(--ease-luxury), border-color 0.4s var(--ease-luxury)',
-          boxShadow: scrolled ? '0 8px 40px rgba(0,0,0,0.4)' : 'none',
+          boxShadow: scrolled ? '0 8px 40px rgba(0,0,0,0.15)' : 'none',
         }}
       >
         <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 32px' }}>
@@ -205,8 +216,8 @@ export default function Header() {
                 onClick={() => setSearchOpen(!searchOpen)}
                 style={iconStyle}
                 aria-label="Rechercher"
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)'; }}
               >
                 <Search size={18} />
               </button>
@@ -218,21 +229,18 @@ export default function Header() {
                 position: 'absolute',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                fontFamily: 'var(--font-display)',
-                fontSize: '1.6rem',
-                fontWeight: 300,
-                fontStyle: 'italic',
-                color: 'var(--or)',
-                textDecoration: 'none',
-                letterSpacing: '0.05em',
                 cursor: 'none',
-                whiteSpace: 'nowrap',
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
               }}
+              aria-label="CannaZen - Accueil"
             >
-              CannaZen
+              <Logo size={scrolled ? 'sm' : 'md'} />
             </Link>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <ThemeToggle />
               {isAuthenticated ? (
                 <UserMenu />
               ) : (
@@ -240,8 +248,8 @@ export default function Header() {
                   to="/connexion"
                   style={{ ...iconStyle, textDecoration: 'none' }}
                   aria-label="Compte"
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)'; }}
                 >
                   <User size={18} />
                 </Link>
@@ -250,8 +258,8 @@ export default function Header() {
                 onClick={() => setCartOpen(true)}
                 style={{ ...iconStyle, position: 'relative' }}
                 aria-label="Panier"
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)'; }}
               >
                 <ShoppingCart size={18} />
                 {cartCount > 0 && (
@@ -261,8 +269,8 @@ export default function Header() {
                     right: '2px',
                     width: '16px',
                     height: '16px',
-                    background: 'var(--or)',
-                    color: 'var(--noir)',
+                    background: isDark ? 'var(--or)' : '#4A6741',
+                    color: isDark ? 'var(--noir)' : '#fff',
                     fontSize: '9px',
                     fontWeight: 700,
                     borderRadius: '50%',
@@ -284,8 +292,9 @@ export default function Header() {
         <nav style={{
           display: 'flex',
           justifyContent: 'center',
-          borderTop: '1px solid rgba(201,168,76,0.06)',
+          borderTop: `1px solid ${isDark ? 'rgba(201,168,76,0.06)' : 'rgba(74,103,65,0.08)'}`,
           padding: '12px 32px',
+          transition: 'border-color 0.4s',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '36px' }}>
             {navItems.map(item => {
@@ -305,15 +314,13 @@ export default function Header() {
                         fontSize: '0.65rem',
                         letterSpacing: '0.25em',
                         textTransform: 'uppercase',
-                        color: 'var(--gris-fin)',
+                        color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)',
                         textDecoration: 'none',
                         cursor: 'none',
                         transition: 'color 0.3s',
-                        position: 'relative',
-                        paddingBottom: '2px',
                       }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)'; }}
                     >
                       {item.label}
                     </Link>
@@ -327,14 +334,14 @@ export default function Header() {
                         fontSize: '0.65rem',
                         letterSpacing: '0.25em',
                         textTransform: 'uppercase',
-                        color: 'var(--gris-fin)',
+                        color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)',
                         background: 'none',
                         border: 'none',
                         cursor: 'none',
                         transition: 'color 0.3s',
                       }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
-                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = iconHoverColor; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.7)'; }}
                     >
                       {item.label}
                       <ChevronDown size={10} style={{
@@ -355,8 +362,9 @@ export default function Header() {
         {searchOpen && (
           <div style={{
             padding: '12px 32px',
-            borderTop: '1px solid rgba(201,168,76,0.08)',
-            background: 'rgba(5,5,4,0.95)',
+            borderTop: `1px solid ${isDark ? 'rgba(201,168,76,0.08)' : 'rgba(74,103,65,0.08)'}`,
+            background: isDark ? 'rgba(5,5,4,0.95)' : 'rgba(245,242,237,0.97)',
+            transition: 'background 0.3s',
           }}>
             <form onSubmit={handleSearch} style={{ maxWidth: '500px', margin: '0 auto', display: 'flex', gap: '8px' }}>
               <input
@@ -368,10 +376,10 @@ export default function Header() {
                 style={{
                   flex: 1,
                   padding: '10px 16px',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(201,168,76,0.2)',
+                  background: isDark ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.8)',
+                  border: `1px solid ${isDark ? 'rgba(201,168,76,0.2)' : 'rgba(74,103,65,0.2)'}`,
                   borderRadius: '4px',
-                  color: 'var(--ivoire)',
+                  color: isDark ? 'var(--ivoire)' : '#1a2f23',
                   fontFamily: 'var(--font-body)',
                   fontSize: '0.85rem',
                   outline: 'none',
@@ -384,9 +392,9 @@ export default function Header() {
                 style={{
                   padding: '10px',
                   background: 'transparent',
-                  border: '1px solid rgba(201,168,76,0.1)',
+                  border: `1px solid ${isDark ? 'rgba(201,168,76,0.1)' : 'rgba(74,103,65,0.15)'}`,
                   borderRadius: '4px',
-                  color: 'var(--gris-fin)',
+                  color: isDark ? 'var(--gris-fin)' : 'rgba(74,103,65,0.6)',
                   cursor: 'none',
                 }}
               >
