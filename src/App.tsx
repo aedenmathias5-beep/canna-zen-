@@ -9,7 +9,7 @@ import AgeGate from './components/layout/AgeGate';
 import ChatWidget from './components/smokellier/ChatWidget';
 import CbdChat from './components/ui/CbdChat';
 import LoadingSpinner from './components/ui/LoadingSpinner';
-import ScrollToTopButton from './components/ui/ScrollToTopButton';
+import { PageTransition } from './components/ui/PageTransition';
 
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
@@ -43,36 +43,37 @@ export default function App() {
       <CartProvider>
         <AgeGate />
         <ScrollToTop />
-        <div className="min-h-screen flex flex-col">
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--noir)' }}>
           <Header />
-          <main className="flex-1">
+          <main style={{ flex: 1 }}>
             <Suspense fallback={<LoadingSpinner />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/boutique" element={<Shop />} />
-                <Route path="/boutique/:slug" element={<ProductDetail />} />
-                <Route path="/connexion" element={<Login />} />
-                <Route path="/auth/callback" element={<AuthCallback />} />
-                <Route path="/compte" element={<Account />} />
-                <Route path="/compte/commandes" element={<Orders />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/checkout/confirmation/:id" element={<Confirmation />} />
-                <Route path="/quiz" element={<Quiz />} />
-                <Route path="/terroirs" element={<Terroirs />} />
-                <Route path="/coffrets" element={<Coffrets />} />
-                <Route path="/loyalty" element={<Loyalty />} />
-                <Route path="/a-propos" element={<About />} />
-                <Route path="/cgv" element={<CGV />} />
-                <Route path="/mentions-legales" element={<Legal />} />
-                <Route path="/politique-de-confidentialite" element={<Privacy />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <PageTransition>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/boutique" element={<Shop />} />
+                  <Route path="/boutique/:slug" element={<ProductDetail />} />
+                  <Route path="/connexion" element={<Login />} />
+                  <Route path="/auth/callback" element={<AuthCallback />} />
+                  <Route path="/compte" element={<Account />} />
+                  <Route path="/compte/commandes" element={<Orders />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/checkout/confirmation/:id" element={<Confirmation />} />
+                  <Route path="/quiz" element={<Quiz />} />
+                  <Route path="/terroirs" element={<Terroirs />} />
+                  <Route path="/coffrets" element={<Coffrets />} />
+                  <Route path="/loyalty" element={<Loyalty />} />
+                  <Route path="/a-propos" element={<About />} />
+                  <Route path="/cgv" element={<CGV />} />
+                  <Route path="/mentions-legales" element={<Legal />} />
+                  <Route path="/politique-de-confidentialite" element={<Privacy />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </PageTransition>
             </Suspense>
           </main>
           <Footer />
         </div>
-        <ScrollToTopButton />
         <CbdChat />
         <ChatWidget />
         <Toaster
@@ -80,15 +81,16 @@ export default function App() {
           toastOptions={{
             duration: 3000,
             style: {
-              background: '#f7f3ec',
-              color: '#2c2520',
-              border: '1px solid rgba(232,239,228,0.5)',
-              borderRadius: '0.75rem',
+              background: '#0d1a10',
+              color: '#f5f0e8',
+              border: '1px solid rgba(201,168,76,0.2)',
+              borderRadius: '8px',
               fontSize: '0.875rem',
-              boxShadow: '0 4px 12px rgba(107,143,94,0.1)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+              fontFamily: 'DM Sans, system-ui, sans-serif',
             },
             success: {
-              iconTheme: { primary: '#6b8f5e', secondary: '#fff' },
+              iconTheme: { primary: '#c9a84c', secondary: '#0a0a08' },
             },
           }}
         />

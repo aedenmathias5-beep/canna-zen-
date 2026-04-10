@@ -6,6 +6,10 @@ import ErrorBoundary from './components/ErrorBoundary'
 import { ThemeProvider } from './lib/ThemeContext'
 import App from './App'
 import './index.css'
+import './styles/design-system.css'
+import { MagneticCursor } from './components/MagneticCursor'
+import { SmoothScroll } from './components/SmoothScroll'
+import { Preloader } from './components/Preloader'
 
 const rootEl = document.getElementById('root') ?? (() => {
   const el = document.createElement('div')
@@ -20,7 +24,11 @@ ReactDOM.createRoot(rootEl).render(
       <ThemeProvider>
         <HelmetProvider>
           <BrowserRouter>
-            <App />
+            <Preloader />
+            <MagneticCursor />
+            <SmoothScroll>
+              <App />
+            </SmoothScroll>
           </BrowserRouter>
         </HelmetProvider>
       </ThemeProvider>

@@ -1,111 +1,320 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUp } from 'lucide-react';
-import Logo from '../ui/Logo';
-import AnimatedSection from '../ui/AnimatedSection';
+import { supabase } from '../../lib/supabase';
+import '../../styles/design-system.css';
+
+const navLinks = [
+  { label: 'Accueil', to: '/' },
+  { label: 'Boutique', to: '/boutique' },
+  { label: 'Quiz CBD', to: '/quiz' },
+  { label: 'Coffrets', to: '/coffrets' },
+  { label: 'Nos Terroirs', to: '/terroirs' },
+  { label: 'Programme fidélité', to: '/loyalty' },
+  { label: 'À propos', to: '/a-propos' },
+];
+
+const categories = [
+  { label: 'Fleurs CBD', to: '/boutique?cat=fleurs-cbd' },
+  { label: 'Fleurs D10', to: '/boutique?cat=fleurs-d10' },
+  { label: 'Fleurs OH+', to: '/boutique?cat=fleurs-oh' },
+  { label: 'Résines D10', to: '/boutique?cat=resines-d10' },
+  { label: 'Vapes OH+ & HEC10', to: '/boutique?cat=vapes' },
+  { label: 'Huiles CBD BIO', to: '/boutique?cat=huiles-cbd' },
+  { label: 'Gummies D9', to: '/boutique?cat=gummies-d9' },
+];
+
+const legalLinks = [
+  { label: 'CGV', to: '/cgv' },
+  { label: 'Mentions légales', to: '/mentions-legales' },
+  { label: 'Confidentialité', to: '/politique-de-confidentialite' },
+];
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    try {
+      await supabase.from('subscribers').insert({ email: email.toLowerCase().trim() });
+    } catch {}
+    setSubscribed(true);
+    setEmail('');
   };
 
   return (
-    <footer className="pt-16 pb-8 mt-20 relative" style={{ background: 'linear-gradient(160deg, #1a2f23, #162a1f, #111f18)', color: 'white' }}>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c4956a]/20 to-transparent" />
-        <div className="absolute top-20 right-20 w-64 h-64 bg-[#c4956a]/3 rounded-full blur-[120px]" />
-        <div className="absolute bottom-20 left-20 w-48 h-48 bg-[#2d4a3e]/20 rounded-full blur-[100px]" />
-      </div>
+    <footer style={{
+      background: 'linear-gradient(180deg, #0d1a10 0%, #050504 100%)',
+      color: 'var(--ivoire)',
+      borderTop: '1px solid rgba(201,168,76,0.08)',
+      paddingTop: '80px',
+    }}>
+      <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 40px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '48px',
+          marginBottom: '80px',
+        }}>
+          <div style={{ gridColumn: 'span 1' }}>
+            <div style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '1.8rem',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              color: 'var(--or)',
+              marginBottom: '16px',
+              letterSpacing: '0.05em',
+            }}>
+              CannaZen
+            </div>
+            <div className="badge-luxury" style={{ marginBottom: '20px' }}>Nature & Bien-être</div>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.82rem',
+              color: 'var(--gris-fin)',
+              lineHeight: 1.8,
+              fontWeight: 300,
+              marginBottom: '28px',
+            }}>
+              L'excellence du cannabis légal français. Produits CBD premium sélectionnés avec soin pour votre bien-être.
+            </p>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              {['IG', 'TT', 'TG'].map(soc => (
+                <div key={soc} style={{
+                  width: '36px', height: '36px',
+                  border: '1px solid rgba(201,168,76,0.2)',
+                  borderRadius: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.6rem',
+                  color: 'var(--or-pale)',
+                  cursor: 'none',
+                  transition: 'background 0.3s, border-color 0.3s',
+                }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(201,168,76,0.08)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.2)'; }}
+                >
+                  {soc}
+                </div>
+              ))}
+            </div>
+          </div>
 
-      <button
-        onClick={scrollToTop}
-        aria-label="Retour en haut"
-        className="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 text-white rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:-translate-y-1"
-        style={{ background: 'linear-gradient(135deg, #c4956a, #d4a574)' }}
-      >
-        <ArrowUp size={18} />
-      </button>
+          <div>
+            <h4 style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.6rem',
+              fontWeight: 500,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: 'rgba(201,168,76,0.4)',
+              marginBottom: '24px',
+            }}>Navigation</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {navLinks.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.85rem',
+                    color: 'var(--gris-fin)',
+                    textDecoration: 'none',
+                    fontWeight: 300,
+                    transition: 'color 0.3s, paddingLeft 0.3s',
+                    cursor: 'none',
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-14">
-            <div className="lg:col-span-1">
-              <Logo variant="light" className="mb-4" />
-              <p className="text-white/40 text-sm font-light leading-relaxed">L'excellence du cannabis légal. Produits CBD premium sélectionnés avec soin.</p>
+          <div>
+            <h4 style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.6rem',
+              fontWeight: 500,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: 'rgba(201,168,76,0.4)',
+              marginBottom: '24px',
+            }}>Catégories</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {categories.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.85rem',
+                    color: 'var(--gris-fin)',
+                    textDecoration: 'none',
+                    fontWeight: 300,
+                    transition: 'color 0.3s',
+                    cursor: 'none',
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'var(--or)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'var(--gris-fin)'; }}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
-            <div>
-              <h4 className="text-[10px] font-medium tracking-[0.3em] text-[#c4956a]/50 mb-5 uppercase">Navigation</h4>
-              <div className="flex flex-col gap-2.5">
-                {[
-                  { label: 'Accueil', to: '/' },
-                  { label: 'Boutique', to: '/boutique' },
-                  { label: 'Quiz CBD', to: '/quiz' },
-                  { label: 'Coffrets', to: '/coffrets' },
-                  { label: 'Nos Terroirs', to: '/terroirs' },
-                  { label: 'À propos', to: '/a-propos' },
-                ].map(link => (
-                  <Link key={link.to} to={link.to} className="text-sm text-white/40 hover:text-[#c4956a] hover:translate-x-1 transition-all duration-300 font-light inline-block">
-                    {link.label}
-                  </Link>
-                ))}
+          </div>
+
+          <div>
+            <h4 style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.6rem',
+              fontWeight: 500,
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: 'rgba(201,168,76,0.4)',
+              marginBottom: '24px',
+            }}>Newsletter</h4>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.82rem',
+              color: 'var(--gris-fin)',
+              fontWeight: 300,
+              lineHeight: 1.7,
+              marginBottom: '20px',
+            }}>
+              Offres exclusives, nouveautés et conseils du Smokellier.
+            </p>
+            {subscribed ? (
+              <div style={{ color: 'var(--vert-clair)', fontSize: '0.8rem', fontFamily: 'var(--font-body)' }}>
+                ✓ Merci, vous êtes inscrit(e) !
               </div>
-            </div>
-            <div>
-              <h4 className="text-[10px] font-medium tracking-[0.3em] text-[#c4956a]/50 mb-5 uppercase">Catégories</h4>
-              <div className="flex flex-col gap-2.5">
-                {[
-                  { label: 'Fleurs CBD', cat: 'fleurs-cbd' },
-                  { label: 'Fleurs D10', cat: 'fleurs-d10' },
-                  { label: 'Fleurs OH+', cat: 'fleurs-oh' },
-                  { label: 'Vapes', cat: 'vapes' },
-                  { label: 'Huiles CBD', cat: 'huiles-cbd' },
-                  { label: 'Gummies D9', cat: 'gummies-d9' },
-                ].map(link => (
-                  <Link key={link.cat} to={`/boutique?cat=${link.cat}`} className="text-sm text-white/40 hover:text-[#c4956a] hover:translate-x-1 transition-all duration-300 font-light inline-block">
-                    {link.label}
-                  </Link>
+            ) : (
+              <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="votre@email.com"
+                  required
+                  style={{
+                    padding: '12px 16px',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(201,168,76,0.15)',
+                    borderRadius: '4px',
+                    color: 'var(--ivoire)',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.82rem',
+                    outline: 'none',
+                    cursor: 'none',
+                    transition: 'border-color 0.3s',
+                  }}
+                  onFocus={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.4)'; }}
+                  onBlur={e => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(201,168,76,0.15)'; }}
+                />
+                <button
+                  type="submit"
+                  className="btn-luxury"
+                  style={{ justifyContent: 'center', borderRadius: '4px' }}
+                >
+                  <span>S'inscrire</span>
+                </button>
+              </form>
+            )}
+
+            <div style={{ marginTop: '28px' }}>
+              <h4 style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '0.6rem',
+                fontWeight: 500,
+                letterSpacing: '0.3em',
+                textTransform: 'uppercase',
+                color: 'rgba(201,168,76,0.4)',
+                marginBottom: '12px',
+              }}>Contact</h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {['contact@cannazen.fun', '11 rue de Tourraine', '67100 Strasbourg'].map((line, i) => (
+                  <p key={i} style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.8rem',
+                    color: 'var(--gris-fin)',
+                    fontWeight: 300,
+                  }}>{line}</p>
                 ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="text-[10px] font-medium tracking-[0.3em] text-[#c4956a]/50 mb-5 uppercase">Informations</h4>
-              <div className="flex flex-col gap-2.5">
-                {[
-                  { label: 'CGV', to: '/cgv' },
-                  { label: 'Mentions légales', to: '/mentions-legales' },
-                  { label: 'Confidentialité', to: '/politique-de-confidentialite' },
-                ].map(link => (
-                  <Link key={link.to} to={link.to} className="text-sm text-white/40 hover:text-[#c4956a] hover:translate-x-1 transition-all duration-300 font-light inline-block">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="text-[10px] font-medium tracking-[0.3em] text-[#c4956a]/50 mb-5 uppercase">Contact</h4>
-              <div className="text-sm text-white/40 space-y-1.5 font-light">
-                <p>contact@cannazen.space</p>
-                <p>11 rue de Tourraine</p>
-                <p>67100 Strasbourg</p>
               </div>
             </div>
           </div>
-        </AnimatedSection>
+        </div>
 
-        <div className="border-t border-white/8 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-[10px] text-white/20 font-light tracking-wider">© 2026 CannaZen · Cannabis légal · THC &lt; 0.3%</p>
-            <div className="flex items-center gap-3">
-              <span className="text-[10px] text-white/20 font-light">Paiement sécurisé</span>
-              <div className="flex items-center gap-2">
-                {['CB', 'VISA', 'MC', 'Virement'].map(method => (
-                  <span key={method} className="bg-white/5 hover:bg-white/8 rounded px-2.5 py-1 text-[10px] text-white/30 font-medium transition-colors duration-300 cursor-default border border-white/5">
-                    {method}
-                  </span>
-                ))}
-              </div>
+        <div style={{
+          borderTop: '1px solid rgba(201,168,76,0.08)',
+          paddingTop: '32px',
+          paddingBottom: '40px',
+          display: 'flex',
+          flexDirection: 'column' as const,
+          gap: '16px',
+        }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '24px', justifyContent: 'space-between', alignItems: 'center' }}>
+            <p style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.65rem',
+              color: 'rgba(201,168,76,0.25)',
+              letterSpacing: '0.1em',
+            }}>
+              © 2026 CannaZen · Cannabis légal · THC &lt; 0.3%
+            </p>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' as const }}>
+              {legalLinks.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.65rem',
+                    color: 'rgba(201,168,76,0.25)',
+                    textDecoration: 'none',
+                    letterSpacing: '0.1em',
+                    cursor: 'none',
+                    transition: 'color 0.3s',
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.6)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(201,168,76,0.25)'; }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' as const, alignItems: 'center' }}>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.6rem', color: 'rgba(201,168,76,0.2)', letterSpacing: '0.1em' }}>Paiement sécurisé</span>
+              {['CB', 'VISA', 'MC', 'BTC', 'ETH'].map(m => (
+                <span key={m} style={{
+                  padding: '3px 8px',
+                  border: '1px solid rgba(201,168,76,0.1)',
+                  borderRadius: '4px',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.55rem',
+                  color: 'rgba(201,168,76,0.3)',
+                  letterSpacing: '0.1em',
+                }}>
+                  {m}
+                </span>
+              ))}
             </div>
           </div>
-          <p className="text-[9px] text-white/12 font-light text-center mt-5 tracking-wider">© CannaZen 2026 · THC &lt; 0.3% · Vente interdite aux mineurs · Produits non médicamenteux</p>
+          <p style={{
+            fontFamily: 'var(--font-body)',
+            fontSize: '0.6rem',
+            color: 'rgba(201,168,76,0.12)',
+            textAlign: 'center' as const,
+            letterSpacing: '0.1em',
+          }}>
+            THC &lt; 0.3% · Vente interdite aux mineurs · Produits non médicamenteux · Consommation responsable
+          </p>
         </div>
       </div>
     </footer>

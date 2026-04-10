@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextType>({ theme: 'light', toggleThe
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('cannazen-theme');
-    return (saved === 'dark' ? 'dark' : 'light') as Theme;
+    return (saved === 'light' ? 'light' : 'dark') as Theme;
   });
 
   useEffect(() => {
