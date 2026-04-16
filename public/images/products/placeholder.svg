@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#16213E"/>
+  <text x="200" y="190" text-anchor="middle" fill="#2A2A3E" font-family="sans-serif" font-size="14" font-weight="bold">IMAGE</text>
+  <text x="200" y="215" text-anchor="middle" fill="#2A2A3E" font-family="sans-serif" font-size="14" font-weight="bold">BIENTÔT</text>
+  <path d="M185 140 L200 110 L215 140 L210 140 L210 155 L207 155 L207 145 L200 120 L193 145 L193 155 L190 155 L190 140Z" fill="#2A2A3E" opacity="0.5"/>
+</svg>
